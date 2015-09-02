@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,41 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar-default {
+    background-color: #FFFFFF;
+    border: none;
+}	
+.navbar > .container > div
+{
+  background-color: #34495E;
+  width:auto;
+}
+
+.btn-upload-product,.btn-upload-product:focus {
+    background-color:#1BBC9B; border-radius:0px;
+    border-width:0px;
+    color:white;
+}
+
+.btn-upload-product:hover { 
+    background-color: #49C9AF;
+    color:white;
+}
+
+.form-signin {
+    max-width: 350px;
+    padding: 25px;
+    margin: 0 auto;
+    border-width:1px;
+    border-color:black;
+    border-style: solid;
+    margin-top:50px;
+}
+
+.login-textbox {
+    border-radius:0px;
+    margin-bottom:10px;
+    max-width: 9000px;
 }
