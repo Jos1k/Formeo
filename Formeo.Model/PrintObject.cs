@@ -20,6 +20,6 @@ namespace Formeo.Model
 
 		public OrderLine OrderLine { get; set; }
 
-		public PrintMaterial PrintMaterials { get; set; }
+		public PrintMaterial PrintMaterial { get; set; }
 	}
 }
