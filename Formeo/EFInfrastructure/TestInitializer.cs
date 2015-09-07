@@ -353,7 +353,7 @@ namespace Formeo.EFInfrastructure
 			users.ForEach(u => context.User.Add(u));
 			statuses.ForEach(s => context.Status.Add(s));
 
-			//2 save changes are neccessary - 1-st to created 
+			//2 save changes are neccessary
 			context.SaveChanges();
 
 			projects.ElementAt(0).Bids = new List<Bid>();
