@@ -28,7 +28,7 @@ namespace Formeo.EFInfrastructure
 		{
 			modelBuilder.Entity<Project>()
 				.HasOptional<Bid>(b => b.Bid)
-				.WithRequired();
+				.WithOptionalPrincipal();
 
 			base.OnModelCreating(modelBuilder);
 		}
