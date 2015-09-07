@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Formeo.Model
 {
 	public class User
 	{
+		[Key]
 		public long ID { get; set; }
 		public string Name { get; set; }
 
@@ -21,10 +23,11 @@ namespace Formeo.Model
 
 		public string Country { get; set; }
 
-		public long CompanyID { get; set; }
+		public virtual Company Company { get; set; }
 
-		public Company Company { get; set; }
+		public virtual ICollection<Project> Projects { get; set; }
 
-		public ICollection<Order> Orders { get; set; }
+		public virtual UserType UserType { get; set; }
+
 	}
 }

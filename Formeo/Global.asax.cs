@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Formeo.EFInfrastructure;
+using Formeo.Model;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,14 +11,16 @@ using System.Web.Routing;
 
 namespace Formeo
 {
-    public class MvcApplication : System.Web.HttpApplication
-    {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-        }
-    }
+	public class MvcApplication : System.Web.HttpApplication
+	{
+		protected void Application_Start()
+		{
+			AreaRegistration.RegisterAllAreas();
+			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+			RouteConfig.RegisterRoutes(RouteTable.Routes);
+			BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			var a = new FormeoDBContext().Project.Where(p => p.Bids.Count > 0);
+		}
+	}
 }
