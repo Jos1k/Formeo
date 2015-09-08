@@ -11,12 +11,11 @@ namespace Formeo.Model
 	public class Bid
 	{
 		[Key]
-		[ForeignKey("Project")]
 		public long ID { get; set; }
 		public decimal Price { get; set; }
-
+		[Required]
 		public virtual User Producer { get; set; }
-
+		[Required]
 		public virtual Project Project { get; set; }
 	}
 }

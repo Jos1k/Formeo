@@ -10,10 +10,15 @@ namespace Formeo.Model
 {
 	public class Project
 	{
+		public Project()
+		{
+			OrderLines = new List<OrderLine>();
+			Bids = new List<Bid>();
+		}
 		[Key]
 		public long ID { get; set; }
 		public string  Name { get; set; }
-
+		
 		public virtual User Customer { get; set; }
 
 		public virtual User Producer { get; set; }

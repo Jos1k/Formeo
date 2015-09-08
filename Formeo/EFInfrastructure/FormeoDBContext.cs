@@ -26,9 +26,28 @@ namespace Formeo.EFInfrastructure
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Project>()
-				.HasOptional<Bid>(b => b.Bid)
-				.WithOptionalPrincipal(p=>p.Project);
+			
+
+			//modelBuilder.Entity<Project>()
+			//	.HasOptional(p => p.Bids);
+
+			//modelBuilder.Entity<Project>()
+			//	.HasOptional(p => p.Bid)
+			//	.WithMany()
+			//	.HasForeignKey(x => x.ID);
+
+			//modelBuilder.Entity<Bid>()
+			//	.HasRequired(b => b.Project)
+			//	.WithMany(p => p.Bids)
+			//	.HasForeignKey(b => b.ID);
+
+			//modelBuilder.Entity<OrderLine>()
+			//	.HasRequired(ol => ol.Project)
+			//	.WithMany(p => p.OrderLines)
+			//	.HasForeignKey(m => m.Project);
+
+			
+
 
 			base.OnModelCreating(modelBuilder);
 		}

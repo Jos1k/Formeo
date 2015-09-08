@@ -8,8 +8,8 @@ namespace Formeo.Model
 {
 	public enum UserType
 	{
-		Admin = 0,
-		Producer = 1,
-		Customer = 2
+		Admin = 1,
+		Producer = 2,
+		Customer = 3
 	}
 }

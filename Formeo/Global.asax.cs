@@ -20,7 +20,7 @@ namespace Formeo
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-			var a = new FormeoDBContext().Project.Where(p => p.Bids.Count > 0);
+			var a = new FormeoDBContext().Project.ToArray();
 		}
 	}
 }

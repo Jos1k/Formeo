@@ -10,6 +10,10 @@ namespace Formeo.Model
 {
 	public class Company
 	{
+		public Company()
+		{
+			Users = new List<User>();
+		}
 
 		[Key]
 		public long ID { get; set; }
