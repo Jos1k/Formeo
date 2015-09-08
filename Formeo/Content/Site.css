@@ -37,6 +37,7 @@ textarea {
     background-color:#1BBC9B; border-radius:0px;
     border-width:0px;
     color:white;
+    height:67px;
 }
 
 .btn-upload-product:hover { 
@@ -58,4 +59,26 @@ textarea {
     border-radius:0px;
     margin-bottom:10px;
     max-width: 9000px;
+}
+
+.sidebar {
+    padding-left: 0px;
+}
+
+ol.sidebar-menu {
+    list-style-type: none;
+    padding-left: inherit;
+}
+
+.btn-sidebar-menu {
+    background-color:#34495E; border-radius:0px;
+    border-width:0px;
+    color:white;
+    width:85px;
+    height:95px;
+}
+
+.btn-sidebar-menu:hover, .btn-sidebar-menu:focus { 
+    background-color: #485B6E;
+    color:white;
 }
