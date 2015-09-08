@@ -27,6 +27,10 @@ namespace Formeo
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/font-awesome.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/FormeoAngularMVCApp")
+                .IncludeDirectory("~/Scripts/Controllers", "*.js")
+                .Include("~/Scripts/formeoAngularMVCApp.js"));
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="formeoAngularMVCApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/angular.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -12,7 +13,7 @@
     <div class="navbar navbar-default">
         <div class="container" style="background-color:#34495E; padding-right:0px;">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img class="icon-bar" width="38" height="35" src="~/images/logo2.png">
                 </a>
             </div>
@@ -32,5 +33,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/FormeoAngularMVCApp")
 </body>
 </html>

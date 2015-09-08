@@ -37,7 +37,6 @@ textarea {
     background-color:#1BBC9B; border-radius:0px;
     border-width:0px;
     color:white;
-    height:67px;
 }
 
 .btn-upload-product:hover { 
@@ -74,11 +73,22 @@ ol.sidebar-menu {
     background-color:#34495E; border-radius:0px;
     border-width:0px;
     color:white;
-    width:85px;
+    min-width:85px;
     height:95px;
+    font-size:0.9em;
 }
 
-.btn-sidebar-menu:hover, .btn-sidebar-menu:focus { 
+.btn-sidebar-menu:hover, .btn_sidebar_menu_selected, .btn-sidebar-menu:focus { 
     background-color: #485B6E;
     color:white;
+}
+
+.sidebar_menu_content {
+    background-color: #485B6E;
+    color:white;
+    padding-left: 0px;
+}
+
+.sidebar_menu_content ol li {
+    display: inline;
 }
