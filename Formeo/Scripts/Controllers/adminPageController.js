@@ -1,14 +1,19 @@
 ﻿var adminPageController = function ($scope) {
+    $scope.selectedMainMenu = '/Clients';
+    $scope.selectedCLientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = []
     $scope.selectMainMenu = function (item) {
-        $scope.selected = item;
+        $scope.selectedMainMenu = item;
+    };
+    $scope.isActiveMainMenu = function (item) {
+        return $scope.selectedMainMenu === item;
     };
 
-    $scope.isActive = function (item) {
-        return $scope.selected === item;
+    $scope.selectClientMenu = function (item) {
+        $scope.selectedCLientsMenu = item;
     };
-
-
-
+    $scope.isActiveCLientsMenu = function (item) {
+        return $scope.selectedCLientsMenu === item;
+    };
 }
