@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using Formeo.Model;
+using Formeo.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace Formeo.EFInfrastructure
@@ -13,6 +15,11 @@ namespace Formeo.EFInfrastructure
 	{
 		protected override void Seed(FormeoDBContext context)
 		{
+
+			ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+
+			RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
 			#region Companies
 			List<Company> companies = new List<Company>()
 			{
@@ -38,64 +45,111 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			#region Users
+			#region Roles
 
-			List<User> users = new List<User>()
+			List<IdentityRole> roles = new List<IdentityRole>() 
 			{
-				new User()
+				new IdentityRole()
 				{
-					Country = "US",
-					Email = "SomeEmail@somedomain.com",
-					Name = "Gordon Freeman",
-					Password = "NoHL3",
-					ZipCode = "SomeZipCode",
-					Adress = "New Mexico City, 21,32",
-					UserType = UserType.Customer,
-					Company = companies.ElementAt(0)
+					Name = "Admin"
 				},
-
-				new User()
+				new IdentityRole()
 				{
-					Country = "IT",
-					Email = "SomeEmail@somedomain.com",
-					Name = "Mario",
-					Password = "ILikeMushrooms",
-					ZipCode = "SomeZipCode Mario Edition",
-					Adress = "NY, 50,50",
-					UserType = UserType.Producer,
-					Company = companies.ElementAt(0)
+					Name = "Producer"
 				},
-
-				new User()
+				new IdentityRole()
 				{
-					Country = "US",
-					Email = "SomeEmail@somedomain.com",
-					Name = "Dead pool",
-					Password = "ILoveDeath",
-					ZipCode = "SomeZipCode Crazy Edition",
-					Adress = "Away from normal",
-					UserType = UserType.Producer,
-					Company = companies.ElementAt(1)
-				},
-
-				new User()
-				{
-					Email = "SomeEmail@somedomain.com",
-					Name = "ADMIN",
-					Password = "Obey",
-					UserType = UserType.Admin
+					Name = "Customer"
 				}
 			};
 
+			roles.ForEach(role => roleManager.Create(role));
 
-			users
-				.Where(user => user.Company != null)
-				.ToList()
-				.ForEach(user => user.Company.Users.Add(user));
+			#endregion
 
-			users.ForEach(u => context.User.Add(u));
+			#region Users
 
-			context.SaveChanges();
+			List<ApplicationUser> users = new List<ApplicationUser>()
+			{
+				new ApplicationUser()
+				{
+					Country = "US",
+					Email = "SomeEmail@somedomain.com",
+					UserName = "Gordon_Freeman",
+					ZipCode = "SomeZipCode",
+					Adress = "New Mexico City, 21,32",
+					Company = companies.ElementAt(0)
+				},
+
+				new ApplicationUser()
+				{
+					Country = "IT",
+					Email = "SomeEmail@somedomain.com",
+					UserName = "Mario",
+					ZipCode = "SomeZipCode Mario Edition",
+					Adress = "NY, 50,50",
+					Company = companies.ElementAt(0)
+				},
+
+				new ApplicationUser()
+				{
+					Country = "US",
+					Email = "SomeEmail@somedomain.com",
+					UserName = "Dead_pool",
+					ZipCode = "SomeZipCode Crazy Edition",
+					Adress = "Away from normal",
+					Company = companies.ElementAt(1)
+				},
+
+				new ApplicationUser()
+				{
+					Email = "SomeEmail@somedomain.com",
+					UserName = "ADMIN",
+				}
+			};
+
+			int i = 0;
+
+			//users.ForEach(user => userManager.Create(user, string.Format("{0},{1}", "Formeo", ++i)));
+
+			foreach (var user in users)
+			{
+
+				IdentityResult result = userManager.Create(user, string.Format("{0},{1}", "Formeo", i++));
+
+				while (!result.Succeeded)
+				{
+					result = userManager.Create(user, string.Format("{0},{1}", "Formeo", i));
+
+					if (!result.Succeeded)
+					{
+						string errors = string.Empty;
+						result.Errors.Select(err=>errors = string.Format("{0}, {1}",errors,err));
+						throw new InvalidOperationException(errors);
+					}
+				}
+
+				switch (i)
+				{
+					case 0:
+						{
+							userManager.AddToRole(user.Id, roles.ElementAt(2).Name);
+							break;
+						}
+					case 1:
+					case 2:
+						{
+							userManager.AddToRole(user.Id, roles.ElementAt(1).Name);
+							break;
+						}
+
+					case 3:
+						{
+							userManager.AddToRole(user.Id, roles.ElementAt(0).Name);
+							break;
+						}
+				}
+			}
 
 			#endregion
 

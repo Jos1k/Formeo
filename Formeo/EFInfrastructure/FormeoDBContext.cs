@@ -1,4 +1,5 @@
-﻿using Formeo.Model;
+﻿using Formeo.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,34 +21,16 @@ namespace Formeo.EFInfrastructure
 		public DbSet<PrintMaterial> PrintMaterial { get; set; }
 		public DbSet<PrintObject> PrintObject { get; set; }
 		public DbSet<Status> Status { get; set; }
-		public DbSet<User> User { get; set; }
+		public DbSet<ApplicationUser> User { get; set; }
 		public DbSet<Bid> Bid { get; set; }
 
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			
 
-			//modelBuilder.Entity<Project>()
-			//	.HasOptional(p => p.Bids);
-
-			//modelBuilder.Entity<Project>()
-			//	.HasOptional(p => p.Bid)
-			//	.WithMany()
-			//	.HasForeignKey(x => x.ID);
-
-			//modelBuilder.Entity<Bid>()
-			//	.HasRequired(b => b.Project)
-			//	.WithMany(p => p.Bids)
-			//	.HasForeignKey(b => b.ID);
-
-			//modelBuilder.Entity<OrderLine>()
-			//	.HasRequired(ol => ol.Project)
-			//	.WithMany(p => p.OrderLines)
-			//	.HasForeignKey(m => m.Project);
-
-			
-
+			modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+			modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+			modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
 			base.OnModelCreating(modelBuilder);
 		}

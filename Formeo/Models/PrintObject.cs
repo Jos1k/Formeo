@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formeo.Model
+namespace Formeo.Models
 {
 	public class PrintObject
 	{

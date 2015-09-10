@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formeo", "Formeo\Formeo.csproj", "{4118448B-8BD2-496E-9EB8-E6A49B83D726}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formeo.Model", "Formeo.Model\Formeo.Model.csproj", "{38C94C8E-DC96-4DC5-ACCE-EB7BEAF2DF4E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{4118448B-8BD2-496E-9EB8-E6A49B83D726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4118448B-8BD2-496E-9EB8-E6A49B83D726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4118448B-8BD2-496E-9EB8-E6A49B83D726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38C94C8E-DC96-4DC5-ACCE-EB7BEAF2DF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38C94C8E-DC96-4DC5-ACCE-EB7BEAF2DF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38C94C8E-DC96-4DC5-ACCE-EB7BEAF2DF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38C94C8E-DC96-4DC5-ACCE-EB7BEAF2DF4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

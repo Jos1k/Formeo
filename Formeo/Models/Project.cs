@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formeo.Model
+namespace Formeo.Models
 {
 	public class Project
 	{
@@ -18,10 +18,10 @@ namespace Formeo.Model
 		[Key]
 		public long ID { get; set; }
 		public string  Name { get; set; }
-		
-		public virtual User Customer { get; set; }
 
-		public virtual User Producer { get; set; }
+		public virtual ApplicationUser Customer { get; set; }
+
+		public virtual ApplicationUser Producer { get; set; }
 
 		public virtual Status Status { get; set; }
 

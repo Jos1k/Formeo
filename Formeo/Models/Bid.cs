@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formeo.Model
+namespace Formeo.Models
 {
 	public class Bid
 	{
@@ -14,7 +14,7 @@ namespace Formeo.Model
 		public long ID { get; set; }
 		public decimal Price { get; set; }
 		[Required]
-		public virtual User Producer { get; set; }
+		public virtual ApplicationUser Producer { get; set; }
 		[Required]
 		public virtual Project Project { get; set; }
 	}
