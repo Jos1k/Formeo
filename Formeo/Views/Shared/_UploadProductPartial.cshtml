@@ -1,22 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
-        @*<li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>*@
-        @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
-    </ul>
-    }
-}
-else
-{
     <div class="nav navbar-nav navbar-right">
-        <button type="button" class="btn btn-default text-center btn-upload-product">
+        <button type="button" class="btn btn-default text-center btn-upload-product" style="height:67px;">
             <i class="fa fa-cloud-upload fa-2x" style="color:white"></i>
             <br>Upload Product
         </button>

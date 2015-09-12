@@ -1,31 +1,227 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div class="row" ng-controller="adminPageController" ng-cloak>
+    <p class="text-right"> Number of stored products </p>
+    <div class="col-md-4">
+        <div class="navigation">
+            <div class="row">
+                <div class="sidebar">
+                    @Html.Partial("Partial/_navigation")
+                </div>
+                <div ng-show="isMenuTypeIs('0')" class="sidebar-menu-content">
+                    <div class="row" ng-show="isActiveMainMenu('/Clients')">
+                        @Html.Partial("Partial/Sections/_clients")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
+                        @Html.Partial("Partial/Sections/_storage")
+                    </div>
+                </div>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+                <!-- TEMP  -->
+                <div ng-show="isMenuTypeIs('1')" class="sidebar-menu-content">
+                    <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
+                        @Html.Partial("Partial/Sections/_dashboard")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
+                        @Html.Partial("Partial/Sections/_storage")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Orders')">
+                        @Html.Partial("Partial/Sections/_orders")
+                    </div>
+                </div>
+                <!-- TEMP  -->
+                <!-- TEMP  -->
+                <div ng-show="isMenuTypeIs('2')" class="sidebar-menu-content">
+                    <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
+                        @Html.Partial("Partial/Sections/_dashboard")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
+                        @Html.Partial("Partial/Sections/_storage")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Orders')">
+                        @Html.Partial("Partial/Sections/_orders")
+                    </div>
+                </div>
+                <!-- TEMP  -->
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-8">
+        
+        <div class="input-group">
+            <input ng-model="menuType" type="text" class="form-control" placeholder="Search user">
+            <span class="input-group-btn">
+                <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+
+        <br />
+        <div ng-show="isMenuTypeIs('0')" class="row custom-greed">
+
+            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>Customer Users</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus left"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-3">User.No.</div>
+                        <div class="col-md-3">Company Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-3">Actions</div>
+                    </div>
+                    <div class="row data-row">
+                        <div class="col-md-3">112</div>
+                        <div class="col-md-3">Volvo</div>
+                        <div class="col-md-3">200</div>
+                        <div class="col-md-3 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-cog"></i>
+                            <i class="fa fa-times-circle"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>Production Users</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus left"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-3">User.No.</div>
+                        <div class="col-md-3">Company Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-3">Actions</div>
+                    </div>
+                    <div class="row data-row">
+                        <div class="col-md-3">113</div>
+                        <div class="col-md-3">Acron</div>
+                        <div class="col-md-3">50</div>
+                        <div class="col-md-3 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-cog"></i>
+                            <i class="fa fa-times-circle"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div ng-show="isMenuTypeIs('1')" class="row custom-greed">
+
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>New orders Registered</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus right"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-3">Art.No.</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">Actions</div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-3">113405728</div>
+                        <div class="col-md-3">Cover backplate</div>
+                        <div class="col-md-3">5</div>
+                        <div class="col-md-1">
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-3">112579238</div>
+                        <div class="col-md-3">Board Holder</div>
+                        <div class="col-md-3">3</div>
+                        <div class="col-md-1">
+                            <input type="checkbox" />
+                        </div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>New orders Registered</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus right"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-4">Art.No.</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-2">Actions</div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-4">113</div>
+                        <div class="col-md-3">Arcon</div>
+                        <div class="col-md-3">50</div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

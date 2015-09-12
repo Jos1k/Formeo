@@ -197,14 +197,24 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Variables.css">
+      <DependentUpon>Variables.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Variables.min.css">
+      <DependentUpon>Variables.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="images\logo.png" />
     <Content Include="images\logo1.png" />
     <Content Include="images\logo2.png" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -212,7 +222,17 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\Variables.scss" />
+    <Content Include="Content\Variables.css.map">
+      <DependentUpon>Variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.scss" />
+    <Content Include="Content\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\adminPageController.js" />
+    <Content Include="Scripts\formeoAngularMVCApp.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -258,6 +278,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_UploadProductPartial.cshtml" />
+    <Content Include="Views\Home\Index-Ihor.cshtml" />
+    <Content Include="Views\Home\Partial\_navigation.cshtml" />
+    <Content Include="Views\Home\Partial\Sections\_clients.cshtml" />
+    <Content Include="Views\Home\Partial\Sections\_storage.cshtml" />
+    <Content Include="Views\Home\Partial\Sections\_dashboard.cshtml" />
+    <Content Include="Views\Home\Partial\Sections\_orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
