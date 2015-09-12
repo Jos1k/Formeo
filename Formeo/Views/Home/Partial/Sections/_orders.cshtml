@@ -1,0 +1,60 @@
+﻿<div class="content-place-holder">
+    <br />
+    <div class="row">
+        <label class="left">
+            <h4>Order Notifications</h4>
+        </label>
+    </div>
+
+    <span ng-show="isMenuTypeIs('1')" class="text-sm">
+        &#60;Art.no&#62;
+        &#60;Message&#62;
+        &#60;Descriptions&#62;
+    </span>
+    
+    <div ng-show="isMenuTypeIs('2')" class="row">
+        <span class="text-sm left">
+            New order: Volvo 113405724 <span></span>
+        </span>
+        <span class="lable-green-1 right">
+            <i class="fa fa-arrow-circle-o-right pointer"></i>
+        </span>
+    </div>
+    
+
+</div>
+
+<div ng-show="isMenuTypeIs('1')" class="tabs-place-holder">
+    <div class="list-group">
+        <a href="#" class="list-group-item btn-default-darck active">
+            All
+        </a>
+        <a href="#" class="list-group-item btn-default-darck">
+            New
+        </a>
+        <a href="#" class="list-group-item btn-default-darck">
+            History
+        </a>
+    </div>
+</div>
+
+<div ng-show="isMenuTypeIs('2')" class="tabs-place-holder">
+    <div class="list-group">
+        <a href="#" class="list-group-item btn-default-darck active">
+            All
+        </a>
+        <a href="#" class="list-group-item btn-default-darck">
+            New
+        </a>
+        <a href="#" class="list-group-item btn-default-darck">
+            Done
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+

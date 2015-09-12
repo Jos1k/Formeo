@@ -1,0 +1,426 @@
+﻿@import 'Variables';
+
+html {
+    padding: 0;
+}
+
+body {
+    /*padding-top: 50px;*/
+    padding-bottom: 20px;
+}
+
+a, .link {
+    text-decoration: none;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.navbar-default {
+    background-color: #FFFFFF;
+    border: none;
+}
+
+.navbar > .container > div {
+    background-color: #34495E;
+    width: auto;
+}
+
+.btn-upload-product {
+    background-color: $lable-active;
+    border-radius: 0;
+    border-width: 0;
+    color: white;
+
+    &:hover {
+        background-color: $lable-active;
+        color: white;
+    }
+}
+
+.lable-green-1 {
+    color: $lable-green1;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.form-signin {
+    max-width: 350px;
+    padding: 25px;
+    margin: 0 auto;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    margin-top: 50px;
+}
+
+.login-textbox {
+    border-radius: 0;
+    margin-bottom: 10px;
+    max-width: 9000px;
+}
+
+
+.form-group-margin {
+    margin-bottom: 13px !important;
+}
+
+.textbox-menu {
+    margin-bottom: 6px;
+    margin-top: 6px;
+    height: 37px;
+}
+
+.textbox-menu::-webkit-input-placeholder, .textbox-menu::-moz-placeholder, .textbox-menu:-moz-placeholder, .textbox-menu:-ms-input-placeholder {
+    font-style: italic;
+}
+
+.padding30px {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.full-wight {
+    width: 100%;
+}
+
+.text-sm {
+    font-size: 1rem;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.link {
+    color: white;
+    text-decoration: none !important;
+    font-size: 1.29em;
+
+    &:hover {
+        color: $lable-active;
+        text-decoration: none !important;
+    }
+
+    &:active {
+        color: $lable-active;
+        text-decoration: none !important;
+    }
+}
+
+.list-group-item:last-child {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.list-group-item.active {
+    color: white;
+    background-color: $navigation-bg-color-active;
+}
+
+a.list-group-item {
+    color: white;
+    background-color: $navigation-bg-color;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+
+    &:hover, &:active, &:focus, .active {
+        color: white;
+        background-color: $navigation-bg-color-active;
+    }
+}
+
+.btn-dark {
+    background-color: $navigation-bg-color;
+    border-radius: 0;
+    color: white;
+
+    &:hover {
+        color: white;
+        background-color: $navigation-bg-color-active;
+    }
+}
+
+.btn-default-darck {
+    background-color: $navigation-bg-color;
+    border-radius: 0;
+    border-width: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
+
+
+/*Navigations section*/
+.navigation {
+    margin-left: -15px;
+    width: 100%;
+    background: $navigation-bg-color;
+
+    .row {
+        margin: 0;
+        line-height: 100%;
+    }
+
+    ol.sidebar-menu {
+        list-style-type: none;
+        padding-left: inherit;
+    }
+
+    .editable-field {
+        padding: 10px;
+
+        .edit-value-holder {
+            float: left;
+        }
+
+        .edit-link-holder {
+            display: table-cell;
+            vertical-align: middle;
+            float: right;
+
+            .btn-edit-link {
+                color: white;
+                font-size: 0.6em;
+                text-decoration: none;
+
+                &:hover {
+                    color: $lable-active;
+                }
+            }
+        }
+    }
+
+
+    .btn-sidebar-menu {
+        background-color: $navigation-bg-color;
+        border-radius: 0;
+        border-width: 0;
+        color: white;
+        min-width: $button-widght;
+        height: $button-height;
+        font-size: 0.823em;
+        border: none;
+        margin: 0;
+        opacity: 1;
+        overflow: auto;
+
+        &:disabled {
+            cursor: cell;
+        }
+
+        &:hover, &:focus {
+            background-color: $navigation-bg-color-active;
+            color: white;
+        }
+    }
+
+
+    .btn-menu-selected {
+        background-color: $navigation-bg-color-active;
+        color: white;
+    }
+
+    .sidebar {
+        width: $sidebar-widght;
+        float: left;
+        padding-left: 0;
+
+        .btn-sidebar-menu {
+            width: 100%;
+        }
+    }
+
+    .sidebar-menu-content {
+        background-color: $navigation-bg-color-active;
+        float: left;
+        color: white;
+        padding: 0;
+        width: $sidebar-content-widght;
+        height: 100%;
+
+        .btn-group {
+            width: 100%;
+            background: $navigation-bg-color;
+        }
+
+        .btn-upload-product {
+            float: right;
+        }
+
+
+        .content-place-holder {
+            width: 80%;
+            float: left;
+            padding: 5px 15px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+
+            label {
+                float: left;
+            }
+
+            .btn-add-right {
+                float: right;
+                font-size: 1rem;
+                border-radius: 0;
+                background: #abb5bd;
+                width: 25px;
+                height: 25px;
+                margin-top: 5px;
+                margin-right: -10px;
+            }
+        }
+
+        .tabs-place-holder {
+            background: white;
+            width: 20%;
+            float: right;
+            min-height: 490px;
+        }
+
+        .class-table-cell {
+            display: inline;
+        }
+
+        .container {
+            height: 100%;
+            min-height: 490px;
+            margin-top: 5px;
+
+            .textbox-menu {
+                font-style: italic;
+            }
+
+            .col-xs-1, .col-xs-2, .col-xs-3,
+            .col-xs-4, .col-xs-5, .col-xs-6,
+            .col-xs-7, .col-xs-8, .col-xs-9,
+            .col-xs-10, .col-xs-11, .col-xs-12,
+            .col-sm-1, .col-sm-2, .col-sm-3,
+            .col-sm-4, .col-sm-5, .col-sm-6,
+            .col-sm-7, .col-sm-8, .col-sm-9,
+            .col-sm-10, .col-sm-11, .col-sm-12,
+            .col-md-1, .col-md-2, .col-md-3,
+            .col-md-4, .col-md-5, .col-md-6,
+            .col-md-7, .col-md-8, .col-md-9,
+            .col-md-10, .col-md-11, .col-md-12,
+            .col-lg-1, .col-lg-2, .col-lg-3,
+            .col-lg-4, .col-lg-5, .col-lg-6,
+            .col-lg-7, .col-lg-8, .col-lg-9,
+            .col-lg-10, .col-lg-11, .col-lg-12 {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            label {
+                text-align: right;
+                clear: both;
+                float: left;
+                font: status-bar;
+                margin-right: 15px;
+            }
+
+            input {
+                float: right;
+            }
+        }
+    }
+}
+
+.input-group {
+    display: flex;
+
+    .form-control {
+        color: #555555;
+        vertical-align: middle;
+        background-color: #ffffff;
+        border: 1px solid #555555;
+        border-radius: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
+}
+
+.line-height{
+    margin-top:10px;
+    line-height:100%;
+}
+
+/*Greed systems styles*/
+.custom-greed {
+
+    .head {
+        font-weight: bold;
+        font-size: 0.88em;
+    }
+
+    .data-row {
+        padding-top: 5px;
+        font-size: 0.88em;
+
+        .actions {
+            color: $navigation-bg-color-active;
+            font-size: 1.24em;
+        }
+    }
+
+    .panel {
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 0;
+        -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .panel-default {
+        border-width: 0;
+        border-style: none;
+    }
+
+    .panel-default > .panel-heading {
+        color: #333333;
+        background-color: white;
+        border-color: white;
+        border-width: 0;
+        border-style: none;
+    }
+}
