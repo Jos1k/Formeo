@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+						DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -74,7 +74,7 @@ namespace Formeo.EFInfrastructure
 				new ApplicationUser()
 				{
 					Country = "US",
-					Email = "SomeEmail@somedomain.com",
+					Email = "SomeEmail1@somedomain.com",
 					UserName = "Gordon_Freeman",
 					ZipCode = "SomeZipCode",
 					Adress = "New Mexico City, 21,32",
@@ -84,7 +84,7 @@ namespace Formeo.EFInfrastructure
 				new ApplicationUser()
 				{
 					Country = "IT",
-					Email = "SomeEmail@somedomain.com",
+					Email = "SomeEmail2@somedomain.com",
 					UserName = "Mario",
 					ZipCode = "SomeZipCode Mario Edition",
 					Adress = "NY, 50,50",
@@ -94,7 +94,7 @@ namespace Formeo.EFInfrastructure
 				new ApplicationUser()
 				{
 					Country = "US",
-					Email = "SomeEmail@somedomain.com",
+					Email = "SomeEmail3@somedomain.com",
 					UserName = "Dead_pool",
 					ZipCode = "SomeZipCode Crazy Edition",
 					Adress = "Away from normal",
@@ -103,7 +103,7 @@ namespace Formeo.EFInfrastructure
 
 				new ApplicationUser()
 				{
-					Email = "SomeEmail@somedomain.com",
+					Email = "SomeEmail4@somedomain.com",
 					UserName = "ADMIN",
 				}
 			};
@@ -115,11 +115,11 @@ namespace Formeo.EFInfrastructure
 			foreach (var user in users)
 			{
 
-				IdentityResult result = userManager.Create(user, string.Format("{0},{1}", "Formeo", i++));
+				IdentityResult result = userManager.Create(user, user.Email);
 
 				while (!result.Succeeded)
 				{
-					result = userManager.Create(user, string.Format("{0},{1}", "Formeo", i));
+					result = userManager.Create(user, user.Email);
 
 					if (!result.Succeeded)
 					{

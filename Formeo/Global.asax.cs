@@ -17,10 +17,9 @@ namespace Formeo
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //Database.SetInitializer<FormeoDBContext>(new DropCreateDatabaseIfModelChanges<FormeoDBContext>());
-            //var a = new FormeoDBContext().Project.ToArray();
-            var a = new ApplicationDbContext().Projects.ToArray();
-            //Database.SetInitializer(new TestInitializer());
-        }
+			Database.SetInitializer(new TestInitializer());
+
+			var a = new ApplicationDbContext().Roles.ToArray();
+		}
 	}
 }

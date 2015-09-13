@@ -40,25 +40,15 @@ namespace Formeo.Models
 		{
 		}
 
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<OrderLine> OrderLines { get; set; }
-        public DbSet<PrintMaterial> PrintMaterials { get; set; }
-        public DbSet<PrintObject> PrintObjects { get; set; }
-        public DbSet<Status> Statuses { get; set; }
-        //public DbSet<ApplicationUser> User { get; set; }
-        public DbSet<Bid> Bids { get; set; }
+		public DbSet<Company> Companies { get; set; }
+		public DbSet<Project> Projects { get; set; }
+		public DbSet<OrderLine> OrderLines { get; set; }
+		public DbSet<PrintMaterial> PrintMaterials { get; set; }
+		public DbSet<PrintObject> PrintObjects { get; set; }
+		public DbSet<Status> Statuses { get; set; }
+		public DbSet<Bid> Bids { get; set; }
 
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
-        //    modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
-        //    modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
-
-        //    base.OnModelCreating(modelBuilder);
-        //}
-        public static ApplicationDbContext Create()
+		public static ApplicationDbContext Create()
 		{
 			return new ApplicationDbContext();
 		}
