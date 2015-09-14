@@ -19,8 +19,6 @@ namespace Formeo.Controllers
 		private ApplicationSignInManager _signInManager;
 		private ApplicationUserManager _userManager;
 
-		private RoleManager<IdentityRole> _roleManager;
-
 		public ApplicationSignInManager SignInManager
 		{
 			get
@@ -45,20 +43,6 @@ namespace Formeo.Controllers
 			}
 		}
 
-		public RoleManager<IdentityRole> RoleManager
-		{
-			get
-			{
-				return _roleManager
-					?? (_roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>()));
-
-			}
-			set 
-			{
-				_roleManager = value;
-			}
-		}
-
 		public AccountController()
 		{
 		}
@@ -68,8 +52,6 @@ namespace Formeo.Controllers
 			UserManager = userManager;
 			SignInManager = signInManager;
 		}
-
-
 
 		//
 		// GET: /Account/Login

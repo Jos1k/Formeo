@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Formeo.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +15,13 @@ namespace Formeo.Controllers
 	{
 		public ActionResult Index()
 		{
-			var rolesArray = Roles.GetRolesForUser();
-			
+			var a =  Roles.GetAllRoles();
 			return View();
 		}
 
 		public ActionResult About()
 		{
 
-			
 			ViewBag.Message = "Your application description page.";
 
 			return View();

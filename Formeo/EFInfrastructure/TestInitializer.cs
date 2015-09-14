@@ -6,12 +6,13 @@ using System.Data.Entity;
 using Formeo.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
 
 
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseAlways<ApplicationDbContext>
+						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -64,6 +65,8 @@ namespace Formeo.EFInfrastructure
 			};
 
 			roles.ForEach(role => roleManager.Create(role));
+			roles.ForEach(role => Roles.CreateRole(role.Name));
+
 
 			#endregion
 
