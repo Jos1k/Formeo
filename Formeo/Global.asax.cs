@@ -19,7 +19,7 @@ namespace Formeo
 
 			Database.SetInitializer(new TestInitializer());
 
-			 var a = new ApplicationDbContext().Roles.ToArray();
+			var a = new ApplicationDbContext().Roles.ToArray();
 		}
 	}
 }

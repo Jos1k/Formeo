@@ -7,18 +7,44 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Formeo;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Formeo.Controllers
 {
+
+	
+
 	[Authorize]
 	public class HomeController : Controller
 	{
+		private  ApplicationUserManager  _userManager;
+
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
+
 		public ActionResult Index()
 		{
-			var a =  Roles.GetAllRoles();
+			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+			var Id = User.Identity.GetUserId();
+
+			var a = UserManager.GetRoles(Id);
+
 			return View();
 		}
 
+
+		[Authorize(Roles = "Customer")]
 		public ActionResult About()
 		{
 

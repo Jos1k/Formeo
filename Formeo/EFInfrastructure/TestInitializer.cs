@@ -12,7 +12,7 @@ using System.Web.Security;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+						DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -65,8 +65,6 @@ namespace Formeo.EFInfrastructure
 			};
 
 			roles.ForEach(role => roleManager.Create(role));
-			roles.ForEach(role => Roles.CreateRole(role.Name));
-
 
 			#endregion
 
@@ -132,7 +130,7 @@ namespace Formeo.EFInfrastructure
 					}
 				}
 
-				switch (i)
+				switch (i++)
 				{
 					case 0:
 						{
