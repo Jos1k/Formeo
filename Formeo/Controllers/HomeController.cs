@@ -34,11 +34,11 @@ namespace Formeo.Controllers
 
 		public ActionResult Index()
 		{
-			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+			//var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-			var Id = User.Identity.GetUserId();
+			//var Id = User.Identity.GetUserId();
 
-			var a = UserManager.GetRoles(Id);
+			//var a = UserManager.GetRoles(Id);
 
 			return View();
 		}

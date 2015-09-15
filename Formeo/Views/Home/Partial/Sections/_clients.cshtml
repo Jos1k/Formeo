@@ -19,42 +19,61 @@
 
 <div class="row">
     <div class="container">
-        <form role="form" ng-show="isActiveCLientsMenu('/AddUser')">
-            <div class="padding30px">
-                <div class="row form-group-margin">
-                    <input type="text" ng-model="userModel.username" placeholder="Username" autofocus class="form-control login-textbox textbox-menu" />
-                    <input type="text" ng-model="userModel.password" placeholder="Password" autofocus class="form-control login-textbox textbox-menu" />
-                    <input type="text" ng-model="userModel.email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" />
-                </div>
-                <div class="row form-group-margin">
-                    <input type="text" ng-model="userModel.address" placeholder="Address" autofocus class="form-control login-textbox textbox-menu" />
-                    <input type="text" ng-model="userModel.postal" placeholder="Postal" autofocus class="form-control login-textbox textbox-menu" />
-                    <input type="text" ng-model="userModel.city" placeholder="City" autofocus class="form-control login-textbox textbox-menu" />
-                    <input type="text" ng-model="userModel.country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" />
-                </div>
-                <div class="row form-group-margin">
-                    <div class="left">
-                        <div class="form-group">
-                            <label for="isProduction" style="font-size: medium">Production</label>
-                            <input class="pointer" name="isProduction" ng-model="userModel.isProduction" type="checkbox" value="">
+
+        @*@using (Html.BeginForm("AddUser", "Account"))
+        {
+            @:<div class="padding30px">
+                @:<div class="row form-group-margin">
+                    @Html.LabelFor(user => user.UserName, new { placeholder = "Username", @class = "form-control login-textbox textbox-menu" });
+            <input type="text" ng-model="userModel.username" placeholder="Username" autofocus class="form-control login-textbox textbox-menu" />
+            <input type="text" ng-model="userModel.password" placeholder="Password" autofocus class="form-control login-textbox textbox-menu" />
+            <input type="text" ng-model="userModel.email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" />
+            
+        @:</div>
+            }*@
+
+        <div ng-show="isActiveCLientsMenu('/AddUser')">
+            @using (Html.BeginForm("RegisterFormeo", "Account", FormMethod.Post))
+            { 
+                @Html.AntiForgeryToken()
+                <div class="padding30px">
+                    <div class="row form-group-margin">
+                        <input type="text" ng-model="userModel.username" name="UserName" id="UserName" placeholder="Username" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="password" ng-model="userModel.password" name="Password" id="Password" placeholder="Password" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="userModel.email" name="Email" id="Email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" />
+                    </div>
+                    <div class="row form-group-margin">
+                        <input type="text" ng-model="userModel.address" name="address" id=" address" placeholder="Address" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="userModel.postal" name="Postal" id="Postal" placeholder="Postal" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="userModel.city" name="City" id="City" placeholder="City" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="userModel.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" />
+                    </div>
+                    <div class="row form-group-margin">
+                        <div class="left">
+                            <div class="form-group">
+                                <label for="isProduction" style="font-size: medium">Production</label>
+                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="userModel.isProduction" type="radio" value="@Formeo.Models.StaticData.RoleNames.Producer">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="isCustomer" style="font-size: medium">Customer</label>
+                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="userModel.isCustomer" type="radio" value="@Formeo.Models.StaticData.RoleNames.Customer">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="isAdmin" style="font-size: medium">Admin</label>
+                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="userModel.isAdmin" type="radio" value="@Formeo.Models.StaticData.RoleNames.Admin">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="isCustomer" style="font-size: medium">Customer</label>
-                            <input class="pointer" name="isCustomer" ng-model="userModel.isCustomer" type="checkbox" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="isAdmin" style="font-size: medium">Admin</label>
-                            <input class="pointer" name="isAdmin" ng-model="userModel.isAdmin" type="checkbox" value="">
+                        <div class="right">
+                            <button type="submit" class="btn btn-default text-center btn-upload-product" style="height: 70px; width: 70px;">
+                                Add
+                            </button>
                         </div>
                     </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-default text-center btn-upload-product" style="height: 70px; width: 70px;">
-                            Add
-                        </button>
-                    </div>
                 </div>
-            </div>
-        </form>
+    }
+        </div>
         <form role="form" ng-show="isActiveCLientsMenu('/ManageUser')">
             <div class="padding30px">
                 <div class="row form-group-margin">
@@ -144,5 +163,6 @@
             </div>
         </form>
     </div>
-</div>
+
+        </div>
 

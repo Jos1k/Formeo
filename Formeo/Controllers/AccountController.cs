@@ -75,7 +75,7 @@ namespace Formeo.Controllers
 			}
 
 			var user = UserManager.FindByEmail(model.Email);
-			if (user == null) 
+			if (user == null)
 			{
 				ModelState.AddModelError("", "Invalid login attempt.");
 				return View(model);
@@ -177,10 +177,61 @@ namespace Formeo.Controllers
 				AddErrors(result);
 			}
 
-			
+
 
 			// If we got this far, something failed, redisplay form
 			return View(model);
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> RegisterFormeo(FormeoRegisterViewModel model)
+		{
+			//todo: remove this stub company
+			//Company comp = new ApplicationDbContext().Companies.First();
+
+
+
+			if (ModelState.IsValid)
+			{
+				var user = new ApplicationUser
+				{
+					UserName = model.UserName,
+					Email = model.Email,
+					Adress = model.Address,
+					ZipCode = model.Postal,
+					City = model.City,
+					Country = model.Country,
+					//Company = comp
+				};
+				IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+				if (result.Succeeded)
+				{
+					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+					result = await AddUserToRoles(model, user);
+					if (result == null || !result.Succeeded) 
+					{
+						AddErrors(result);
+					}
+					return RedirectToAction("Index", "Home");
+				}
+
+				AddErrors(result);
+			}
+
+
+
+			// If we got this far, something failed, redisplay form
+			return View(model);
+		}
+
+		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)
+		{
+			IdentityResult result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
+
+			return result;
 		}
 
 		//
