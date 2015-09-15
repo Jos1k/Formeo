@@ -52,15 +52,15 @@ namespace Formeo.EFInfrastructure
 			{
 				new IdentityRole()
 				{
-					Name = "Admin"
+					Name =  StaticData.RoleNames.Admin
 				},
 				new IdentityRole()
 				{
-					Name = "Producer"
+					Name =  StaticData.RoleNames.Producer
 				},
 				new IdentityRole()
 				{
-					Name = "Customer"
+					Name = StaticData.RoleNames.Customer
 				}
 			};
 
@@ -125,7 +125,7 @@ namespace Formeo.EFInfrastructure
 					if (!result.Succeeded)
 					{
 						string errors = string.Empty;
-						result.Errors.Select(err=>errors = string.Format("{0}, {1}",errors,err));
+						result.Errors.Select(err => errors = string.Format("{0}, {1}", errors, err));
 						throw new InvalidOperationException(errors);
 					}
 				}

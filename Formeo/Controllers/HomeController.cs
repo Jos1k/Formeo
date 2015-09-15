@@ -35,9 +35,9 @@ namespace Formeo.Controllers
             var a = UserManager.GetRoles(Id);
             switch (a[0])
                 {
-                    case "Admin": return View("IndexAdmin");
-                    case "Customer": return View("IndexCustomer");
-                    case "Producer": return View("IndexProducer");
+                    case StaticData.RoleNames.Admin: return View("IndexAdmin");
+                    case StaticData.RoleNames.Customer: return View("IndexCustomer");
+                    case StaticData.RoleNames.Producer: return View("IndexProducer");
                 }
 			return View();
 		}

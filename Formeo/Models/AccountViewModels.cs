@@ -3,6 +3,58 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Formeo.Models
 {
+
+	#region FormeoViewModels
+
+	public class FormeoRegisterViewModel
+	{
+		[Required]
+		[StringLength(20)]
+		[Display(Name = "UserName")]
+		public string UserName { get; set; }
+
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Email")]
+		public string Email { get; set; }
+
+		[Required]
+		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+		[DataType(DataType.Password)]
+		[Display(Name = "Password")]
+		public string Password { get; set; }
+
+		[StringLength(100)]
+		[DataType(DataType.Text)]
+		[Display(Name = "Address")]
+		public string Address { get; set; }
+
+		[StringLength(20)]
+		[DataType(DataType.Text)]
+		[Display(Name = "Postal")]
+		public string Postal { get; set; }
+
+		[StringLength(100)]
+		[DataType(DataType.Text)]
+		[Display(Name = "City")]
+		public string City { get; set; }
+
+		[StringLength(100)]
+		[DataType(DataType.Text)]
+		[Display(Name = "Country")]
+		public string Country { get; set; }
+
+		//public bool isAdmin { get; set; }
+		//public bool isCustomer { get; set; }
+		//public bool isProduction { get; set; }
+
+		public string SelectedRole { get; set; }
+
+	}
+
+
+	#endregion
+
 	public class ExternalLoginConfirmationViewModel
 	{
 		[Required]
@@ -79,6 +131,7 @@ namespace Formeo.Models
 		[Display(Name = "Confirm password")]
 		[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string ConfirmPassword { get; set; }
+
 	}
 
 	public class ResetPasswordViewModel
