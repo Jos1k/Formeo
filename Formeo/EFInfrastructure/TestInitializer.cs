@@ -12,7 +12,7 @@ using System.Web.Security;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseAlways<ApplicationDbContext>
+						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{

@@ -265,6 +265,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\producerPageController.js" />
+    <Content Include="Scripts\Controllers\customerPageController.js" />
     <Content Include="Scripts\Controllers\adminPageController.js" />
     <Content Include="Scripts\formeoAngularMVCApp.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -298,7 +300,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -319,13 +320,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_UploadProductPartial.cshtml" />
-    <Content Include="Views\Home\Index-Ihor.cshtml" />
     <Content Include="Views\Home\Partial\_navigation.cshtml" />
     <Content Include="Views\Home\Partial\Sections\_clients.cshtml" />
     <Content Include="Views\Home\Partial\Sections\_storage.cshtml" />
     <Content Include="Views\Home\Partial\Sections\_dashboard.cshtml" />
     <Content Include="Views\Home\Partial\Sections\_orders.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Home\IndexAdmin.cshtml" />
+    <Content Include="Views\Home\IndexCustomer.cshtml" />
+    <Content Include="Views\Home\IndexProducer.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

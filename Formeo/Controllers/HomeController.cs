@@ -12,9 +12,6 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Formeo.Controllers
 {
-
-	
-
 	[Authorize]
 	public class HomeController : Controller
 	{
@@ -34,11 +31,14 @@ namespace Formeo.Controllers
 
 		public ActionResult Index()
 		{
-			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-
 			var Id = User.Identity.GetUserId();
-
-			var a = UserManager.GetRoles(Id);
+            var a = UserManager.GetRoles(Id);
+            switch (a[0]) 
+            {
+                case "Admin": return View("IndexAdmin");
+                case "Customer": return View("IndexCustomer");
+                case "Producer": return View("IndexProducer");
+            }
 
 			return View();
 		}

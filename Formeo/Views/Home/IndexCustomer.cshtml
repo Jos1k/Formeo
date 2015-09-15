@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row" ng-controller="customerPageController" ng-cloak>
+    <p class="text-right"> Number of stored products </p>
+    <div class="col-md-4">
+        <div class="navigation">
+            <div class="row">
+                <div class="sidebar">
+                    <ol class="sidebar-menu">
+
+                        <li>
+                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Dashboard')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Dashboard')}">
+                                <i class="fa fa-home fa-2x" style="color:white"></i>
+                                <br>Dashboard
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Storage')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Storage')}">
+                                <i class="fa fa-cloud fa-2x" style="color:white"></i>
+                                <br>Storage
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Orders')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Orders')}">
+                                <i class="fa fa-shopping-cart fa-2x" style="color: white"></i>
+                                <br>Orders
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Stats')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Stats')}">
+                                <i class="fa fa-bar-chart fa-2x" style="color:white"></i>
+                                <br>Stats
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Settings')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Settings')}">
+                                <i class="fa fa-cog fa-2x" style="color:white"></i>
+                                <br>Settings
+                            </button>
+                        </li>
+                        <li>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
+                                    <i class="fa fa-sign-out fa-2x" style="color: white"></i>
+                                    <br>Logout
+                                </button>
+                            }
+                        </li>
+                    </ol>
+                </div>
+                <div class="sidebar-menu-content">
+                    <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
+                        @Html.Partial("Partial/Sections/_dashboard")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
+                        @Html.Partial("Partial/Sections/_storage")
+                    </div>
+                    <div class="row" ng-show="isActiveMainMenu('/Orders')">
+                        @Html.Partial("Partial/Sections/_orders")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search user">
+            <span class="input-group-btn">
+                <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+
+        <br />
+        <div class="row custom-greed">
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>New orders Registered</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus right"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-3">Art.No.</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">Actions</div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-3">113405728</div>
+                        <div class="col-md-3">Cover backplate</div>
+                        <div class="col-md-3">5</div>
+                        <div class="col-md-1">
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-3">112579238</div>
+                        <div class="col-md-3">Board Holder</div>
+                        <div class="col-md-3">3</div>
+                        <div class="col-md-1">
+                            <input type="checkbox" />
+                        </div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>New orders Registered</h4>
+                        </div>
+                        <div class="col-md-2 line-height">
+                            <i class="fa fa-plus right"></i>
+                        </div>
+                    </div>
+                    <div class="row head">
+                        <div class="col-md-4">Art.No.</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-2">Actions</div>
+                    </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-4">113</div>
+                        <div class="col-md-3">Arcon</div>
+                        <div class="col-md-3">50</div>
+                        <div class="col-md-2 actions">
+                            <i class="fa fa-stack-exchange"></i>
+                            <i class="fa fa-photo"></i>
+                            <i class="fa fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
