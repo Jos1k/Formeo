@@ -33,13 +33,12 @@ namespace Formeo.Controllers
 		{
 			var Id = User.Identity.GetUserId();
             var a = UserManager.GetRoles(Id);
-            switch (a[0]) 
-            {
-                case "Admin": return View("IndexAdmin");
-                case "Customer": return View("IndexCustomer");
-                case "Producer": return View("IndexProducer");
-            }
-
+            switch (a[0])
+                {
+                    case "Admin": return View("IndexAdmin");
+                    case "Customer": return View("IndexCustomer");
+                    case "Producer": return View("IndexProducer");
+                }
 			return View();
 		}
 
