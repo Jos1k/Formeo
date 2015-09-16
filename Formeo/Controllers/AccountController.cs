@@ -155,14 +155,12 @@ namespace Formeo.Controllers
 				IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
-					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
 					result = await AddUserToRoles(model, user);
 					if (result == null || !result.Succeeded) 
 					{
 						AddErrors(result);
 					}
-					return RedirectToAction("IndexAdmin", "Home");
+					return RedirectToAction("Index", "Home");
 				}
 
 				AddErrors(result);
@@ -171,7 +169,7 @@ namespace Formeo.Controllers
 
 
 			// If we got this far, something failed, redisplay form
-			return View(model);
+			return RedirectToAction("Index","Home");
 		}
 
 		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)

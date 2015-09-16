@@ -9,13 +9,15 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Formeo;
 using Microsoft.AspNet.Identity.Owin;
+using Formeo.BussinessLayer;
 
 namespace Formeo.Controllers
 {
 	[Authorize]
 	public class HomeController : Controller
 	{
-		private  ApplicationUserManager  _userManager;
+
+		private ApplicationUserManager _userManager;
 
 		public ApplicationUserManager UserManager
 		{
@@ -31,19 +33,45 @@ namespace Formeo.Controllers
 
 		public ActionResult Index()
 		{
-			var Id = User.Identity.GetUserId();
-            var a = UserManager.GetRoles(Id);
-            switch (a[0])
-                {
-                    case StaticData.RoleNames.Admin: return View("IndexAdmin");
-                    case StaticData.RoleNames.Customer: return View("IndexCustomer");
-                    case StaticData.RoleNames.Producer: return View("IndexProducer");
-                }
+			string Id = User.Identity.GetUserId();
+			string role = UserManager.GetRoles(Id).FirstOrDefault();
+			switch (role)
+			{
+				case StaticData.RoleNames.Admin: return RedirectToAction("IndexAdmin");
+				case StaticData.RoleNames.Customer: return RedirectToAction("IndexCustomer");
+				case StaticData.RoleNames.Producer: return RedirectToAction("IndexProducer");
+				default:
+					return View();
+			}
+		}
+
+		#region Indexes
+
+		[Authorize(Roles=StaticData.RoleNames.Admin)]
+		public ActionResult IndexAdmin()
+		{
+			_IndexAdminViewModel viewModel = new _IndexAdminViewModel();
+			viewModel.Customers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Customer).ToList();
+			viewModel.Producers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Producer).ToList();
+
+			return View(viewModel);
+		}
+
+		[Authorize(Roles = StaticData.RoleNames.Customer)]
+		public ActionResult IndexCustomer()
+		{
 			return View();
 		}
 
+		[Authorize(Roles = StaticData.RoleNames.Producer)]
+		public ActionResult IndexProducer()
+		{
+			return View();
+		}
 
-		[Authorize(Roles = "Customer")]
+		#endregion
+
+
 		public ActionResult About()
 		{
 

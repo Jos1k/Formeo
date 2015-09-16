@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Formeo.Models._IndexAdminViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 <div class="row" ng-controller="adminPageController" ng-cloak>
@@ -82,20 +84,27 @@
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-3">User.No.</div>
+                        <div class="col-md-3">UserName</div>
                         <div class="col-md-3">Company Name</div>
                         <div class="col-md-3">Storage Quantity</div>
                         <div class="col-md-3">Actions</div>
                     </div>
                     <div class="row data-row">
-                        <div class="col-md-3">112</div>
-                        <div class="col-md-3">Volvo</div>
-                        <div class="col-md-3">200</div>
-                        <div class="col-md-3 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-cog"></i>
-                            <i class="fa fa-times-circle"></i>
-                        </div>
+
+                        @{
+                            foreach (var user in Model.Customers)
+                            {
+                                <div class="col-md-3">@user.UserName</div>
+                                <div class="col-md-3">@(user.Company == null ? "No Company" : user.Company.Name)</div>
+                                <div class="col-md-3">300</div>
+
+                                <div class="col-md-3 actions">
+                                    <i class="fa fa-stack-exchange"></i>
+                                    <i class="fa fa-cog"></i>
+                                    <i class="fa fa-times-circle"></i>
+                                </div>
+                            }
+                        }
                     </div>
 
                 </div>
@@ -120,21 +129,26 @@
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-3">User.No.</div>
+                        <div class="col-md-3">UserName.</div>
                         <div class="col-md-3">Company Name</div>
                         <div class="col-md-3">Storage Quantity</div>
                         <div class="col-md-3">Actions</div>
                     </div>
-                    <div class="row data-row">
-                        <div class="col-md-3">113</div>
-                        <div class="col-md-3">Acron</div>
-                        <div class="col-md-3">50</div>
-                        <div class="col-md-3 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-cog"></i>
-                            <i class="fa fa-times-circle"></i>
-                        </div>
-                    </div>
+
+                   @{
+                        foreach (var user in Model.Producers)
+                        {
+                            <div class="col-md-3">@user.UserName</div>
+                            <div class="col-md-3">@(user.Company == null ? "No Company" : user.Company.Name)</div>
+                            <div class="col-md-3">200</div>
+
+                            <div class="col-md-3 actions">
+                                <i class="fa fa-stack-exchange"></i>
+                                <i class="fa fa-cog"></i>
+                                <i class="fa fa-times-circle"></i>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
