@@ -10,6 +10,7 @@ using System.Web.Security;
 using Formeo;
 using Microsoft.AspNet.Identity.Owin;
 using Formeo.BussinessLayer;
+using Newtonsoft.Json;
 
 namespace Formeo.Controllers
 {
@@ -41,7 +42,7 @@ namespace Formeo.Controllers
 				case StaticData.RoleNames.Customer: return RedirectToAction("IndexCustomer");
 				case StaticData.RoleNames.Producer: return RedirectToAction("IndexProducer");
 				default:
-					return View();
+					return View("Login", "Account");
 			}
 		}
 
@@ -51,13 +52,17 @@ namespace Formeo.Controllers
 		public ActionResult IndexAdmin()
 		{
 			_IndexAdminViewModel viewModel = new _IndexAdminViewModel();
-			viewModel.Customers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Customer).ToList();
-			viewModel.Producers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Producer).ToList();
+			var Customers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Customer).ToList();
+			var Producers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Producer).ToList();
+
+			viewModel.CustomersJSON = GetJSONUsers(Customers, StaticData.RoleNames.Customer);
+			viewModel.ProducersJSON = GetJSONUsers(Producers, StaticData.RoleNames.Producer);
 
 			return View(viewModel);
 		}
 
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
+		[Authorize(Roles = StaticData.RoleNames.Admin)]
 		public ActionResult IndexCustomer()
 		{
 			return View();
@@ -86,5 +91,33 @@ namespace Formeo.Controllers
 
 			return View();
 		}
+
+
+		#region Helpers
+
+		private string GetJSONUsers(List<ApplicationUser> users, string role) 
+		{
+		
+			var users_short = users.Select
+				(user => new 
+					{  
+						UserName=user.UserName,
+						Company = user.Company==null?"No Company":user.Company.Name,
+						Email = user.Email,
+						Address = user.Adress,
+						Postal = user.ZipCode,
+						City = user.City,
+						Country = user.Country,
+						IsProducer =  role == StaticData.RoleNames.Producer,
+						IsCustomer= role == StaticData.RoleNames.Customer,
+						IsAdmin= role == StaticData.RoleNames.Admin
+
+					}
+				)
+				.ToArray();
+			return JsonConvert.SerializeObject(users_short);
+		}
+
+		#endregion
 	}
 }

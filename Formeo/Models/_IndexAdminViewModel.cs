@@ -7,7 +7,8 @@ namespace Formeo.Models
 {
 	public class _IndexAdminViewModel
 	{
-		public List<ApplicationUser> Customers { get; set; }
-		public List<ApplicationUser> Producers { get; set; }
+		public string CustomersJSON { get; set; }
+		public string ProducersJSON { get; set; }
+		
 	}
 }

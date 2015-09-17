@@ -11,11 +11,22 @@
         isAdmin: false
     };
 
+    $scope.EMPTY = "";
+
     $scope.selectedMainMenu = '/Clients';
     $scope.selectedCLientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = [];
     $scope.menuType = "0";
+    $scope.selectedUser = $scope.EMPTY;
+
+    $scope.selectUser = function (user)
+    {
+        if (user != $scope.EMPTY)
+        {
+            $scope.selectedUser = user;
+        }
+    }
 
     $scope.isMenuTypeIs = function (type)
     {

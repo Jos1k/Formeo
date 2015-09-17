@@ -79,7 +79,7 @@
                 <div class="row form-group-margin">
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60; User Name &#62;
+                            {{selectedUser === EMPTY ? "&#60; User Name &#62;" : selectedUser.UserName}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -97,7 +97,7 @@
 
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60; Email &#62;
+                            {{selectedUser === EMPTY ? "&#60; Email &#62;" : selectedUser.Email}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -108,7 +108,7 @@
                 <div class="row form-group-margin">
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60;Address&#62;
+                            {{selectedUser === EMPTY ? "&#60;Address&#62;" : selectedUser.Address}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -117,7 +117,7 @@
 
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60;Postal&#62;
+                            {{selectedUser === EMPTY ? "&#60;Postal&#62;" : selectedUser.Postal}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -126,7 +126,7 @@
 
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60;City&#62;
+                            {{selectedUser === EMPTY ? "&#60;City&#62;" : selectedUser.City}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -135,7 +135,7 @@
 
                     <div class="row editable-field">
                         <div class="edit-value-holder">
-                            &#60;Country&#62;
+                            {{selectedUser === EMPTY ? "&#60;Country&#62;" : selectedUser.Country}}
                         </div>
                         <div class="edit-link-holder">
                             <a class="btn-edit-link" href="#">Change</a>
@@ -148,21 +148,20 @@
                     <div class="left">
                         <div class="form-group">
                             <label for="isProduction" style="font-size: medium">Production</label>
-                            <input class="pointer" name="isProduction" ng-model="userModel.isProduction" type="checkbox" readonly="readonly">
+                            <input class="pointer" name="roleRadio" ng-model="selectedUser.IsProduction" type="radio" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label for="isCustomer" style="font-size: medium">Customer</label>
-                            <input class="pointer" name="isCustomer" ng-model="userModel.isCustomer" type="checkbox" readonly="readonly">
+                            <input class="pointer" name="roleRadio" ng-model="selectedUser.IsCustomer" type="radio" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label for="isAdmin" style="font-size: medium">Admin</label>
-                            <input class="pointer" name="isAdmin" ng-model="userModel.isAdmin" type="checkbox" readonly="readonly">
-                        </div>
+                            <input class="pointer" name="roleRadio" ng-model="selectedUser.IsAdmin" type="radio" readonly="readonly">
                     </div>
                 </div>
             </div>
-        </form>
+                </div>
+</form>
     </div>
-
-        </div>
+    </div>
 
