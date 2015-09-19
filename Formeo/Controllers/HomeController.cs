@@ -35,6 +35,14 @@ namespace Formeo.Controllers
 		public ActionResult Index()
 		{
 			string Id = User.Identity.GetUserId();
+
+			var userCheck = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
+
+			if (userCheck == null) 
+			{
+				return RedirectToAction("Login", "Account");
+			}
+
 			string role = UserManager.GetRoles(Id).FirstOrDefault();
 			switch (role)
 			{
@@ -42,7 +50,7 @@ namespace Formeo.Controllers
 				case StaticData.RoleNames.Customer: return RedirectToAction("IndexCustomer");
 				case StaticData.RoleNames.Producer: return RedirectToAction("IndexProducer");
 				default:
-					return View("Login", "Account");
+					return RedirectToAction("Login", "Account");
 			}
 		}
 
@@ -62,7 +70,6 @@ namespace Formeo.Controllers
 		}
 
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
-		[Authorize(Roles = StaticData.RoleNames.Admin)]
 		public ActionResult IndexCustomer()
 		{
 			return View();

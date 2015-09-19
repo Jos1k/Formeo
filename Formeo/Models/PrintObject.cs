@@ -11,7 +11,6 @@ namespace Formeo.Models
 	public class PrintObject
 	{
 		[Key]
-		[ForeignKey("OrderLine")]
 		public long ID { get; set; }
 		public string Name { get; set; }
 
@@ -22,7 +21,7 @@ namespace Formeo.Models
 		public string CustomerArticleNumber { get; set; }
 		public double CubicInches { get; set; }
 
-		public virtual OrderLine OrderLine { get; set; }
+		public virtual Project Project { get; set; }
 
 		public virtual PrintMaterial PrintMaterial { get; set; }
 	}

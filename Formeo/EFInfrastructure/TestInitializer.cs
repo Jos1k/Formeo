@@ -302,43 +302,6 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			#region OrderLines
-
-			List<OrderLine> orderLines = new List<OrderLine>()
-			{
-				new OrderLine()
-				{
-					Name="OrderLine1",
-					Project = projects.ElementAt(0),
-					
-				},
-
-				new OrderLine()
-				{
-					Name="OrderLine2",
-					Project = projects.ElementAt(1),
-					
-
-				},
-				new OrderLine()
-				{
-					Name="OrderLine3",
-					Project = projects.ElementAt(2)
-
-				},
-					new OrderLine()
-				{
-					Name="OrderLine4",
-					Project = projects.ElementAt(2)
-
-				}
-			};
-
-			orderLines.ForEach(o => context.OrderLines.Add(o));
-			context.SaveChanges();
-
-			#endregion
-
 			#region PrintObjects
 
 			List<PrintObject> printObjects = new List<PrintObject>()
@@ -350,7 +313,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(0),
-					OrderLine = orderLines.ElementAt(0)
+					Project = projects.ElementAt(0)
 				},
 
 				new PrintObject()
@@ -360,7 +323,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(1),
-					OrderLine = orderLines.ElementAt(1)
+					Project = projects.ElementAt(0)
 				},
 
 				new PrintObject()
@@ -370,7 +333,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(2),
-					OrderLine = orderLines.ElementAt(2)
+					Project = projects.ElementAt(1)
 
 
 				},
@@ -382,7 +345,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile4",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(3),
-					OrderLine = orderLines.ElementAt(3)
+					Project = projects.ElementAt(2)
 
 
 				},
@@ -394,8 +357,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(4),
-					OrderLine = orderLines.ElementAt(2)
-
+					Project = projects.ElementAt(2)
 				}
 			};
 
@@ -405,7 +367,7 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			projects.ElementAt(0).Bid = bids.ElementAt(1);
+			projects.ElementAt(0).WinningBid = bids.ElementAt(1);
 
 			context.SaveChanges();
 

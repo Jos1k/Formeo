@@ -12,7 +12,7 @@ namespace Formeo.Models
 	{
 		public Project()
 		{
-			OrderLines = new List<OrderLine>();
+			PrintObjects = new List<PrintObject>();
 			Bids = new List<Bid>();
 		}
 		[Key]
@@ -25,10 +25,10 @@ namespace Formeo.Models
 
 		public virtual Status Status { get; set; }
 
-		public virtual Bid Bid { get; set; }
+		public virtual Bid WinningBid { get; set; }
 
 		public virtual ICollection<Bid> Bids { get; set; }
 
-		public virtual ICollection<OrderLine> OrderLines { get; set; }
+		public virtual ICollection<PrintObject> PrintObjects { get; set; }
 	}
 }

@@ -42,7 +42,6 @@ namespace Formeo.Models
 
 		public DbSet<Company> Companies { get; set; }
 		public DbSet<Project> Projects { get; set; }
-		public DbSet<OrderLine> OrderLines { get; set; }
 		public DbSet<PrintMaterial> PrintMaterials { get; set; }
 		public DbSet<PrintObject> PrintObjects { get; set; }
 		public DbSet<Status> Statuses { get; set; }
