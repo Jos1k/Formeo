@@ -95,32 +95,21 @@
                     </div>
                     <div class="row data-row">
 
-                        <div ng-repeat="user in customers" ng-click="selectUser(user)">
+                        <div ng-repeat="user in customers">
                             <div class="col-md-3">{{user.UserName}}</div>
                             <div class="col-md-3">{{user.Company}} </div>
                             <div class="col-md-3">300</div>
 
                             <div class="col-md-3 actions">
-                                <i class="fa fa-stack-exchange"></i>
-                                <i class="fa fa-cog"></i>
-                                <i class="fa fa-times-circle"></i>
+                                <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                <a ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                                <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
+                                    <i class="fa fa-times-circle" style="cursor: pointer;"></i>
+                                </a>
                             </div>
                         </div>
-
-                        @*@{
-                            foreach (var user in Model.Customers)
-                            {
-                                <div class="col-md-3">@user.UserName</div>
-                                <div class="col-md-3">@(user.Company == null ? "No Company" : user.Company.Name)</div>
-                                <div class="col-md-3">300</div>
-
-                                <div class="col-md-3 actions">
-                                    <i class="fa fa-stack-exchange"></i>
-                                    <i class="fa fa-cog"></i>
-                                    <i class="fa fa-times-circle"></i>
-                                </div>
-                            }
-                        }*@
                     </div>
 
                 </div>
@@ -129,7 +118,7 @@
             <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <br/>
+                        <br />
                     </div>
                 </div>
             </div>
@@ -151,32 +140,21 @@
                         <div class="col-md-3">Actions</div>
                     </div>
 
-                    <div ng-repeat="user in producers" ng-click="selectUser(user)">
+                    <div ng-repeat="user in producers">
                         <div class="col-md-3">{{user.UserName}}</div>
                         <div class="col-md-3">{{user.Company}} </div>
                         <div class="col-md-3">300</div>
 
                         <div class="col-md-3 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-cog"></i>
-                            <i class="fa fa-times-circle"></i>
+                            <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                            <a ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <a style="cursor: pointer;" ng-click="removeUser(user, producers)">
+                                <i class="fa fa-times-circle"></i>
+                            </a>
                         </div>
                     </div>
-
-                   @*@{
-                        foreach (var user in Model.Producers)
-                        {
-                            <div class="col-md-3">@user.UserName</div>
-                            <div class="col-md-3">@(user.Company == null ? "No Company" : user.Company.Name)</div>
-                            <div class="col-md-3">200</div>
-
-                            <div class="col-md-3 actions">
-                                <i class="fa fa-stack-exchange"></i>
-                                <i class="fa fa-cog"></i>
-                                <i class="fa fa-times-circle"></i>
-                            </div>
-                        }
-                    }*@
                 </div>
             </div>
         </div>

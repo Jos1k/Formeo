@@ -208,7 +208,6 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\PrintMaterial.cs" />
     <Compile Include="Models\PrintObject.cs" />
     <Compile Include="Models\Project.cs" />

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Formeo.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
 
 namespace Formeo.Controllers
 {
@@ -170,6 +171,25 @@ namespace Formeo.Controllers
 
 			// If we got this far, something failed, redisplay form
 			return RedirectToAction("Index","Home");
+		}
+
+		[HttpPost]
+		public ActionResult RemoveUser(string userName) 
+		{
+			ApplicationUser user = UserManager.FindByName(userName);
+			if (user == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			IdentityResult removeResult = UserManager.Delete(user);
+
+			if (removeResult.Succeeded)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
+			}
+			return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+
 		}
 
 		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)
