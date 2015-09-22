@@ -24,11 +24,7 @@ namespace Formeo.Controllers
 		{
 			get
 			{
-				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-			}
-			private set
-			{
-				_userManager = value;
+				return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 			}
 		}
 
@@ -38,7 +34,7 @@ namespace Formeo.Controllers
 
 			var userCheck = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
 
-			if (userCheck == null) 
+			if (userCheck == null)
 			{
 				return RedirectToAction("Login", "Account");
 			}
@@ -56,7 +52,7 @@ namespace Formeo.Controllers
 
 		#region Indexes
 
-		[Authorize(Roles=StaticData.RoleNames.Admin)]
+		[Authorize(Roles = StaticData.RoleNames.Admin)]
 		public ActionResult IndexAdmin()
 		{
 			_IndexAdminViewModel viewModel = new _IndexAdminViewModel();
@@ -102,23 +98,22 @@ namespace Formeo.Controllers
 
 		#region Helpers
 
-		private string GetJSONUsers(List<ApplicationUser> users, string role) 
+		private string GetJSONUsers(List<ApplicationUser> users, string role)
 		{
-		
-			var users_short = users.Select
-				(user => new 
-					{  
-						UserName=user.UserName,
-						Company = user.Company==null?"No Company":user.Company.Name,
-						Email = user.Email,
-						Address = user.Adress,
-						Postal = user.ZipCode,
-						City = user.City,
-						Country = user.Country,
-						IsProducer =  role == StaticData.RoleNames.Producer,
-						IsCustomer= role == StaticData.RoleNames.Customer,
-						IsAdmin= role == StaticData.RoleNames.Admin
 
+			var users_short = users.Select
+				(user => new
+					{
+						UserName = user.UserName,
+						Company = user.Company == null ? "<No Data>" : user.Company.Name,
+						Email = string.IsNullOrWhiteSpace(user.Email) ? "<No Data>" : user.Email,
+						Address = string.IsNullOrWhiteSpace(user.Adress) ? "<No Data>" : user.Adress,
+						Postal = string.IsNullOrWhiteSpace(user.ZipCode) ? "<No Data>" : user.ZipCode,
+						City = string.IsNullOrWhiteSpace(user.City) ? "<No Data>" : user.City,
+						Country = string.IsNullOrWhiteSpace(user.Country) ? "<No Data>" : user.Country,
+						IsProducer = role == StaticData.RoleNames.Producer,
+						IsCustomer = role == StaticData.RoleNames.Customer,
+						IsAdmin = role == StaticData.RoleNames.Admin
 					}
 				)
 				.ToArray();

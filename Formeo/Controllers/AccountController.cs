@@ -19,6 +19,15 @@ namespace Formeo.Controllers
 	{
 		private ApplicationSignInManager _signInManager;
 		private ApplicationUserManager _userManager;
+		private ApplicationDbContext _applicationContext;
+
+		public ApplicationDbContext ApplicationContext
+		{
+			get
+			{
+				return _applicationContext ?? (_applicationContext = new ApplicationDbContext());
+			}
+		}
 
 		public ApplicationSignInManager SignInManager
 		{
@@ -76,7 +85,7 @@ namespace Formeo.Controllers
 			}
 
 			var user = UserManager.FindByEmail(model.Email);
-			if (user == null) 
+			if (user == null)
 			{
 				ModelState.AddModelError("", "Invalid login attempt.");
 				return View(model);
@@ -132,7 +141,7 @@ namespace Formeo.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles=StaticData.RoleNames.Admin)]
+		[Authorize(Roles = StaticData.RoleNames.Admin)]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> RegisterFormeo(FormeoRegisterViewModel model)
 		{
@@ -157,7 +166,7 @@ namespace Formeo.Controllers
 				if (result.Succeeded)
 				{
 					result = await AddUserToRoles(model, user);
-					if (result == null || !result.Succeeded) 
+					if (result == null || !result.Succeeded)
 					{
 						AddErrors(result);
 					}
@@ -170,11 +179,11 @@ namespace Formeo.Controllers
 
 
 			// If we got this far, something failed, redisplay form
-			return RedirectToAction("Index","Home");
+			return RedirectToAction("Index", "Home");
 		}
 
 		[HttpPost]
-		public ActionResult RemoveUser(string userName) 
+		public ActionResult RemoveUser(string userName)
 		{
 			ApplicationUser user = UserManager.FindByName(userName);
 			if (user == null)
@@ -191,6 +200,61 @@ namespace Formeo.Controllers
 			return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
 
 		}
+
+		[HttpPost]
+		public ActionResult UpdateUserInfo(string userName, string field, string newValue)
+		{
+
+			ApplicationUser userToUpdate = ApplicationContext.Users.Where(user => user.UserName == userName).FirstOrDefault();
+			if (userToUpdate == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			switch (field)
+			{
+				case "email":
+					{
+						userToUpdate.Email = newValue;
+						break;
+					}
+				case "address":
+					{
+						userToUpdate.Adress = newValue;
+						break;
+					}
+				case "postal":
+					{
+						userToUpdate.ZipCode = newValue;
+						break;
+					}
+				case "city":
+					{
+						userToUpdate.City = newValue;
+						break;
+					}
+				case "country":
+					{
+						userToUpdate.Country = newValue;
+						break;
+					}
+
+				default:
+					return new HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed);
+			}
+			try
+			{
+				
+				ApplicationContext.SaveChanges();
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
+			}
+			catch
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+			}
+		}
+
+
 
 		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)
 		{

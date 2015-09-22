@@ -12,7 +12,7 @@
     };
 
     $scope.selectedMainMenu = '/Dashboard';
-    $scope.selectedCLientsMenu = '/AddUser';
+    $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = [];
     $scope.menuType = "0";
@@ -31,10 +31,10 @@
     };
 
     $scope.selectClientMenu = function (item) {
-        $scope.selectedCLientsMenu = item;
+        $scope.selectedClientsMenu = item;
     };
     $scope.isActiveCLientsMenu = function (item) {
-        return $scope.selectedCLientsMenu === item;
+        return $scope.selectedClientsMenu === item;
     };
 
     $scope.cleanUserModel = function () {

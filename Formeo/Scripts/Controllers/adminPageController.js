@@ -14,18 +14,39 @@
     $scope.EMPTY = "";
 
     $scope.selectedMainMenu = '/Clients';
-    $scope.selectedCLientsMenu = '/AddUser';
+    $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = [];
     $scope.menuType = "0";
     $scope.selectedUser = $scope.EMPTY;
 
+    $scope.updateUserInfo = function (isShownEditableTextbox, user, fieldNameToChange, newValue) {
+
+        if(!isShownEditableTextbox ||  user == $scope.EMPTY)
+        {
+            $window.alert('error');
+            return;
+        }
+
+        $http({
+            method: 'POST',
+            url: '/Account/UpdateUserInfo',
+            params: { userName: user.UserName, field: fieldNameToChange, newValue: newValue },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+                then(function (response) {
+                    //success
+                }, function (response) {
+                    //error
+                    $window.alert('error');
+                });
+    }
+
     $scope.removeUser = function (user, collectionToHandle) {
 
-        $window.alert(collectionToHandle.length);
 
         if (user != $scope.EMPTY) {
-            
+
             $http({
                 method: 'POST',
                 url: '/Account/RemoveUser',
@@ -33,8 +54,8 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
               then(function (response) {
-                  // this callback will be called asynchronously
-                  // when the response is available
+                  var index = collectionToHandle.indexOf(user);
+                  collectionToHandle.splice(index, 1);
               }, function (response) {
                   // called asynchronously if an error occurs
                   // or server returns response with an error status.
@@ -61,11 +82,11 @@
     };
 
     $scope.selectClientMenu = function (item) {
-        $scope.selectedCLientsMenu = item;
+        $scope.selectedClientsMenu = item;
     };
 
     $scope.isActiveCLientsMenu = function (item) {
-        return $scope.selectedCLientsMenu === item;
+        return $scope.selectedClientsMenu === item;
     };
 
     $scope.cleanUserModel = function () {

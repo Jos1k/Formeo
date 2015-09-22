@@ -27,25 +27,13 @@ namespace Formeo.BussinessLayer
 			}
 		}
 
-		#region Members
-
-		UserManager<ApplicationUser> _userManager;
-		RoleManager<IdentityRole> _roleManager;
-
-		#endregion
-
 		#region Properties
 
 		public UserManager<ApplicationUser> UserManager
 		{
 			get
 			{
-				return _userManager
-					?? (_userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())));
-			}
-			private set
-			{
-				_userManager = value;
+				return new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 			}
 		}
 
@@ -53,12 +41,7 @@ namespace Formeo.BussinessLayer
 		{
 			get
 			{
-				return _roleManager
-					?? (_roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext())));
-			}
-			private set
-			{
-				_roleManager = value;
+				return new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 			}
 		}
 

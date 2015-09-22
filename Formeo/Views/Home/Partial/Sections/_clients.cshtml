@@ -17,24 +17,12 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="container">
-
-        @*@using (Html.BeginForm("AddUser", "Account"))
-        {
-            @:<div class="padding30px">
-                @:<div class="row form-group-margin">
-                    @Html.LabelFor(user => user.UserName, new { placeholder = "Username", @class = "form-control login-textbox textbox-menu" });
-            <input type="text" ng-model="userModel.username" placeholder="Username" autofocus class="form-control login-textbox textbox-menu" />
-            <input type="text" ng-model="userModel.password" placeholder="Password" autofocus class="form-control login-textbox textbox-menu" />
-            <input type="text" ng-model="userModel.email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" />
-            
-        @:</div>
-            }*@
-
         <div ng-show="isActiveCLientsMenu('/AddUser')">
             @using (Html.BeginForm("RegisterFormeo", "Account", FormMethod.Post))
-            { 
+            {
                 @Html.AntiForgeryToken()
                 <div class="padding30px">
                     <div class="row form-group-margin">
@@ -53,12 +41,12 @@
                             <div class="form-group">
                                 <label for="isProduction" style="font-size: medium">Production</label>
                                 <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="userModel.isProduction" type="radio" value="@Formeo.Models.StaticData.RoleNames.Producer">
-                                
+
                             </div>
                             <div class="form-group">
                                 <label for="isCustomer" style="font-size: medium">Customer</label>
                                 <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="userModel.isCustomer" type="radio" value="@Formeo.Models.StaticData.RoleNames.Customer">
-                                
+
                             </div>
                             <div class="form-group">
                                 <label for="isAdmin" style="font-size: medium">Admin</label>
@@ -72,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-    }
+            }
         </div>
         <form role="form" ng-show="isActiveCLientsMenu('/ManageUser')">
             <div class="padding30px">
@@ -81,64 +69,85 @@
                         <div class="edit-value-holder">
                             {{selectedUser === EMPTY ? "&#60; User Name &#62;" : selectedUser.UserName}}
                         </div>
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
-                        </div>
                     </div>
 
-                    <div class="row editable-field">
-                        <div class="edit-value-holder">
-                            &#60; Password &#62;
-                        </div>
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
-                        </div>
-                    </div>
+                    <div ng-init="isShowEditEmail = false"></div>
+                    <div ng-init="isShowEditAddress = false"></div>
+                    <div ng-init="isShowEditPostal = false"></div>
+                    <div ng-init="isShowEditCity = false"></div>
+                    <div ng-init="isShowEditCountry = false"></div>
 
                     <div class="row editable-field">
-                        <div class="edit-value-holder">
+                        <div class="edit-value-holder" ng-show="!isShowEditEmail || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditEmail = false : isShowEditEmail=true;">
                             {{selectedUser === EMPTY ? "&#60; Email &#62;" : selectedUser.Email}}
                         </div>
+                        <div class="edit-value-holder " ng-show="isShowEditEmail && !selectedUser==EMPTY">
+                            <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Email" />
+                        </div>
+
                         <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
+                            <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditEmail, selectedUser, 'email', selectedUser.Email); isShowEditEmail=false">Change</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="row form-group-margin">
                     <div class="row editable-field">
-                        <div class="edit-value-holder">
+                        <div class="edit-value-holder" ng-show="!isShowEditAddress || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditAddress = false : isShowEditAddress=true;">
                             {{selectedUser === EMPTY ? "&#60;Address&#62;" : selectedUser.Address}}
                         </div>
+                        <div class="edit-value-holder " ng-show="isShowEditAddress && !selectedUser==EMPTY">
+                            <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Address" />
+                        </div>
+
                         <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
+                            <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditAddress, selectedUser, 'address', selectedUser.Address); isShowEditAddress=false">Change</a>
                         </div>
                     </div>
 
-                    <div class="row editable-field">
-                        <div class="edit-value-holder">
-                            {{selectedUser === EMPTY ? "&#60;Postal&#62;" : selectedUser.Postal}}
-                        </div>
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
+
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditPostal || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditPostal = false : isShowEditPostal=true;">
+                                {{selectedUser === EMPTY ? "&#60;Postal&#62;" : selectedUser.Postal}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditPostal && !selectedUser==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Postal" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditPostal, selectedUser, 'postal', selectedUser.Postal); isShowEditPostal=false">Change</a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row editable-field">
-                        <div class="edit-value-holder">
-                            {{selectedUser === EMPTY ? "&#60;City&#62;" : selectedUser.City}}
-                        </div>
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditCity || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditCity = false : isShowEditCity=true;">
+                                {{selectedUser === EMPTY ? "&#60;City&#62;" : selectedUser.City}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditCity && !selectedUser==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.City" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditCity, selectedUser, 'city', selectedUser.City); isShowEditCity=false">Change</a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row editable-field">
-                        <div class="edit-value-holder">
-                            {{selectedUser === EMPTY ? "&#60;Country&#62;" : selectedUser.Country}}
-                        </div>
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#">Change</a>
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditCountry || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditCountry = false : isShowEditCountry=true;">
+                                {{selectedUser === EMPTY ? "&#60;Country&#62;" : selectedUser.Country}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditCountry && !selectedUser==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Country" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditCountry, selectedUser, 'country', selectedUser.Country); isShowEditCountry=false">Change</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,11 +168,10 @@
                         <div class="form-group">
                             <label for="isAdmin" style="font-size: medium">Admin</label>
                             <input class="pointer" name="roleRadio" ng-class="{checked: selectedUser.IsAdmin}" type="radio" readonly="readonly">
+                        </div>
                     </div>
                 </div>
             </div>
-                </div>
-</form>
+        </form>
     </div>
-    </div>
-
+</div>
