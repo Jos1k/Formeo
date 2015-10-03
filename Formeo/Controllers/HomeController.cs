@@ -28,18 +28,18 @@ namespace Formeo.Controllers
 			}
 		}
 
+		public ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
+
 		public ActionResult Index()
 		{
-			string Id = User.Identity.GetUserId();
-
-			var userCheck = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
+			var userCheck = GetCurrentUser();
 
 			if (userCheck == null)
 			{
 				return RedirectToAction("Login", "Account");
 			}
 
-			string role = UserManager.GetRoles(Id).FirstOrDefault();
+			string role = UserManager.GetRoles(userCheck.Id).FirstOrDefault();
 			switch (role)
 			{
 				case StaticData.RoleNames.Admin: return RedirectToAction("IndexAdmin");
@@ -48,6 +48,14 @@ namespace Formeo.Controllers
 				default:
 					return RedirectToAction("Login", "Account");
 			}
+		}
+
+		private ApplicationUser GetCurrentUser()
+		{
+			string Id = User.Identity.GetUserId();
+
+			var userCheck = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
+			return userCheck;
 		}
 
 		#region Indexes
@@ -68,7 +76,17 @@ namespace Formeo.Controllers
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
 		public ActionResult IndexCustomer()
 		{
-			return View();
+			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
+
+			var currentUser = GetCurrentUser();
+			if (currentUser == null) 
+			{
+				return RedirectToAction("Login", "Account");
+			}
+
+			viewModel.PrintObjectsJSON = GetPrintObjectsJSONForUser(currentUser);
+
+			return View(viewModel);
 		}
 
 		[Authorize(Roles = StaticData.RoleNames.Producer)]
@@ -118,6 +136,23 @@ namespace Formeo.Controllers
 				)
 				.ToArray();
 			return JsonConvert.SerializeObject(users_short);
+		}
+
+		private string GetPrintObjectsJSONForUser(ApplicationUser currentUser)
+		{
+			List<PrintObject> printObjects = DbContext.PrintObjects.Where(
+				po => po.CustomerCreator.Id == currentUser.Id)
+				.ToList();
+			var printObjectsShort = printObjects.Select(
+				 po => new
+					{
+						Id = po.ID,
+						ArtNo = po.ArticleNo,
+						Name = po.Name,
+					}
+				).ToList();
+
+			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
 		#endregion

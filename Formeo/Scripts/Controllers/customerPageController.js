@@ -1,4 +1,4 @@
-﻿var customerPageController = function ($scope) {
+﻿var customerPageController = function ($scope, $window, $http, $modal, $compile) {
     $scope.userModel = {
         username: '',
         password: '',
@@ -16,9 +16,57 @@
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = [];
     $scope.menuType = "0";
+    $scope.selectedPrintObjectIds = [];
+    $scope.layOrderButtonIsDisabled = false;
 
-    $scope.isMenuTypeIs = function (type)
-    {
+    $scope.addOrRemovePrintobject = function (printObjectId) {
+        var index = $scope.selectedPrintObjectIds.indexOf(printObjectId);
+
+        if (index > -1) {
+            $scope.selectedPrintObjectIds.splice(index, 1);
+        }
+        else {
+            $scope.selectedPrintObjectIds.push(printObjectId);
+        }
+    }
+
+    $scope.printObjectIsSelected = function (printObjectId) {
+        return $scope.selectedPrintObjectIds.indexOf(printObjectId) > -1;
+    }
+
+    $scope.showLayOrderModal = function () {
+
+        if (!$scope.selectedPrintObjectIds.length) {
+            return;
+        }
+
+        $scope.layOrderButtonIsDisabled = true;
+        $http({
+            method: 'GET',
+            url: '/Project/LayOrder',
+            params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+                then(function (response) {
+                    //success
+                    //$scope.result = response;
+                    var resp =$compile(response.data);
+
+                    var modalInstance = $modal.open({
+                        template: (response.data),
+                        controller: 'layOrderPartialController',
+                    });
+
+                    //$('#LayOrder-container').html(response.data);
+                    //$('#modal-LayOrder').modal('show');
+                }, function (response) {
+                    //error
+                    $window.alert('error');
+                });
+        $scope.layOrderButtonIsDisabled = false;
+    }
+
+    $scope.isMenuTypeIs = function (type) {
         return $scope.menuType === type;
     };
 

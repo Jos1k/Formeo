@@ -1,5 +1,7 @@
-﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', []);
+﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', ['ui.bootstrap']);
 
 formeoAngularMVCApp.controller('adminPageController', adminPageController);
 formeoAngularMVCApp.controller('customerPageController', customerPageController);
 formeoAngularMVCApp.controller('producerPageController', producerPageController);
+
+formeoAngularMVCApp.controller('layOrderPartialController', layOrderPartialController);

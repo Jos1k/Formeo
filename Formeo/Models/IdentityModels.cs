@@ -23,6 +23,8 @@ namespace Formeo.Models
 
 		public virtual ICollection<Project> Projects { get; set; }
 
+		public virtual ICollection<PrintObject> PrintObjects { get; set; }
+
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
 		{

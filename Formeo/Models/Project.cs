@@ -17,7 +17,7 @@ namespace Formeo.Models
 		}
 		[Key]
 		public long ID { get; set; }
-		public string  Name { get; set; }
+		public string Name { get; set; }
 
 		public virtual ApplicationUser Customer { get; set; }
 
@@ -30,5 +30,21 @@ namespace Formeo.Models
 		public virtual ICollection<Bid> Bids { get; set; }
 
 		public virtual ICollection<PrintObject> PrintObjects { get; set; }
+
+
+		#region DeliveryInfo
+
+		public string SurName { get; set; }
+
+		public string LastName { get; set; }
+
+		public string Address { get; set; }
+
+		public string ZipCode { get; set; }
+
+		public string City { get; set; }
+		public string Country { get; set; }
+
+		#endregion
 	}
 }

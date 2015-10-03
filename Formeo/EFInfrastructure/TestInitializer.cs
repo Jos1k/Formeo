@@ -12,7 +12,7 @@ using System.Web.Security;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+						DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -358,6 +358,30 @@ namespace Formeo.EFInfrastructure
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(4),
 					Project = projects.ElementAt(2)
+				},
+
+				
+				new PrintObject()
+				{
+					Name = "PrintObject6",
+					CadFile = "CadFile7",
+					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
+					CustomerArticleNumber = "CustomerArticleNumber",
+					PrintMaterial = printMaterials.ElementAt(4),
+					CustomerCreator = users.ElementAt(0),
+					ArticleNo = 123456789
+				},
+
+				
+				new PrintObject()
+				{
+					Name = "PrintObject7",
+					CadFile = "CadFile7",
+					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
+					CustomerArticleNumber = "CustomerArticleNumber",
+					PrintMaterial = printMaterials.ElementAt(4),
+					CustomerCreator = users.ElementAt(0),
+					ArticleNo = 1
 				}
 			};
 

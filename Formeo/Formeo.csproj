@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="EFInfrastructure\TestInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +208,7 @@
     <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LayOrderViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PrintMaterial.cs" />
     <Compile Include="Models\PrintObject.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\_IndexAdminViewModel.cs" />
+    <Compile Include="Models\_IndexCustomerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -242,6 +245,7 @@
     <Content Include="images\logo.png" />
     <Content Include="images\logo1.png" />
     <Content Include="images\logo2.png" />
+    <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -266,6 +270,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\layOrderPartialController.js" />
     <Content Include="Scripts\Controllers\producerPageController.js" />
     <Content Include="Scripts\Controllers\customerPageController.js" />
     <Content Include="Scripts\Controllers\adminPageController.js" />
@@ -285,6 +290,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-bootstrap-0.13.4.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.13.4.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -312,6 +319,7 @@
     <Content Include="Views\Home\IndexAdmin.cshtml" />
     <Content Include="Views\Home\IndexCustomer.cshtml" />
     <Content Include="Views\Home\IndexProducer.cshtml" />
+    <Content Include="Views\Project\_LayOrderPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

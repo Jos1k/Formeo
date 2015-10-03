@@ -14,6 +14,8 @@ namespace Formeo.Models
 		public long ID { get; set; }
 		public string Name { get; set; }
 
+		public ApplicationUser CustomerCreator { get; set; }
+
 		public long ArticleNo { get; set; }
 
 		public string CadFile { get; set; }
