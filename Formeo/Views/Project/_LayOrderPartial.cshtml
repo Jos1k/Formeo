@@ -1,36 +1,61 @@
 ﻿@model Formeo.Models.LayOrderViewModel
 
-    <div ng-init="printObjectsInfoModal = @Model.PrintObjectsInfoJSON" />
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Lay Order</h4>
-        </div>
-        <div class="modal-body">
-            <p>You're about to order following</p>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row head">
-                        <div class="col-md-3">Art.No.</div>
-                        <div class="col-md-3">Product Name</div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3">Quantity</div>
-                    </div>
-                </div>
-            </div>
-            <div ng-repeat="printObject in printObjectsInfoModal">
-                <div class="row data-row">
-                    <div class="col-md-3">{{printObject.ArtNo}}</div>
-                    <div class="col-md-3">{{printObject.Name}}</div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <input type="checkbox" ng-checked="printObjectIsSelected(printObject.Id)" ng-click="addOrRemovePrintobject(printObject.Id)" />
-                    </div>
+<div ng-init="printObjectsInfoModal = @Model.PrintObjectsInfoJSON" />
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Lay Order</h4>
+    </div>
+    <div class="modal-body">
+        <p>You're about to order following</p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row head">
+                    <div class="col-md-3">Art.No.</div>
+                    <div class="col-md-3">Product Name</div>
+                    <div class="col-md-3">Quantity</div>
+                    <div class="col-md-3">Actions</div>
                 </div>
 
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <div ng-repeat="printObject in printObjectsInfoModal">
+                    <div class="row data-row">
+                        <div class="col-md-3">{{printObject.ArtNo}}</div>
+                        <div class="col-md-3">{{printObject.Name}}</div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <a href="#" ng-click="increasePrintObjectQuantity(printObject)"> <i class="fa fa-plus-square"></i></a>
+                                {{printObject.Quantity}}
+                                <a href="#" ng-click="decreasePrintObjectQuantity(printObject)"> <i class="fa fa-minus-square"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="#" ng-click="removePrintObjectFromOrder(printObject)"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+        <p>Delivery info</p>
+        <div ng-init="deliveryInfo" />
+
+        <input placeholder="Surname" ng-model="deliveryInfo.Surname" type="text" />
+
+        <input placeholder="Last Name" ng-model="deliveryInfo.LastName" type="text" />
+
+        <input placeholder="Delivery address" ng-model="deliveryInfo.Address" type="text" />
+
+        <input placeholder="Postal code" ng-model="deliveryInfo.PostCode" type="text" />
+
+        <input placeholder="City" ng-model="deliveryInfo.City" type="text" />
+
+        <input placeholder="Counry" ng-model="deliveryInfo.Country" type="text" />
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="LayOrder()">Lay order</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
 </div>

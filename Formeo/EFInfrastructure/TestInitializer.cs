@@ -313,7 +313,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(0),
-					Project = projects.ElementAt(0)
+					//Project = projects.ElementAt(0)
 				},
 
 				new PrintObject()
@@ -323,7 +323,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(1),
-					Project = projects.ElementAt(0)
+					//Project = projects.ElementAt(0)
 				},
 
 				new PrintObject()
@@ -333,7 +333,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(2),
-					Project = projects.ElementAt(1)
+					//Project = projects.ElementAt(1)
 
 
 				},
@@ -345,7 +345,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile4",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(3),
-					Project = projects.ElementAt(2)
+					//Project = projects.ElementAt(2)
 
 
 				},
@@ -357,7 +357,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(4),
-					Project = projects.ElementAt(2)
+					//Project = projects.ElementAt(2)
 				},
 
 				

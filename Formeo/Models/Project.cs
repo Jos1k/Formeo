@@ -12,7 +12,7 @@ namespace Formeo.Models
 	{
 		public Project()
 		{
-			PrintObjects = new List<PrintObject>();
+			//PrintObjects = new List<PrintObject>();
 			Bids = new List<Bid>();
 		}
 		[Key]
@@ -29,12 +29,12 @@ namespace Formeo.Models
 
 		public virtual ICollection<Bid> Bids { get; set; }
 
-		public virtual ICollection<PrintObject> PrintObjects { get; set; }
+		public virtual ICollection<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelations { get; set; }
 
 
 		#region DeliveryInfo
 
-		public string SurName { get; set; }
+		public string Surname { get; set; }
 
 		public string LastName { get; set; }
 

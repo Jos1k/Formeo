@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BussinessLayer\UserHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomAttributes\JsonFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LayOrderViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProjectPrintObjectRelation.cs" />
     <Compile Include="Models\PrintMaterial.cs" />
     <Compile Include="Models\PrintObject.cs" />
     <Compile Include="Models\Project.cs" />
@@ -270,6 +272,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\layOrderConfirmPartialController.js" />
     <Content Include="Scripts\Controllers\layOrderPartialController.js" />
     <Content Include="Scripts\Controllers\producerPageController.js" />
     <Content Include="Scripts\Controllers\customerPageController.js" />
@@ -320,6 +323,7 @@
     <Content Include="Views\Home\IndexCustomer.cshtml" />
     <Content Include="Views\Home\IndexProducer.cshtml" />
     <Content Include="Views\Project\_LayOrderPartial.cshtml" />
+    <Content Include="Views\Project\_LayOrderConfirmPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿var customerPageController = function ($scope, $window, $http, $modal, $compile) {
+﻿var customerPageController = function ($scope, $window, $http, $modal) {
     $scope.userModel = {
         username: '',
         password: '',
@@ -17,7 +17,7 @@
     $scope.mainMenu = [];
     $scope.menuType = "0";
     $scope.selectedPrintObjectIds = [];
-    $scope.layOrderButtonIsDisabled = false;
+    $scope.layOrderButtonIsDisabled = true;
 
     $scope.addOrRemovePrintobject = function (printObjectId) {
         var index = $scope.selectedPrintObjectIds.indexOf(printObjectId);
@@ -28,6 +28,7 @@
         else {
             $scope.selectedPrintObjectIds.push(printObjectId);
         }
+        $scope.layOrderButtonIsDisabled = $scope.selectedPrintObjectIds.length > 0 ? false : true;
     }
 
     $scope.printObjectIsSelected = function (printObjectId) {
@@ -41,6 +42,7 @@
         }
 
         $scope.layOrderButtonIsDisabled = true;
+
         $http({
             method: 'GET',
             url: '/Project/LayOrder',
@@ -49,21 +51,20 @@
         }).
                 then(function (response) {
                     //success
-                    //$scope.result = response;
-                    var resp =$compile(response.data);
-
                     var modalInstance = $modal.open({
                         template: (response.data),
                         controller: 'layOrderPartialController',
+                        backdrop: 'static'
                     });
+                    $scope.layOrderButtonIsDisabled = false;
 
-                    //$('#LayOrder-container').html(response.data);
-                    //$('#modal-LayOrder').modal('show');
+
                 }, function (response) {
                     //error
                     $window.alert('error');
+                    $scope.layOrderButtonIsDisabled = false;
+
                 });
-        $scope.layOrderButtonIsDisabled = false;
     }
 
     $scope.isMenuTypeIs = function (type) {

@@ -25,7 +25,7 @@ namespace Formeo.Models
 		public string CustomerArticleNumber { get; set; }
 		public double CubicInches { get; set; }
 
-		public virtual Project Project { get; set; }
+		public virtual ICollection<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelatios { get; set; }
 
 		public virtual PrintMaterial PrintMaterial { get; set; }
 	}

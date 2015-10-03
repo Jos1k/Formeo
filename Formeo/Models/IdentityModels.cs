@@ -49,6 +49,8 @@ namespace Formeo.Models
 		public DbSet<Status> Statuses { get; set; }
 		public DbSet<Bid> Bids { get; set; }
 
+		public DbSet<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelations { get; set; } 
+
 		public static ApplicationDbContext Create()
 		{
 			return new ApplicationDbContext();

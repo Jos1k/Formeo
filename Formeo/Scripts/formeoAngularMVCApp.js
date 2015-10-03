@@ -5,3 +5,4 @@ formeoAngularMVCApp.controller('customerPageController', customerPageController)
 formeoAngularMVCApp.controller('producerPageController', producerPageController);
 
 formeoAngularMVCApp.controller('layOrderPartialController', layOrderPartialController);
+formeoAngularMVCApp.controller('layOrderConfirmPartialController', layOrderConfirmPartialController);
