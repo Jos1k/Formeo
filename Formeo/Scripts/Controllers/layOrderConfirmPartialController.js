@@ -30,6 +30,7 @@
             then(function (response) {
                 //success
 
+                $window.alert('success');
 
 
             }, function (response) {

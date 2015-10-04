@@ -9,6 +9,7 @@ namespace Formeo
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+			DependencyLoader.Start();
         }
     }
 }

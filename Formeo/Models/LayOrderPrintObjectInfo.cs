@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Formeo.Models
 {
-	//part of project
-	public class LayOrderViewModel
+	public class LayOrderPrintObjectInfo
 	{
-		public string PrintObjectsInfoJSON { get; set; }
+		public long PrintObjectId { get; set; }
+		public int Quantity { get; set; }
 	}
 }

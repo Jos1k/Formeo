@@ -62,6 +62,14 @@ namespace Formeo.BussinessLayer
 			return UserManager.Users.Where(x => x.Roles.First().RoleId == role.Id).ToList();
 		}
 
+		public ApplicationUser GetCurrentUser()
+		{
+			string Id = HttpContext.Current.User.Identity.GetUserId();
+
+			var currentUser = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
+			return currentUser;
+		}
+
 		#endregion
 
 	}

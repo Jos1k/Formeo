@@ -1,0 +1,41 @@
+﻿@model Formeo.Models.AddProductsViewModel
+
+<div ng-init="printObjectsInfoModal = @Model.PrintObjectsInfoJSON"/>
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Lay Order</h4>
+    </div>
+    <div class="modal-body">
+        <p>You're about to order following</p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row head">
+                    <div class="col-md-3">Art.No.</div>
+                    <div class="col-md-3">Product Name</div>
+                    <div class="col-md-3">Add</div>
+                </div>
+
+
+                <div ng-repeat="printObject in printObjectsInfoModal">
+                    <div class="row data-row">
+                        <div class="col-md-3">{{printObject.ArtNo}}</div>
+                        <div class="col-md-3">{{printObject.Name}}</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" ng-checked="printObjectIsSelected(printObject)" ng-click="addOrRemovePrintobject(printObject)" />
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="!printObjectsInfoModal.length">
+                    No objects to add - you have selected all products.
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-disabled="!selectedPrintObjectsInfoModal.length" ng-click="Add()">Add Selected products</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+
+

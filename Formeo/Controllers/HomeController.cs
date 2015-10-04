@@ -11,14 +11,23 @@ using Formeo;
 using Microsoft.AspNet.Identity.Owin;
 using Formeo.BussinessLayer;
 using Newtonsoft.Json;
+using Microsoft.Practices.Unity;
 
 namespace Formeo.Controllers
 {
 	[Authorize]
 	public class HomeController : Controller
 	{
-
 		private ApplicationUserManager _userManager;
+
+		IPrintObjectService _printObjectService;
+
+		[InjectionConstructor]
+		public HomeController(IPrintObjectService printObjectService)
+		{
+			_printObjectService = printObjectService;
+		}
+
 
 		public ApplicationUserManager UserManager
 		{
@@ -63,28 +72,24 @@ namespace Formeo.Controllers
 		[Authorize(Roles = StaticData.RoleNames.Admin)]
 		public ActionResult IndexAdmin()
 		{
-			_IndexAdminViewModel viewModel = new _IndexAdminViewModel();
-			var Customers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Customer).ToList();
-			var Producers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Producer).ToList();
-
-			viewModel.CustomersJSON = GetJSONUsers(Customers, StaticData.RoleNames.Customer);
-			viewModel.ProducersJSON = GetJSONUsers(Producers, StaticData.RoleNames.Producer);
+			_IndexAdminViewModel viewModel = GetAdminHomepageViewModel();
 
 			return View(viewModel);
 		}
 
+		
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
 		public ActionResult IndexCustomer()
 		{
 			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
 
 			var currentUser = GetCurrentUser();
-			if (currentUser == null) 
+			if (currentUser == null)
 			{
 				return RedirectToAction("Login", "Account");
 			}
 
-			viewModel.PrintObjectsJSON = GetPrintObjectsJSONForUser(currentUser);
+			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsForUserJSON(currentUser);
 
 			return View(viewModel);
 		}
@@ -115,6 +120,17 @@ namespace Formeo.Controllers
 
 
 		#region Helpers
+		private _IndexAdminViewModel GetAdminHomepageViewModel()
+		{
+			_IndexAdminViewModel viewModel;
+			viewModel = new _IndexAdminViewModel();
+			var Customers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Customer).ToList();
+			var Producers = UserHelper.Instance.GetUsersByRole(StaticData.RoleNames.Producer).ToList();
+
+			viewModel.CustomersJSON = GetJSONUsers(Customers, StaticData.RoleNames.Customer);
+			viewModel.ProducersJSON = GetJSONUsers(Producers, StaticData.RoleNames.Producer);
+			return viewModel;
+		}
 
 		private string GetJSONUsers(List<ApplicationUser> users, string role)
 		{
@@ -136,23 +152,6 @@ namespace Formeo.Controllers
 				)
 				.ToArray();
 			return JsonConvert.SerializeObject(users_short);
-		}
-
-		private string GetPrintObjectsJSONForUser(ApplicationUser currentUser)
-		{
-			List<PrintObject> printObjects = DbContext.PrintObjects.Where(
-				po => po.CustomerCreator.Id == currentUser.Id)
-				.ToList();
-			var printObjectsShort = printObjects.Select(
-				 po => new
-					{
-						Id = po.ID,
-						ArtNo = po.ArticleNo,
-						Name = po.Name,
-					}
-				).ToList();
-
-			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
 		#endregion

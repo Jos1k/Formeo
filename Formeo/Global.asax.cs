@@ -19,6 +19,9 @@ namespace Formeo
 
 			Database.SetInitializer(new TestInitializer());
 
+			//DependencyLoader.Start();
+
+			//check if DB is built
 			var a = new ApplicationDbContext().Roles.ToArray();
 		}
 	}

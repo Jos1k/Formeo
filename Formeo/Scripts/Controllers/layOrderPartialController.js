@@ -29,7 +29,6 @@
         $http({
             method: 'GET',
             url: '/Project/LayOrderConfirm',
-            params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).
               then(function (response) {
@@ -38,18 +37,47 @@
                       template: (response.data),
                       controller: 'layOrderConfirmPartialController',
                       backdrop: 'static',
-                      resolve: {
-                          printObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
-                          deliveryInfo: function () { return $scope.deliveryInfo; }
-                      }
+
                   });
-                  $scope.layOrderButtonIsDisabled = false;
 
 
               }, function (response) {
                   //error
                   $window.alert('error');
-                  $scope.layOrderButtonIsDisabled = false;
+
+              });
+    }
+
+    $scope.AddProduct = function () {
+
+        var pObjectIds = []
+
+        angular.forEach($scope.printObjectsInfoModal, function (index) {
+            pObjectIds.push(index.PrintObjectId);
+        });
+
+        $http({
+            method: 'GET',
+            url: '/Project/AddProducts',
+            params: { 'selectedPrintObjectIds': JSON.stringify(pObjectIds) },
+            headers: { 'Content-Type': 'application/json' },
+            data: ''
+        }).
+              then(function (response) {
+                  //success
+                  var modalInstance = $modal.open({
+                      template: (response.data),
+                      controller: 'addProductsPartialController',
+                      backdrop: 'static',
+                      resolve: {
+                          parentPrintObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
+                      }
+                  });
+
+
+              }, function (response) {
+                  //error
+                  $window.alert('error');
 
               });
     }
