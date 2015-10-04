@@ -10,5 +10,7 @@ namespace Formeo.BussinessLayer.Interfaces
 	public interface IUserManager
 	{
 		ApplicationUser GetCurrentUser();
+		IEnumerable<ApplicationUser> GetUsersByRole(string roleName);
+		Task<ICollection<ApplicationUser>> GetUsersByRoleAsync(string roleName);
 	}
 }

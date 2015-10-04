@@ -37,7 +37,10 @@
                       template: (response.data),
                       controller: 'layOrderConfirmPartialController',
                       backdrop: 'static',
-
+                      resolve: {
+                          printObjectsInfoModal:function () {return $scope.printObjectsInfoModal;},
+                          deliveryInfo: function () { return $scope.deliveryInfo; }
+                      }
                   });
 
 

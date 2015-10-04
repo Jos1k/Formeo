@@ -205,11 +205,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BussinessLayer\Interfaces\IPrintObjectsManager.cs" />
+    <Compile Include="BussinessLayer\Interfaces\IUserService.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\PrintObjectsManager.cs" />
     <Compile Include="BussinessLayer\Interfaces\IPrintObjectService.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\UserManager.cs" />
     <Compile Include="BussinessLayer\Services\PrintObjectService.cs" />
-    <Compile Include="BussinessLayer\UserHelper.cs" />
+    <Compile Include="BussinessLayer\Services\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomAttributes\JsonFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />

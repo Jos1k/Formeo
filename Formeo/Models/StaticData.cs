@@ -7,11 +7,11 @@ namespace Formeo.Models
 {
 	public static class StaticData
 	{
-		public static class RoleNames 
+		public static class RoleNames
 		{
 			public const string Admin = "Admin";
-            public const string Customer = "Customer";
-            public const string Producer = "Producer";
+			public const string Customer = "Customer";
+			public const string Producer = "Producer";
 		}
 	}
 }

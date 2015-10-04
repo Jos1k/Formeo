@@ -31,6 +31,7 @@ namespace Formeo
 			container.RegisterType<IUserManager, UserManager>();
 
 			container.RegisterType<IPrintObjectService, PrintObjectService>();
+			container.RegisterType<IUserService, UserService>();
 
 			return container;
 		}
