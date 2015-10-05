@@ -19,14 +19,17 @@ namespace Formeo.Controllers
 
 		IPrintObjectService _printObjectService;
 		IUserManager _userManager;
+		IProjectsManager _projectManager;
 
 		[InjectionConstructor]
 		public ProjectController(
 			IPrintObjectService printObjectService,
-			IUserManager userManager)
+			IUserManager userManager,
+			IProjectsManager projectManager)
 		{
 			_printObjectService = printObjectService;
 			_userManager = userManager;
+			_projectManager = projectManager;
 		}
 
 		[HttpGet]
@@ -58,7 +61,7 @@ namespace Formeo.Controllers
 
 			AddProductsViewModel viewModel = new AddProductsViewModel();
 			var currentUser = _userManager.GetCurrentUser();
-			viewModel.PrintObjectsInfoJSON = _printObjectService.GetExclusivePrintObjectsByIdsForUserJSON(currentUser, selectedPrintObjectIds);
+			viewModel.PrintObjectsInfoJSON = _printObjectService.GetExclusivePrintObjectsByIdsForUserJSON(currentUser.Id, selectedPrintObjectIds);
 
 
 			return PartialView("_AddProductsPartial", viewModel);
@@ -66,24 +69,37 @@ namespace Formeo.Controllers
 
 
 		[HttpPost]
+		[JsonQueryParamFilter(Param = "articleNo", JsonDataType = typeof(int))]
 		[JsonQueryParamFilter(Param = "printObjectInfo", JsonDataType = typeof(List<LayOrderPrintObjectInfo>))]
 		[JsonQueryParamFilter(Param = "deliveryInfo", JsonDataType = typeof(DeliveryInfo))]
-		public JsonResult CreateOrder(List<LayOrderPrintObjectInfo> printObjectInfo, DeliveryInfo deliveryInfo)
+		public ActionResult CreateOrder(
+			string orderName,
+			int articleNo,
+			List<LayOrderPrintObjectInfo> printObjectInfo,
+			DeliveryInfo deliveryInfo)
 		{
 			int overallQuantity;
-			Project newProject = CreateOrder_Helper(printObjectInfo, deliveryInfo, out overallQuantity);
-			var result = JsonConvert.SerializeObject(
-				new
-				{
-					OrderId = newProject.ID,
-					Quantity = overallQuantity
-				});
+
+			ApplicationUser currentUser = _userManager.GetCurrentUser();
+
+			Project newProject = _projectManager.CreateProject(
+				orderName,
+				articleNo,
+				currentUser.Id,
+				printObjectInfo,
+				deliveryInfo);
+
+			var result = new {
+					ProjectId = newProject.ID,
+					Name = newProject.Name,
+					Quantity = newProject.OverallQuantity,
+					IsCompleted = newProject.IsCompleted,
+					ArticleNo = newProject.ArticleNo
+				};
 			return Json(result);
 		}
 
 		#region Helpers
-		//All code from helpers should be moved to managers
-		//F**k it's mess here... should move this mess to injectable managers...later.
 
 		private LayOrderViewModel GetLayOrderViewModel(long[] selectedPrintObjectIds)
 		{
@@ -94,48 +110,6 @@ namespace Formeo.Controllers
 
 			return viewModel;
 		}
-
-		private Project CreateOrder_Helper(List<LayOrderPrintObjectInfo> printObjectInfo, DeliveryInfo deliveryInfo, out int overallQuantity)
-		{
-			var currentContext = DbContext;
-			overallQuantity = 0;
-
-			Project newProject = new Project();
-			newProject.Address = deliveryInfo.Address;
-			newProject.City = deliveryInfo.City;
-			newProject.Country = deliveryInfo.Country;
-			newProject.Surname = deliveryInfo.Surname;
-			newProject.LastName = deliveryInfo.LastName;
-			newProject.ZipCode = deliveryInfo.PostCode;
-
-			currentContext.Projects.Add(newProject);
-			currentContext.SaveChanges();
-
-			List<PrintObject> projects = new List<PrintObject>(); ;
-
-			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
-			{
-				PrintObject poEntity = currentContext.PrintObjects
-					.Where(po => po.ID == poInfo.PrintObjectId)
-					.FirstOrDefault();
-
-				if (poEntity != null)
-				{
-					ProjectPrintObjectQuantityRelation rel = new ProjectPrintObjectQuantityRelation();
-					rel.PrintObject = poEntity;
-					rel.Project = newProject;
-					rel.Quantity = poInfo.Quantity;
-					currentContext.ProjectPrintObjectQuantityRelations.Add(rel);
-					currentContext.SaveChanges();
-				}
-				overallQuantity += poInfo.Quantity;
-			}
-
-			return newProject;
-		}
-
-		//this method should extract as extension
-
 
 		#endregion
 	}

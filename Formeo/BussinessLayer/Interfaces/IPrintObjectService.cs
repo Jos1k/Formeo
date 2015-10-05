@@ -5,12 +5,12 @@ namespace Formeo.BussinessLayer
 {
 	public interface IPrintObjectService
 	{
-		string GetPrintObjectsForUserJSON(ApplicationUser user);
+		string GetPrintObjectsForUserJSON(string userId);
 
 		string GetPrintObjectsByIdsJSON(IEnumerable<long> printObjectIds);
 
 		string GetExclusivePrintObjectsByIdsForUserJSON(
-			ApplicationUser user,
+			string userId,
 			IEnumerable<long> printObjectIdsToExlude);
 	}
 }

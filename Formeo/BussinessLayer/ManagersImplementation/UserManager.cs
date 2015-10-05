@@ -47,5 +47,19 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return CurrentDbContext.Users.Where(x => x.Roles.First().RoleId == role.Id).ToList();
 		}
 
+		public ApplicationUser GetUserById(string userId)
+		{
+			return CurrentDbContext.Users.Where(user => user.Id == userId).First();
+		}
+
+
+		public bool UserIsInRole(string userId, string roleName) 
+		{
+			var userStore = new UserStore<ApplicationUser>(CurrentDbContext);
+			var userManager = new UserManager<ApplicationUser>(userStore);
+
+			return userManager.IsInRole(userId, roleName);
+		}
+
 	}
 }

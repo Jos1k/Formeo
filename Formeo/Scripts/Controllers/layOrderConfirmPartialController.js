@@ -1,6 +1,8 @@
-﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $modal, $http, printObjectsInfoModal, deliveryInfo) {
+﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $modal, $http, printObjectsInfoModal, deliveryInfo, orderName, artNo) {
 
-    $scope.asd = "Hi";
+    $scope.orderName = orderName;
+    $scope.artNo = artNo;
+
     $scope.deliveryInfo = deliveryInfo;
     $scope.printObjectsInfoModal = printObjectsInfoModal;
 
@@ -23,23 +25,22 @@
         $http({
             method: 'POST',
             url: '/Project/CreateOrder',
-            params: { 'printObjectInfo': JSON.stringify(infosParam), 'deliveryInfo': $scope.deliveryInfo },
+            params: { 'orderName': $scope.orderName, 'articleNo': $scope.artNo, 'printObjectInfo': JSON.stringify(infosParam), 'deliveryInfo': $scope.deliveryInfo },
             headers: { 'Content-Type': 'application/json;' },
             data: ''
         }).
             then(function (response) {
                 //success
 
-               // $window.alert('success');
-
+                // $window.alert('success');
+                $modalInstance.close(response.data);
 
             }, function (response) {
                 //error
                 $window.alert('error');
+                $modalInstance.dismiss('cancel');
 
             });
-
-        $modalInstance.dismiss('cancel');
     };
 
 }

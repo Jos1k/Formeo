@@ -19,16 +19,23 @@ namespace Formeo.Controllers
 	[Authorize]
 	public class HomeController : Controller
 	{
-		private ApplicationUserManager _userManager;
 
-		IPrintObjectService _printObjectService;
-		IUserService _userService; 
+		private IPrintObjectService _printObjectService;
+		private IUserService _userService;
+		private IUserManager _userManager;
+		private IProjectService _projectService;
 
 		[InjectionConstructor]
-		public HomeController(IPrintObjectService printObjectService, IUserService userService)
+		public HomeController(
+			IPrintObjectService printObjectService,
+			IUserService userService,
+			IUserManager userManager,
+			IProjectService projectService)
 		{
 			_printObjectService = printObjectService;
 			_userService = userService;
+			_userManager = userManager;
+			_projectService = projectService;
 		}
 
 
@@ -44,7 +51,7 @@ namespace Formeo.Controllers
 
 		public ActionResult Index()
 		{
-			var userCheck = GetCurrentUser();
+			var userCheck = _userManager.GetCurrentUser();
 
 			if (userCheck == null)
 			{
@@ -52,6 +59,7 @@ namespace Formeo.Controllers
 			}
 
 			string role = UserManager.GetRoles(userCheck.Id).FirstOrDefault();
+
 			switch (role)
 			{
 				case StaticData.RoleNames.Admin: return RedirectToAction("IndexAdmin");
@@ -62,13 +70,6 @@ namespace Formeo.Controllers
 			}
 		}
 
-		private ApplicationUser GetCurrentUser()
-		{
-			string Id = User.Identity.GetUserId();
-
-			var userCheck = UserManager.Users.Where(user => user.Id == Id).FirstOrDefault();
-			return userCheck;
-		}
 
 		#region Indexes
 
@@ -80,19 +81,21 @@ namespace Formeo.Controllers
 			return View(viewModel);
 		}
 
-		
+
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
 		public ActionResult IndexCustomer()
 		{
 			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
 
-			var currentUser = GetCurrentUser();
+			var currentUser = _userManager.GetCurrentUser();
 			if (currentUser == null)
 			{
 				return RedirectToAction("Login", "Account");
 			}
 
-			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsForUserJSON(currentUser);
+			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsForUserJSON(currentUser.Id);
+			viewModel.ActiveProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, false);
+			viewModel.CompletedProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, true);
 
 			return View(viewModel);
 		}
@@ -127,7 +130,7 @@ namespace Formeo.Controllers
 		{
 			_IndexAdminViewModel viewModel;
 			viewModel = new _IndexAdminViewModel();
-			
+
 			viewModel.CustomersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Customer);
 			viewModel.ProducersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Producer);
 			return viewModel;

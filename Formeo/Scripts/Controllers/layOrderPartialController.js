@@ -38,9 +38,20 @@
                       controller: 'layOrderConfirmPartialController',
                       backdrop: 'static',
                       resolve: {
-                          printObjectsInfoModal:function () {return $scope.printObjectsInfoModal;},
+                          orderName: function () { return $scope.OrderName; },
+                          artNo: function () { return $scope.ArtNo; },
+                          printObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
                           deliveryInfo: function () { return $scope.deliveryInfo; }
                       }
+                  });
+                  modalInstance.result.then(function (response)
+                  {
+                      $modalInstance.close(response);
+                  }, function (response) {
+                      //error
+                      $window.alert('error 123');
+                      $modalInstance.dismiss('cancel');
+
                   });
 
 

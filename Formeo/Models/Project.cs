@@ -10,6 +10,7 @@ namespace Formeo.Models
 {
 	public class Project
 	{
+		
 		public Project()
 		{
 			//PrintObjects = new List<PrintObject>();
@@ -18,6 +19,7 @@ namespace Formeo.Models
 		[Key]
 		public long ID { get; set; }
 		public string Name { get; set; }
+		public int ArticleNo { get; set; }
 
 		public virtual ApplicationUser Customer { get; set; }
 
@@ -31,6 +33,10 @@ namespace Formeo.Models
 
 		public virtual ICollection<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelations { get; set; }
 
+		//quantity of all printobjects in this project
+		public int OverallQuantity { get; set; }
+
+		public bool IsCompleted { get; set; }
 
 		#region DeliveryInfo
 

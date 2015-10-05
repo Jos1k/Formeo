@@ -47,9 +47,9 @@ namespace Formeo.BussinessLayer.Services
 			}
 			return JsonConvert.SerializeObject(tempList);
 		}
-		public string GetPrintObjectsForUserJSON(ApplicationUser user)
+		public string GetPrintObjectsForUserJSON(string userId)
 		{
-			var printObjects = _printObjectsManager.GetPrintObjectsForUser(user);
+			var printObjects = _printObjectsManager.GetPrintObjectsForUser(userId);
 			var printObjectsShort = printObjects.Select(
 				 po => new
 				 {
@@ -62,9 +62,9 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
-		public string GetExclusivePrintObjectsByIdsForUserJSON(ApplicationUser user, IEnumerable<long> printObjectIdsToExlude)
+		public string GetExclusivePrintObjectsByIdsForUserJSON(string userId, IEnumerable<long> printObjectIdsToExlude)
 		{
-			var printObjects = _printObjectsManager.GetPrintObjectsForUser(user);
+			var printObjects = _printObjectsManager.GetPrintObjectsForUser(userId);
 			var printObjectsShort = printObjects
 				.Where(po => !printObjectIdsToExlude.Contains(po.ID))
 				.Select(po =>
@@ -72,7 +72,7 @@ namespace Formeo.BussinessLayer.Services
 					{
 						Id = po.ID,
 						ArtNo = po.ArticleNo,
-						Name = po.Name,
+						Name = po.Name
 					})
 				 .ToList();
 

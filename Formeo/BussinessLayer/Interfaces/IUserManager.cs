@@ -12,5 +12,8 @@ namespace Formeo.BussinessLayer.Interfaces
 		ApplicationUser GetCurrentUser();
 		IEnumerable<ApplicationUser> GetUsersByRole(string roleName);
 		Task<ICollection<ApplicationUser>> GetUsersByRoleAsync(string roleName);
+		ApplicationUser GetUserById(string userId);
+
+		bool UserIsInRole(string userId, string roleName);
 	}
 }

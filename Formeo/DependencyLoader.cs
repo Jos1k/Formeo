@@ -29,9 +29,11 @@ namespace Formeo
 
 			container.RegisterType<IPrintObjectsManager, PrintObjectsManager>();
 			container.RegisterType<IUserManager, UserManager>();
+			container.RegisterType<IProjectsManager, ProjectsManager>();
 
 			container.RegisterType<IPrintObjectService, PrintObjectService>();
 			container.RegisterType<IUserService, UserService>();
+			container.RegisterType<IProjectService, ProjectService>();
 
 			return container;
 		}

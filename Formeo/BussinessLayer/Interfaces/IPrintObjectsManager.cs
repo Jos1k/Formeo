@@ -9,8 +9,10 @@ namespace Formeo.BussinessLayer.Interfaces
 {
 	public interface IPrintObjectsManager
 	{
-		IEnumerable<PrintObject> GetPrintObjectsForUser(ApplicationUser user);
+		IEnumerable<PrintObject> GetPrintObjectsForUser(string userId);
 
 		IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds);
+
+		PrintObject GetPrintObjectById(long printObjectIds);
 	}
 }

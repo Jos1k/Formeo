@@ -56,6 +56,15 @@
                         controller: 'layOrderPartialController',
                         backdrop: 'static'
                     });
+
+                    modalInstance.result.then(function (response) {
+                        $scope.activeProjects.push(response);
+                    }, function (response) {
+                        //error
+                        $modalInstance.dismiss('cancel');
+
+                    });
+
                     $scope.layOrderButtonIsDisabled = false;
 
 
