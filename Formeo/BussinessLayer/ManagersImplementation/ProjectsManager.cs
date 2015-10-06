@@ -11,14 +11,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 	{
 		private IPrintObjectsManager _printObjectsManager;
 		IUserManager _userManager;
+		ApplicationDbContext _dbcontext;
 
-		public ProjectsManager(IPrintObjectsManager printObjectsManager, IUserManager userManager)
+		public ProjectsManager(IPrintObjectsManager printObjectsManager, IUserManager userManager, ApplicationDbContext dbContext)
 		{
 			_printObjectsManager = printObjectsManager;
 			_userManager = userManager;
+			_dbcontext = dbContext;
 		}
-
-		private ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
 
 		public Project CreateProject(
 			string projectName,
@@ -27,12 +27,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			List<LayOrderPrintObjectInfo> printObjectInfo,
 			DeliveryInfo deliveryInfo)
 		{
-			var currentContext = DbContext;
-
-			ApplicationUser creatorUser = currentContext //it's a hack. User from manager is from another context that local context. This causes issues.
-				.Users
-				.Where(user => user.Id == userId)
-				.FirstOrDefault(); 
+			ApplicationUser creatorUser = _userManager.GetCurrentUser();
 
 			if (creatorUser == null 
 				||!_userManager.UserIsInRole(
@@ -58,13 +53,13 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newProject.Customer = creatorUser;
 			newProject.IsCompleted = false;
 
-			currentContext.Projects.Add(newProject);
-			//currentContext.SaveChanges();
+			_dbcontext.Projects.Add(newProject);
+			//_dbcontext.SaveChanges();
 
 
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
 			{
-				PrintObject poEntity = currentContext
+				PrintObject poEntity = _dbcontext
 					.PrintObjects
 					.Where(po => po.ID == poInfo.PrintObjectId)
 					.FirstOrDefault(); //the same hack
@@ -76,14 +71,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					rel.PrintObject = poEntity;
 					rel.Project = newProject;
 					rel.Quantity = poInfo.Quantity;
-					currentContext.ProjectPrintObjectQuantityRelations.Add(rel);
-					currentContext.SaveChanges();
+					_dbcontext.ProjectPrintObjectQuantityRelations.Add(rel);
+					_dbcontext.SaveChanges();
 				}
 				overallQuantity += poInfo.Quantity;
 			}
 
 			newProject.OverallQuantity = overallQuantity;
-			currentContext.SaveChanges();
+			_dbcontext.SaveChanges();
 			return newProject;
 		}
 
@@ -95,7 +90,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public IEnumerable<Project> GetAllProjectsByUserId(string userId)
 		{
-			return DbContext
+			return _dbcontext
 				.Projects
 				.Where(project => project.Customer.Id == userId)
 				.ToList();

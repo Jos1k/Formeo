@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System;
 
 namespace Formeo.Models
 {
@@ -35,7 +36,7 @@ namespace Formeo.Models
 		}
 	}
 
-	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IDisposable
 	{
 		public ApplicationDbContext()
 			: base("DefaultConnection", throwIfV1Schema: false)

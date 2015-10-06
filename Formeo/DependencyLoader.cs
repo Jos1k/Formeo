@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Formeo.Models;
 
 namespace Formeo
 {
@@ -34,6 +35,8 @@ namespace Formeo
 			container.RegisterType<IPrintObjectService, PrintObjectService>();
 			container.RegisterType<IUserService, UserService>();
 			container.RegisterType<IProjectService, ProjectService>();
+
+			container.RegisterType<ApplicationDbContext>( new PerThreadLifetimeManager() );
 
 			return container;
 		}

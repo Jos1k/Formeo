@@ -9,12 +9,17 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 {
 	public class PrintObjectsManager : IPrintObjectsManager
 	{
-		private ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
+
+		private ApplicationDbContext _dbContext;
+
+		public PrintObjectsManager( ApplicationDbContext dbContext ) {
+			_dbContext = dbContext;
+		}
 
 		#region  IPrintObjectsManager members
 		public IEnumerable<PrintObject> GetPrintObjectsForUser(string userId)
 		{
-			List<PrintObject> printObjects = DbContext.PrintObjects.Where(
+			List<PrintObject> printObjects = _dbContext.PrintObjects.Where(
 				po => po.CustomerCreator.Id == userId)
 				.ToList();
 
@@ -23,7 +28,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds)
 		{
-			List<PrintObject> printObjects = DbContext.PrintObjects.Where(
+			List<PrintObject> printObjects = _dbContext.PrintObjects.Where(
 				po => printObjectIds.Contains(po.ID)
 			).ToList();
 			return printObjects;
@@ -31,7 +36,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public PrintObject GetPrintObjectById(long printObjectId)
 		{
-			PrintObject printObject = DbContext.PrintObjects.Where(
+			PrintObject printObject = _dbContext.PrintObjects.Where(
 				po => po.ID == printObjectId
 			).FirstOrDefault();
 			return printObject;
