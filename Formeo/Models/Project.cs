@@ -10,7 +10,16 @@ namespace Formeo.Models
 {
 	public class Project
 	{
-		
+
+		private static List<string> _completedStatusesList = new List<string>() { 
+			StaticData.StatusNames.Canceled,
+			StaticData.StatusNames.Finished 
+		};
+
+		private static List<string> _newStatusesList = new List<string>() { 
+			StaticData.StatusNames.NotAccepted
+		};
+
 		public Project()
 		{
 			//PrintObjects = new List<PrintObject>();
@@ -27,7 +36,7 @@ namespace Formeo.Models
 
 		public virtual Status Status { get; set; }
 
-		public virtual Bid WinningBid { get; set; }
+		//public virtual Bid WinningBid { get; set; }
 
 		public virtual ICollection<Bid> Bids { get; set; }
 
@@ -36,7 +45,23 @@ namespace Formeo.Models
 		//quantity of all printobjects in this project
 		public int OverallQuantity { get; set; }
 
-		public bool IsCompleted { get; set; }
+		[NotMapped]
+		public bool IsCompleted
+		{
+			get
+			{
+				return Status != null && _completedStatusesList.Contains(Status.Name);
+			}
+		}
+
+		[NotMapped]
+		public bool IsNew
+		{
+			get
+			{
+				return Status != null && _newStatusesList.Contains(Status.Name);
+			}
+		}
 
 		#region DeliveryInfo
 

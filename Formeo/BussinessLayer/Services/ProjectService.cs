@@ -34,6 +34,20 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(projectsShort);
 		}
 
+		public string GetNewProjectsJson() 
+		{
+			var projects = _projectsManager.GetNewProjects();
 
+			var projectsShort = projects.Select
+				(project =>
+					new
+					{
+						ProjectId = project.ID,
+						Name = project.Name,
+						Quantity = project.OverallQuantity,
+						ArticleNo = project.ArticleNo
+					});
+			return JsonConvert.SerializeObject(projectsShort);
+		}
 	}
 }

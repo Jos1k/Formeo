@@ -32,11 +32,11 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			ApplicationUser creatorUser = currentContext //it's a hack. User from manager is from another context that local context. This causes issues.
 				.Users
 				.Where(user => user.Id == userId)
-				.FirstOrDefault(); 
+				.FirstOrDefault();
 
-			if (creatorUser == null 
-				||!_userManager.UserIsInRole(
-				userId, 
+			if (creatorUser == null
+				|| !_userManager.UserIsInRole(
+				userId,
 				StaticData.RoleNames.Customer))
 			{
 				return null;
@@ -44,7 +44,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 			int overallQuantity = 0;
 
-
+			Status newStatus = currentContext
+				.Statuses
+				.Where(stat => stat.Name == StaticData.StatusNames.InQueue)
+				.First();
 
 			Project newProject = new Project();
 			newProject.Name = projectName;
@@ -56,10 +59,11 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newProject.LastName = deliveryInfo.LastName;
 			newProject.ZipCode = deliveryInfo.PostCode;
 			newProject.Customer = creatorUser;
-			newProject.IsCompleted = false;
+			newProject.Status = newStatus;
+
 
 			currentContext.Projects.Add(newProject);
-			//currentContext.SaveChanges();
+			currentContext.SaveChanges();
 
 
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
@@ -87,10 +91,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return newProject;
 		}
 
-		public IEnumerable<Project> GetProjectsByUserId(string userId,bool isCompleted)
+		public IEnumerable<Project> GetProjectsByUserId(string userId, bool isCompleted)
 		{
 			var projects = GetAllProjectsByUserId(userId);
-			return projects.Where(project => project.IsCompleted == isCompleted);
+			return projects.Where(project => project.IsCompleted == isCompleted).ToList();
 		}
 
 		public IEnumerable<Project> GetAllProjectsByUserId(string userId)

@@ -18,5 +18,8 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		IEnumerable<Project> GetProjectsByUserId(string customerId, bool isCompleted);
 		IEnumerable<Project> GetAllProjectsByUserId(string userId);
+
+		IEnumerable<Project> GetNewProjects();
+
 	}
 }

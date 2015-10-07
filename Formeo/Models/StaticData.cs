@@ -13,5 +13,15 @@ namespace Formeo.Models
 			public const string Customer = "Customer";
 			public const string Producer = "Producer";
 		}
+
+		public static class StatusNames 
+		{
+			public const string InQueue = "InQueue";//new order
+			public const string Preparing = "Preparing";
+			public const string Running = "Running";
+			public const string Finished = "Finished";
+			public const string Canceled = "Canceled";
+			public const string NotAccepted = "Not Accepted";
+		}
 	}
 }

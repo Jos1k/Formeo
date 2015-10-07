@@ -85,7 +85,6 @@ namespace Formeo.Controllers
 		[Authorize(Roles = StaticData.RoleNames.Customer)]
 		public ActionResult IndexCustomer()
 		{
-			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
 
 			var currentUser = _userManager.GetCurrentUser();
 			if (currentUser == null)
@@ -93,9 +92,13 @@ namespace Formeo.Controllers
 				return RedirectToAction("Login", "Account");
 			}
 
+			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
+
+
 			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsForUserJSON(currentUser.Id);
-			viewModel.ActiveProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, false);
-			viewModel.CompletedProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, true);
+
+			viewModel.ActiveProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, isCompleted: false);
+			viewModel.CompletedProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, isCompleted: true);
 
 			return View(viewModel);
 		}
@@ -103,6 +106,16 @@ namespace Formeo.Controllers
 		[Authorize(Roles = StaticData.RoleNames.Producer)]
 		public ActionResult IndexProducer()
 		{
+			var currentUser = _userManager.GetCurrentUser();
+			if (currentUser == null)
+			{
+				return RedirectToAction("Login", "Account");
+			}
+
+			_IndexProducerViewModel viewModel = new _IndexProducerViewModel();
+
+			viewModel.Dashboard_NewOrders = _projectService.GetNewOrders
+
 			return View();
 		}
 

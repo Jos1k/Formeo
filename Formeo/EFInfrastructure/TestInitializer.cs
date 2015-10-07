@@ -155,25 +155,36 @@ namespace Formeo.EFInfrastructure
 			#endregion
 
 			#region Statuses
-
+			//this could be used as not tests data 
 			List<Status> statuses = new List<Status>() 
 			{
 				new Status()
 				{
-					//ID=1,
-					Name = "Status1"
+					Name = StaticData.StatusNames.Finished
+				},
+
+					new Status()
+				{
+					Name = StaticData.StatusNames.Canceled
+				},
+
+
+				new Status()
+				{
+					Name = StaticData.StatusNames.InQueue
 				},
 
 				new Status()
 				{
-					//ID=2,
-					Name = "Status2"
+					Name = StaticData.StatusNames.NotAccepted
 				},
-
 				new Status()
 				{
-					//ID=3,
-					Name = "Status3"
+					Name = StaticData.StatusNames.Preparing
+				},
+				new Status()
+				{
+					Name = StaticData.StatusNames.Running
 				}
 			};
 
@@ -391,7 +402,7 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			projects.ElementAt(0).WinningBid = bids.ElementAt(1);
+		//	projects.ElementAt(0).WinningBid = bids.ElementAt(1);
 
 			context.SaveChanges();
 
