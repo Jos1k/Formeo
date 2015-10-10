@@ -14,14 +14,41 @@ namespace Formeo.Models
 			public const string Producer = "Producer";
 		}
 
-		public static class StatusNames 
+		public enum OrderStatusEnum
 		{
-			public const string InQueue = "InQueue";//new order
-			public const string Preparing = "Preparing";
-			public const string Running = "Running";
-			public const string Finished = "Finished";
-			public const string Canceled = "Canceled";
-			public const string NotAccepted = "Not Accepted";
+			InProgress = 1,
+			Delivered
+		}
+
+		public enum PrintObjectStatusEnum
+		{
+			Default,
+			Producing,
+			Delivered
+		}
+
+		public static string GetOrderStatusName(this OrderStatusEnum status)
+		{
+			string statusRes;
+			switch (status)
+			{
+				case OrderStatusEnum.InProgress:
+					{ 
+						statusRes = "In Progres";
+						break; 
+					}
+				case OrderStatusEnum.Delivered:
+					{
+						statusRes = "Delivered";
+						break;
+					}
+				default:
+					{
+						statusRes = "Unknown status";
+						break;
+					}
+			}
+			return statusRes;
 		}
 	}
 }

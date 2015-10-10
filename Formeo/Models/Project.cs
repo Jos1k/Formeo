@@ -10,58 +10,24 @@ namespace Formeo.Models
 {
 	public class Project
 	{
-
-		private static List<string> _completedStatusesList = new List<string>() { 
-			StaticData.StatusNames.Canceled,
-			StaticData.StatusNames.Finished 
-		};
-
-		private static List<string> _newStatusesList = new List<string>() { 
-			StaticData.StatusNames.NotAccepted
-		};
-
-		public Project()
-		{
-			//PrintObjects = new List<PrintObject>();
-			Bids = new List<Bid>();
-		}
 		[Key]
 		public long ID { get; set; }
 		public string Name { get; set; }
-		public int ArticleNo { get; set; }
 
-		public virtual ApplicationUser Customer { get; set; }
+		public virtual ApplicationUser Creator { get; set; }
 
-		public virtual ApplicationUser Producer { get; set; }
+		public virtual Company CompanyCreator { get; set; }
 
-		public virtual Status Status { get; set; }
+		public virtual OrderStatus Status { get; set; }
 
-		//public virtual Bid WinningBid { get; set; }
+		public virtual ICollection<ProjectInfo> ProjectPrintObjectQuantityRelations { get; set; }
 
-		public virtual ICollection<Bid> Bids { get; set; }
+		public decimal OrderPrice { get; set; }
 
-		public virtual ICollection<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelations { get; set; }
-
+		[NotMapped]
 		//quantity of all printobjects in this project
-		public int OverallQuantity { get; set; }
+		public int OverallQuantity { get { return GetOverallQuantity(); } }
 
-		[NotMapped]
-		public bool IsCompleted
-		{
-			get
-			{
-				return Status != null && _completedStatusesList.Contains(Status.Name);
-			}
-		}
-
-		[NotMapped]
-		public bool IsNew
-		{
-			get
-			{
-				return Status != null && _newStatusesList.Contains(Status.Name);
-			}
-		}
 
 		#region DeliveryInfo
 
@@ -77,5 +43,22 @@ namespace Formeo.Models
 		public string Country { get; set; }
 
 		#endregion
+
+		private int GetOverallQuantity()
+		{
+			if (ProjectPrintObjectQuantityRelations == null
+				|| ProjectPrintObjectQuantityRelations.Count == 0)
+			{
+				return 0;
+			}
+			int overralQuantity = 0;
+
+			foreach (var relation in ProjectPrintObjectQuantityRelations)
+			{
+				overralQuantity += relation.Quantity;
+			}
+
+			return overralQuantity;
+		}
 	}
 }

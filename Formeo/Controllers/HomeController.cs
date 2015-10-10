@@ -20,22 +20,25 @@ namespace Formeo.Controllers
 	public class HomeController : Controller
 	{
 
-		private IPrintObjectService _printObjectService;
+		private IPrintObjectsService _printObjectService;
 		private IUserService _userService;
 		private IUserManager _userManager;
 		private IProjectService _projectService;
+		private ICompaniesManager _companiesManager;
 
 		[InjectionConstructor]
 		public HomeController(
-			IPrintObjectService printObjectService,
+			IPrintObjectsService printObjectService,
 			IUserService userService,
 			IUserManager userManager,
-			IProjectService projectService)
+			IProjectService projectService,
+			ICompaniesManager companiesManager)
 		{
 			_printObjectService = printObjectService;
 			_userService = userService;
 			_userManager = userManager;
 			_projectService = projectService;
+			_companiesManager = companiesManager;
 		}
 
 
@@ -94,11 +97,21 @@ namespace Formeo.Controllers
 
 			_IndexCustomerViewModel viewModel = new _IndexCustomerViewModel();
 
+			var company = _companiesManager.GetCompanyByUserId(currentUser.Id);
 
-			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsForUserJSON(currentUser.Id);
+			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsByCompanyCreatorJSON(company.ID);
 
-			viewModel.ActiveProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, isCompleted: false);
-			viewModel.CompletedProjectsJSON = _projectService.GetProjectsByUserJSON(currentUser.Id, isCompleted: true);
+			viewModel.ActiveProjectsJSON =
+				_projectService
+				.GetProjectsByCreatorUserJSON(
+				currentUser.Id,
+				Formeo.Models.StaticData.OrderStatusEnum.InProgress);
+
+			viewModel.CompletedProjectsJSON =
+				_projectService
+				.GetProjectsByCreatorUserJSON(
+				currentUser.Id,
+				Formeo.Models.StaticData.OrderStatusEnum.Delivered);
 
 			return View(viewModel);
 		}
@@ -111,12 +124,13 @@ namespace Formeo.Controllers
 			{
 				return RedirectToAction("Login", "Account");
 			}
-
+			var company = _companiesManager.GetCompanyByUserId(currentUser.Id);
 			_IndexProducerViewModel viewModel = new _IndexProducerViewModel();
 
-			viewModel.Dashboard_NewOrders = _projectService.GetNewOrders
+			viewModel.Dashboard_BidRequestedPrintObjects = _printObjectService.GetNeedBidPrintObjectsForProducerJSON(currentUser.Id, true);
+			viewModel.Dashboard_PrintObjectsDelivered = _projectService.GetProjectsByCompanyJSON(company.ID, StaticData.OrderStatusEnum.Delivered);
 
-			return View();
+			return View(viewModel);
 		}
 
 		#endregion

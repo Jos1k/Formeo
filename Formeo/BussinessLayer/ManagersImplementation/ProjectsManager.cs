@@ -11,32 +11,31 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 	{
 		private IPrintObjectsManager _printObjectsManager;
 		IUserManager _userManager;
+		ICompaniesManager _companiesManager;
+		ApplicationDbContext _dbcontext;
 
-		public ProjectsManager(IPrintObjectsManager printObjectsManager, IUserManager userManager)
+		public ProjectsManager(IPrintObjectsManager printObjectsManager,
+			IUserManager userManager,
+			ApplicationDbContext dbContext,
+			ICompaniesManager companiesManager)
 		{
 			_printObjectsManager = printObjectsManager;
 			_userManager = userManager;
+			_dbcontext = dbContext;
+			_companiesManager = companiesManager;
 		}
-
-		private ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
 
 		public Project CreateProject(
 			string projectName,
-			int articleNo,
-			string userId,
+			string creatorUserId,
 			List<LayOrderPrintObjectInfo> printObjectInfo,
 			DeliveryInfo deliveryInfo)
 		{
-			var currentContext = DbContext;
-
-			ApplicationUser creatorUser = currentContext //it's a hack. User from manager is from another context that local context. This causes issues.
-				.Users
-				.Where(user => user.Id == userId)
-				.FirstOrDefault();
+			ApplicationUser creatorUser = _userManager.GetUserById(creatorUserId);
 
 			if (creatorUser == null
 				|| !_userManager.UserIsInRole(
-				userId,
+				creatorUserId,
 				StaticData.RoleNames.Customer))
 			{
 				return null;
@@ -44,31 +43,33 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 			int overallQuantity = 0;
 
-			Status newStatus = currentContext
-				.Statuses
-				.Where(stat => stat.Name == StaticData.StatusNames.InQueue)
-				.First();
+			//need status manager...later
+			OrderStatus newStatus =
+				_dbcontext
+					.Statuses
+					.Where(stat => stat.CurrentOrderStatus == Formeo.Models.StaticData.OrderStatusEnum.InProgress)
+					.Single();
+
+			Company company = _companiesManager.GetCompanyByUserId(creatorUserId);
 
 			Project newProject = new Project();
 			newProject.Name = projectName;
-			newProject.ArticleNo = articleNo;
 			newProject.Address = deliveryInfo.Address;
 			newProject.City = deliveryInfo.City;
 			newProject.Country = deliveryInfo.Country;
 			newProject.Surname = deliveryInfo.Surname;
 			newProject.LastName = deliveryInfo.LastName;
 			newProject.ZipCode = deliveryInfo.PostCode;
-			newProject.Customer = creatorUser;
+			newProject.Creator = creatorUser;
 			newProject.Status = newStatus;
 
-
-			currentContext.Projects.Add(newProject);
-			currentContext.SaveChanges();
+			_dbcontext.Projects.Add(newProject);
+			//_dbcontext.SaveChanges();
 
 
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
 			{
-				PrintObject poEntity = currentContext
+				PrintObject poEntity = _dbcontext
 					.PrintObjects
 					.Where(po => po.ID == poInfo.PrintObjectId)
 					.FirstOrDefault(); //the same hack
@@ -76,33 +77,52 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 				if (poEntity != null)
 				{
-					ProjectPrintObjectQuantityRelation rel = new ProjectPrintObjectQuantityRelation();
+					ProjectInfo rel = new ProjectInfo();
 					rel.PrintObject = poEntity;
 					rel.Project = newProject;
 					rel.Quantity = poInfo.Quantity;
-					currentContext.ProjectPrintObjectQuantityRelations.Add(rel);
-					currentContext.SaveChanges();
+					_dbcontext.ProjectsInfo.Add(rel);
+					_dbcontext.SaveChanges();
 				}
 				overallQuantity += poInfo.Quantity;
 			}
 
-			newProject.OverallQuantity = overallQuantity;
-			currentContext.SaveChanges();
+			_dbcontext.SaveChanges();
 			return newProject;
 		}
 
-		public IEnumerable<Project> GetProjectsByUserId(string userId, bool isCompleted)
+		public IEnumerable<Project> GetNewProjects()
 		{
-			var projects = GetAllProjectsByUserId(userId);
-			return projects.Where(project => project.IsCompleted == isCompleted).ToList();
+			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Project> GetAllProjectsByUserId(string userId)
+
+		public IEnumerable<Project> GetProjectsByStatus(StaticData.OrderStatusEnum ordersStatus)
 		{
-			return DbContext
-				.Projects
-				.Where(project => project.Customer.Id == userId)
-				.ToList();
+			return _dbcontext
+			.Projects
+			.Where(project => project.Status.CurrentOrderStatus == ordersStatus)
+			.ToList();
 		}
+
+		public IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus)
+		{
+			return _dbcontext
+					.Projects
+					.Where(project => project.Creator.Id == customerId
+						&& project.Status.CurrentOrderStatus == orderStatus)
+					.ToList();
+		}
+
+		public IEnumerable<Project> GetProjectsByCompany(long companyId, StaticData.OrderStatusEnum orderStatus)
+		{
+			var projects =
+				from project in _dbcontext.Projects
+				join projectInfo in _dbcontext.ProjectsInfo
+				on project.ID equals projectInfo.ProjectId
+				select project;
+			return projects;
+		}
+
 	}
 }

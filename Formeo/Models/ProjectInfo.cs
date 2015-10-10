@@ -7,15 +7,19 @@ using System.Web;
 
 namespace Formeo.Models
 {
-	public class ProjectPrintObjectQuantityRelation
+	public class ProjectInfo
 	{
-		[Key, ForeignKey("Project"), Column(Order=0)]
+		[Key, ForeignKey("Project"), Column(Order = 0)]
 		public virtual long ProjectId { get; set; }
 		public virtual Project Project { get; set; }
 
 		[Key, ForeignKey("PrintObject"), Column(Order = 1)]
 		public virtual long PrintObjectId { get; set; }
 		public virtual PrintObject PrintObject { get; set; }
-		public long Quantity { get; set; }
+		public Company CompanyProducer { get; set; }
+		public int Quantity { get; set; }
+		public decimal Price { get; set; }
+
+		public Formeo.Models.StaticData.PrintObjectStatusEnum Status{ get; set; }
 	}
 }

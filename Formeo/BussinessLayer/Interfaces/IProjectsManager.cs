@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrderStatus = Formeo.Models.StaticData.OrderStatusEnum;
 
 namespace Formeo.BussinessLayer.Interfaces
 {
@@ -11,15 +12,18 @@ namespace Formeo.BussinessLayer.Interfaces
 	{
 		Project CreateProject(
 			string projectName,
-			int articleNo,
 			string userId,
 			List<LayOrderPrintObjectInfo> printObjectInfo,
 			DeliveryInfo deliveryInfo);
 
-		IEnumerable<Project> GetProjectsByUserId(string customerId, bool isCompleted);
-		IEnumerable<Project> GetAllProjectsByUserId(string userId);
 
-		IEnumerable<Project> GetNewProjects();
+		IEnumerable<Project> GetProjectsByStatus(OrderStatus ordersStatus);
+
+		IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus);
+
+		IEnumerable<Project> GetProjectsByCompany(long companyId, StaticData.OrderStatusEnum orderStatus);
+
+
 
 	}
 }

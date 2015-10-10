@@ -7,7 +7,7 @@ namespace Formeo.Models
 {
 	public class _IndexProducerViewModel
 	{
-		public string Dashboard_NewOrders { get; set; }
-		public string Dashboard_OrdersDelivered { get; set; }
+		public string Dashboard_BidRequestedPrintObjects { get; set; }
+		public string Dashboard_PrintObjectsDelivered { get; set; }
 	}
 }

@@ -59,6 +59,8 @@
 
                     modalInstance.result.then(function (response) {
                         $scope.activeProjects.push(response);
+                        $scope.selectedPrintObjectIds = [];
+                        $scope.layOrderButtonIsDisabled = true;
                     }, function (response) {
                         //error
                         $modalInstance.dismiss('cancel');
@@ -91,6 +93,7 @@
     $scope.selectClientMenu = function (item) {
         $scope.selectedClientsMenu = item;
     };
+
     $scope.isActiveCLientsMenu = function (item) {
         return $scope.selectedClientsMenu === item;
     };
@@ -108,4 +111,24 @@
             isAdmin: false
         };
     };
+
+    $scope.toogleIsNeedBid = function (printObject) {
+
+
+        $http({
+            method: 'POST',
+            url: '/PrintObjects/ToggleIsNeedPrintObjectBid',
+            params: { 'printObjectId': printObject.Id },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(function (responce) {
+
+            printObject.IsNeedBid = responce.data
+        }, function (response) {
+            //error
+            $window.alert('error');
+
+
+        });
+
+    }
 }

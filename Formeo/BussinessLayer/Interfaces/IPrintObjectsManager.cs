@@ -9,10 +9,22 @@ namespace Formeo.BussinessLayer.Interfaces
 {
 	public interface IPrintObjectsManager
 	{
-		IEnumerable<PrintObject> GetPrintObjectsForUser(string userId);
+		IEnumerable<PrintObject> GetPrintObjectsByCreatorCompany(long companyId);
 
 		IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds);
+		PrintObject GetPrintObjectsById(long printObjectId);
 
-		PrintObject GetPrintObjectById(long printObjectIds);
+		IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId);
+
+		IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId,bool isNeedBid);
+
+		IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer(
+			long companyId,
+			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
+		);
+
+		IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId);
+
+		bool ToggleIsNeedBid(long printObjectId);
 	}
 }

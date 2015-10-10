@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Formeo.Models._IndexProducerViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 <div class="row" id="indexProducer" ng-controller="producerPageController" ng-cloak>
@@ -65,16 +66,24 @@
         </div>
     </div>
     <div class="col-md-8">
-        
+
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search user">
             <span class="input-group-btn">
                 <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
             </span>
+
+            <button type="button" class="btn btn-success" style="margin-left:50px" ng-disabled="layOrderButtonIsDisabled" ng-click="showBidProductModal(selectedPrintObjectToBidId)">
+                <i class="fa fa-money"></i> Bid product
+            </button>
         </div>
 
         <br />
         <div class="row custom-greed">
+
+            <div ng-init="needBidPrintObjects = @Model.Dashboard_BidRequestedPrintObjects"></div>
+            <div ng-init="deliveredPrintObjects = @Model.Dashboard_PrintObjectsDelivered"></div>
+
 
             <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
                 <div class="panel-body">
@@ -87,75 +96,58 @@
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-3">Art.No.</div>
                         <div class="col-md-3">Product Name</div>
-                        <div class="col-md-3">Storage Quantity</div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-7">Bid Item</div>
                         <div class="col-md-2">Actions</div>
                     </div>
 
-                    <div class="row data-row">
-                        <div class="col-md-3">113405728</div>
-                        <div class="col-md-3">Cover backplate</div>
-                        <div class="col-md-3">5</div>
-                        <div class="col-md-1">
-                            <input type="checkbox"/>
-                        </div>
-                        <div class="col-md-2 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-photo"></i>
-                            <i class="fa fa-download"></i>
-                        </div>
-                    </div>
-
-                    <div class="row data-row">
-                        <div class="col-md-3">112579238</div>
-                        <div class="col-md-3">Board Holder</div>
-                        <div class="col-md-3">3</div>
-                        <div class="col-md-1">
-                            <input type="checkbox" />
-                        </div>
-                        <div class="col-md-2 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-photo"></i>
-                            <i class="fa fa-download"></i>
+                    <div ng-repeat="needBidPrintObject in needBidPrintObjects">
+                        <div class="row data-row">
+                            <div class="col-md-3">{{needBidPrintObject.Name}}</div>
+                            <div class="col-md-7">
+                                <input type="checkbox" ng-model="needBidPrintObject.IsSelected" ng-click="selectSingleItem($index,needBidPrintObjects)" />
+                            </div>
+                            <div class="col-md-2 actions">
+                                <i class="fa fa-stack-exchange"></i>
+                                <i class="fa fa-photo"></i>
+                                <i class="fa fa-download"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-10">
-                            <h4>Orders Delivered</h4>
+                            <h4>Delivered orders</h4>
                         </div>
                         <div class="col-md-2 line-height">
                             <i class="fa fa-plus right"></i>
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-3">Art.No.</div>
-                        <div class="col-md-3">Product Name</div>
-                        <div class="col-md-3">Storage Quantity</div>
+                        <div class="col-md-3">Order Name</div>
+                        <div class="col-md-3">Quantity</div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">Actions</div>
                     </div>
 
-                    <div class="row data-row">
-                        <div class="col-md-3">113405728</div>
-                        <div class="col-md-3">Cover backplate</div>
-                        <div class="col-md-3">5</div>
-                        <div class="col-md-1">
-                            <input type="checkbox" />
-                        </div>
-                        <div class="col-md-2 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-photo"></i>
-                            <i class="fa fa-download"></i>
+                    <div ng-repeat="comletedOrder in deliveredPrintObjects">
+                        <div class="row data-row">
+                            <div class="col-md-3">{{comletedOrder.Name}}</div>
+                            <div class="col-md-3">{{comletedOrder.Quantity}}</div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2 actions">
+                                <i class="fa fa-stack-exchange"></i>
+                                <i class="fa fa-photo"></i>
+                                <i class="fa fa-download"></i>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
+
+            </div> @*Dashboard*@
 
             <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
                 <div class="panel-body">
@@ -165,35 +157,6 @@
                 </div>
             </div>
 
-            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>New orders Registered</h4>
-                        </div>
-                        <div class="col-md-2 line-height">
-                            <i class="fa fa-plus right"></i>
-                        </div>
-                    </div>
-                    <div class="row head">
-                        <div class="col-md-4">Art.No.</div>
-                        <div class="col-md-3">Product Name</div>
-                        <div class="col-md-3">Storage Quantity</div>
-                        <div class="col-md-2">Actions</div>
-                    </div>
-
-                    <div class="row data-row">
-                        <div class="col-md-4">113</div>
-                        <div class="col-md-3">Arcon</div>
-                        <div class="col-md-3">50</div>
-                        <div class="col-md-2 actions">
-                            <i class="fa fa-stack-exchange"></i>
-                            <i class="fa fa-photo"></i>
-                            <i class="fa fa-download"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

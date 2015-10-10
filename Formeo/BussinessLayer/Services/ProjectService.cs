@@ -1,4 +1,5 @@
 ﻿using Formeo.BussinessLayer.Interfaces;
+using Formeo.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,42 +13,62 @@ namespace Formeo.BussinessLayer.Services
 	{
 		private IUserManager _userManager;
 		private IProjectsManager _projectsManager;
-		public ProjectService(IUserManager userManager, IProjectsManager projectsManager)
+		IPrintObjectsManager _printObjectManager;
+		public ProjectService(
+			IUserManager userManager,
+			IProjectsManager projectsManager,
+			IPrintObjectsManager printObjectManager)
 		{
 			_userManager = userManager;
 			_projectsManager = projectsManager;
+			_printObjectManager = printObjectManager;
 		}
-		public string GetProjectsByUserJSON(string userId, bool isActive)
-		{
-			var projects = _projectsManager.GetProjectsByUserId(userId,isActive);
 
-			var projectsShort = projects.Select
-				(project =>
-					new
-					{
-						ProjectId = project.ID,
-						Name = project.Name,
-						Quantity = project.OverallQuantity,
-						IsCompleted = project.IsCompleted,
-						ArticleNo = project.ArticleNo
-					});
+		public string GetProjectsByCompanyJSON(long companyId, StaticData.OrderStatusEnum orderStatus)
+		{
+			IEnumerable<Project> projects =
+				   _projectsManager
+				   .GetProjectsByCompany(companyId, orderStatus);
+
+			var projectsShort = GetProjectShort(projects);
+
 			return JsonConvert.SerializeObject(projectsShort);
 		}
 
-		public string GetNewProjectsJson() 
+		public string GetProjectsByCreatorUserJSON(string creatorUserId, Formeo.Models.StaticData.OrderStatusEnum orderStatus)
 		{
-			var projects = _projectsManager.GetNewProjects();
+			IEnumerable<Project> projects =
+				_projectsManager
+				.GetProjectByCreator(creatorUserId, orderStatus);
 
-			var projectsShort = projects.Select
-				(project =>
-					new
-					{
-						ProjectId = project.ID,
-						Name = project.Name,
-						Quantity = project.OverallQuantity,
-						ArticleNo = project.ArticleNo
-					});
+			var projectsShort = GetProjectShort(projects);
+
 			return JsonConvert.SerializeObject(projectsShort);
+		}
+
+
+		private IEnumerable<ProjectShort> GetProjectShort(IEnumerable<Project> projects)
+		{
+
+			if (projects == null || projects.Count() == 0)
+			{
+				return new List<ProjectShort>();
+			}
+			var projectsShort = projects.Select(project => new ProjectShort()
+			{
+				Id = project.ID,
+				Name = project.Name,
+				Quantity = project.OverallQuantity,
+			});
+			return projectsShort;
+		}
+
+		private class ProjectShort
+		{
+			public long Id { get; set; }
+			public string Name { get; set; }
+			public int Quantity { get; set; }
+
 		}
 	}
 }

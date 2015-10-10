@@ -1,7 +1,6 @@
-﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $modal, $http, printObjectsInfoModal, deliveryInfo, orderName, artNo) {
+﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $modal, $http, printObjectsInfoModal, deliveryInfo, orderName) {
 
     $scope.orderName = orderName;
-    $scope.artNo = artNo;
 
     $scope.deliveryInfo = deliveryInfo;
     $scope.printObjectsInfoModal = printObjectsInfoModal;
@@ -25,7 +24,7 @@
         $http({
             method: 'POST',
             url: '/Project/CreateOrder',
-            params: { 'orderName': $scope.orderName, 'articleNo': $scope.artNo, 'printObjectInfo': JSON.stringify(infosParam), 'deliveryInfo': $scope.deliveryInfo },
+            params: { 'orderName': $scope.orderName, 'printObjectInfo': JSON.stringify(infosParam), 'deliveryInfo': $scope.deliveryInfo },
             headers: { 'Content-Type': 'application/json;' },
             data: ''
         }).

@@ -156,35 +156,16 @@ namespace Formeo.EFInfrastructure
 
 			#region Statuses
 			//this could be used as not tests data 
-			List<Status> statuses = new List<Status>() 
+			List<OrderStatus> statuses = new List<OrderStatus>() 
 			{
-				new Status()
+				new OrderStatus()
 				{
-					Name = StaticData.StatusNames.Finished
+					CurrentOrderStatus = Formeo.Models.StaticData.OrderStatusEnum.InProgress
 				},
 
-					new Status()
+				new OrderStatus()
 				{
-					Name = StaticData.StatusNames.Canceled
-				},
-
-
-				new Status()
-				{
-					Name = StaticData.StatusNames.InQueue
-				},
-
-				new Status()
-				{
-					Name = StaticData.StatusNames.NotAccepted
-				},
-				new Status()
-				{
-					Name = StaticData.StatusNames.Preparing
-				},
-				new Status()
-				{
-					Name = StaticData.StatusNames.Running
+					CurrentOrderStatus = Formeo.Models.StaticData.OrderStatusEnum.Delivered
 				}
 			};
 
@@ -200,79 +181,26 @@ namespace Formeo.EFInfrastructure
 				new Project()
 				{
 					Name = "Order1",
-					Customer = users.ElementAt(0),
-					Producer = users.ElementAt(1),
+					Creator = users.ElementAt(0),
 					Status = statuses.ElementAt(0)
 				},
 				new Project()
 				{
 					Name = "Order2",
-					Customer = users.ElementAt(0),
-					Producer = users.ElementAt(2),
+					Creator = users.ElementAt(0),
 					Status = statuses.ElementAt(0)
 
 				},
 				new Project()
 				{
 					Name = "Order3",
-					Customer = users.ElementAt(0),
+					Creator = users.ElementAt(0),
 					Status = statuses.ElementAt(0),
-					
 				}
 
 			};
 
 			projects.ForEach(o => context.Projects.Add(o));
-
-			context.SaveChanges();
-
-			#endregion
-
-			#region Bids
-
-			List<Bid> bids = new List<Bid>()
-			{
-				new Bid() 
-				{
-					Price = 10,
-					Project = projects.ElementAt(0),
-					Producer = users.ElementAt(1)
-				},
-				new Bid ()
-				{
-					Price = 20,
-					Project = projects.ElementAt(0),
-					Producer = users.ElementAt(2)
-				},
-				new Bid 
-				{
-					Price = 30,
-					Project = projects.ElementAt(0),
-					Producer = users.ElementAt(2)
-				},
-				////
-				new Bid() 
-				{
-					Price = 11,
-					Project = projects.ElementAt(1),
-					Producer = users.ElementAt(1)
-				},
-				new Bid ()
-				{
-					Price = 21,
-					Project = projects.ElementAt(1),
-					Producer = users.ElementAt(1)
-				},
-				new Bid 
-				{
-					Price = 31,
-					Project = projects.ElementAt(1),
-					Producer = users.ElementAt(2)
-				}
-			};
-
-			bids.ForEach(bid => bid.Project.Bids.Add(bid));
-			bids.ForEach(b => context.Bids.Add(b));
 
 			context.SaveChanges();
 
@@ -324,7 +252,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(0),
-					//Project = projects.ElementAt(0)
+					CompanyCreator = companies.ElementAt(0)
 				},
 
 				new PrintObject()
@@ -334,7 +262,8 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(1),
-					//Project = projects.ElementAt(0)
+					CompanyCreator = companies.ElementAt(0)
+
 				},
 
 				new PrintObject()
@@ -344,8 +273,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(2),
-					//Project = projects.ElementAt(1)
-
+					CompanyCreator = companies.ElementAt(0)
 
 				},
 
@@ -379,7 +307,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(4),
-					CustomerCreator = users.ElementAt(0),
+					UserCreator = users.ElementAt(0),
 					ArticleNo = 123456789
 				},
 
@@ -391,7 +319,7 @@ namespace Formeo.EFInfrastructure
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					PrintMaterial = printMaterials.ElementAt(4),
-					CustomerCreator = users.ElementAt(0),
+					UserCreator = users.ElementAt(0),
 					ArticleNo = 1
 				}
 			};
@@ -402,7 +330,57 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-		//	projects.ElementAt(0).WinningBid = bids.ElementAt(1);
+			#region Bids
+
+			//List<Bid> bids = new List<Bid>()
+			//{
+			//	new Bid() 
+			//	{
+			//		Price = 10,
+			//		PrintObject = printObjects.ElementAt(0), 
+			//		Producer = users.ElementAt(1)
+			//	},
+			//	new Bid ()
+			//	{
+			//		Price = 20,
+			//		PrintObject = printObjects.ElementAt(0), 
+			//		Producer = users.ElementAt(2)
+			//	},
+			//	new Bid 
+			//	{
+			//		Price = 30,
+			//		PrintObject = printObjects.ElementAt(1), 
+			//		Producer = users.ElementAt(2)
+			//	},
+			//	////
+			//	new Bid() 
+			//	{
+			//		Price = 11,
+			//		PrintObject = printObjects.ElementAt(1), 
+
+			//		Producer = users.ElementAt(1)
+			//	},
+			//	new Bid ()
+			//	{
+			//		Price = 21,
+			//		PrintObject = printObjects.ElementAt(2), 
+			//		Producer = users.ElementAt(1)
+			//	},
+			//	new Bid 
+			//	{
+			//		Price = 31,
+			//		PrintObject = printObjects.ElementAt(3), 
+			//		Producer = users.ElementAt(2)
+			//	}
+			//};
+
+			//bids.ForEach(b => context.Bids.Add(b));
+
+			//context.SaveChanges();
+
+			#endregion
+
+			//	projects.ElementAt(0).WinningBid = bids.ElementAt(1);
 
 			context.SaveChanges();
 

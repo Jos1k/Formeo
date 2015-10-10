@@ -38,14 +38,12 @@
                       controller: 'layOrderConfirmPartialController',
                       backdrop: 'static',
                       resolve: {
-                          orderName: function () { return $scope.OrderName; },
-                          artNo: function () { return $scope.ArtNo; },
+                          orderName: function () { return $scope.orderName; },
                           printObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
                           deliveryInfo: function () { return $scope.deliveryInfo; }
                       }
                   });
-                  modalInstance.result.then(function (response)
-                  {
+                  modalInstance.result.then(function (response) {
                       $modalInstance.close(response);
                   }, function (response) {
                       //error

@@ -16,6 +16,6 @@ namespace Formeo.Models
 		[Required]
 		public virtual ApplicationUser Producer { get; set; }
 		[Required]
-		public virtual Project Project { get; set; }
+		public virtual PrintObject PrintObject { get; set; }
 	}
 }

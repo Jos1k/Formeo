@@ -1,0 +1,36 @@
+﻿@model Formeo.Models._BidPrintObjectPartialViewModel
+
+<div ng-init="printObjectsInfoModal = @Model.PrintObjectJSON"/>
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Bid Product</h4>
+    </div>
+    <div class="modal-body">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row head">
+                    <div class="col-md-3">Art.No.</div>
+                    <div class="col-md-3">Product Name</div>
+                    <div class="col-md-3">Download file</div>
+                </div>
+
+                    <div class="row data-row">
+                        <div class="col-md-3">{{printObjectsInfoModal.ArtNo}}</div>
+                        <div class="col-md-3">{{printObjectsInfoModal.Name}}</div>
+                        <div class="col-md-3">
+                            <a href="#"><i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <input type="number" min="0.01" step="0.01" ng-model="price" value="0.01" />
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="BidProduct()">Bid price</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+
+

@@ -9,56 +9,49 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Formeo.BussinessLayer.ManagersImplementation
-{
-	class UserManager : IUserManager
-	{
+namespace Formeo.BussinessLayer.ManagersImplementation {
+	class UserManager : IUserManager {
+		ApplicationDbContext _dbcontext;
 
-		public RoleManager<IdentityRole> RoleManager
-		{
-			get
-			{
-				return new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+		public UserManager( ApplicationDbContext dbcontext ) {
+			_dbcontext = dbcontext;
+		}
+
+		public RoleManager<IdentityRole> RoleManager {
+			get {
+				return new RoleManager<IdentityRole>( new RoleStore<IdentityRole>( _dbcontext ) );
 			}
 		}
 
-		public ApplicationDbContext CurrentDbContext { get { return new ApplicationDbContext(); } }
-
-		public ApplicationUser GetCurrentUser()
-		{
-			ApplicationDbContext currentContext = new ApplicationDbContext();
+		public ApplicationUser GetCurrentUser() {
 
 			string Id = HttpContext.Current.User.Identity.GetUserId();
 
-			var currentUser = currentContext.Users.Where(user => user.Id == Id).FirstOrDefault();
+			var currentUser = _dbcontext.Users.Where( user => user.Id == Id ).FirstOrDefault();
 			return currentUser;
 		}
 
-		public IEnumerable<ApplicationUser> GetUsersByRole(string roleName)
-		{
-			var role = RoleManager.FindByName(roleName);
-			var a = CurrentDbContext.Users.Where(x => x.Roles.FirstOrDefault().RoleId == role.Id).ToList();
-			return a;
+		public IEnumerable<ApplicationUser> GetUsersByRole( string roleName ) {
+			var role = RoleManager.FindByName( roleName );
+			var user = _dbcontext.Users.Where( x => x.Roles.FirstOrDefault().RoleId == role.Id ).ToList();
+			return user;
 		}
 
-		public async Task<ICollection<ApplicationUser>> GetUsersByRoleAsync(string roleName)
-		{
-			var role = await RoleManager.FindByNameAsync(roleName);
-			return CurrentDbContext.Users.Where(x => x.Roles.First().RoleId == role.Id).ToList();
+		public async Task<ICollection<ApplicationUser>> GetUsersByRoleAsync( string roleName ) {
+			var role = await RoleManager.FindByNameAsync( roleName );
+			return _dbcontext.Users.Where( x => x.Roles.First().RoleId == role.Id ).ToList();
 		}
 
-		public ApplicationUser GetUserById(string userId)
-		{
-			return CurrentDbContext.Users.Where(user => user.Id == userId).First();
+		public ApplicationUser GetUserById( string userId ) {
+			return _dbcontext.Users.Where( user => user.Id == userId ).First();
 		}
 
 
-		public bool UserIsInRole(string userId, string roleName) 
-		{
-			var userStore = new UserStore<ApplicationUser>(CurrentDbContext);
-			var userManager = new UserManager<ApplicationUser>(userStore);
+		public bool UserIsInRole( string userId, string roleName ) {
+			var userStore = new UserStore<ApplicationUser>( _dbcontext );
+			var userManager = new UserManager<ApplicationUser>( userStore );
 
-			return userManager.IsInRole(userId, roleName);
+			return userManager.IsInRole( userId, roleName );
 		}
 
 	}

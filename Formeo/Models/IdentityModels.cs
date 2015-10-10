@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System;
 
 namespace Formeo.Models
 {
@@ -35,7 +36,7 @@ namespace Formeo.Models
 		}
 	}
 
-	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IDisposable
 	{
 		public ApplicationDbContext()
 			: base("DefaultConnection", throwIfV1Schema: false)
@@ -46,10 +47,10 @@ namespace Formeo.Models
 		public DbSet<Project> Projects { get; set; }
 		public DbSet<PrintMaterial> PrintMaterials { get; set; }
 		public DbSet<PrintObject> PrintObjects { get; set; }
-		public DbSet<Status> Statuses { get; set; }
+		public DbSet<OrderStatus> Statuses { get; set; }
 		public DbSet<Bid> Bids { get; set; }
 
-		public DbSet<ProjectPrintObjectQuantityRelation> ProjectPrintObjectQuantityRelations { get; set; } 
+		public DbSet<ProjectInfo> ProjectsInfo { get; set; } 
 
 		public static ApplicationDbContext Create()
 		{
