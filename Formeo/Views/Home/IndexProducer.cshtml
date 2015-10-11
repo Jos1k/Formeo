@@ -96,15 +96,17 @@
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-3">Product Name</div>
-                        <div class="col-md-7">Bid Item</div>
+                        <div class="col-md-4">Product Name</div>
+                        <div class="col-md-4">Company</div>
+                        <div class="col-md-2">Bid Item</div>
                         <div class="col-md-2">Actions</div>
                     </div>
 
                     <div ng-repeat="needBidPrintObject in needBidPrintObjects">
                         <div class="row data-row">
-                            <div class="col-md-3">{{needBidPrintObject.Name}}</div>
-                            <div class="col-md-7">
+                            <div class="col-md-4">{{needBidPrintObject.Name}}</div>
+                            <div class="col-md-4">{{needBidPrintObject.CompanyName}}</div>
+                            <div class="col-md-2">
                                 <input type="checkbox" ng-model="needBidPrintObject.IsSelected" ng-click="selectSingleItem($index,needBidPrintObjects)" />
                             </div>
                             <div class="col-md-2 actions">

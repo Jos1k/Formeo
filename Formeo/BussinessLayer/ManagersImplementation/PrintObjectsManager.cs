@@ -11,10 +11,15 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 	{
 
 		private ApplicationDbContext _dbContext;
+		private ICompaniesManager _comaniesManager;
 
-		public PrintObjectsManager(ApplicationDbContext dbContext)
+		public PrintObjectsManager(
+			ApplicationDbContext dbContext,
+			ICompaniesManager comaniesManager
+			)
 		{
 			_dbContext = dbContext;
+			_comaniesManager = comaniesManager;
 		}
 
 		#region  IPrintObjectsManager members
@@ -38,20 +43,11 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObjects;
 		}
 
-		public PrintObject GetPrintObjectsById(long printObjectId)
-		{
-			PrintObject printObject = _dbContext.PrintObjects.Where(
-				po => po.ID == printObjectId
-			).Single();
-			return printObject;
-		}
-
-
 		public PrintObject GetPrintObjectById(long printObjectId)
 		{
 			PrintObject printObject = _dbContext.PrintObjects.Where(
 				po => po.ID == printObjectId
-			).FirstOrDefault();
+			).Single();
 			return printObject;
 		}
 
@@ -66,11 +62,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId, bool isNeedBid)
 		{
+
+			Company producerCompany = _comaniesManager.GetCompanyByUserId(producerId);
+
 			IEnumerable<PrintObject> printObjectsResult =
 				from printObject in _dbContext.PrintObjects
 				where
 					!(from bid in _dbContext.Bids
-						where bid.Producer.Id == producerId
+					  where bid.CompanyProducer.ID == producerCompany.ID
 						select bid.PrintObject.ID)
 					.Contains(printObject.ID)
 					&& printObject.IsNeedBid == isNeedBid

@@ -1,7 +1,8 @@
 ﻿var bidProductPartialController = function ($scope, $modalInstance, $window, $http) {
 
     $scope.asd = "Hi";
-    $scope.price=0.01;
+    $scope.price = 0.01;
+    $scope.printObjectInfoModal = "";
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
@@ -10,15 +11,16 @@
     $scope.BidProduct = function () {
         $http({
             method: 'POST',
-            url: '/Project/CreateOrder',
-            params: { 'orderName': $scope.orderName, 'printObjectInfo': JSON.stringify(infosParam), 'deliveryInfo': $scope.deliveryInfo },
+            url: '/Bids/CreateBid',
+            params: { 'printObjectId': $scope.printObjectInfoModal.Id, 'price': $scope.price },
             headers: { 'Content-Type': 'application/json;' },
             data: ''
         }).
            then(function (response) {
-              
+               $modalInstance.close(response.data);
            }, function (response) {
-             
+               $window.alert('error creating bid');
+               $modalInstance.dismiss('cancel');
            });
     };
 

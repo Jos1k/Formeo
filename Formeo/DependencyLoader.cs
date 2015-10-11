@@ -32,10 +32,12 @@ namespace Formeo
 			container.RegisterType<IUserManager, UserManager>();
 			container.RegisterType<IProjectsManager, ProjectsManager>();
 			container.RegisterType<ICompaniesManager, CompaniesManager>();
+			container.RegisterType<IBidsManager, BidsManager>();
 
 			container.RegisterType<IPrintObjectsService, PrintObjectService>();
 			container.RegisterType<IUserService, UserService>();
 			container.RegisterType<IProjectService, ProjectService>();
+			container.RegisterType<IBidsService, BidsService>();
 
 			container.RegisterType<ApplicationDbContext>(new PerThreadLifetimeManager());
 

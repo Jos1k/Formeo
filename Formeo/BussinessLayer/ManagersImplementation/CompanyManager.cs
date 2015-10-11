@@ -30,5 +30,12 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					.Where(company => company.ID == user.Company.ID)
 					.SingleOrDefault();
 		}
+		public Company GetCompanyById(long companyId)
+		{
+			return _dbContext
+				.Companies
+				.Where(company => company.ID == companyId)
+				.SingleOrDefault();
+		}
 	}
 }

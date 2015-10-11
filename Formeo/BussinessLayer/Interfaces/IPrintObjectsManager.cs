@@ -12,7 +12,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		IEnumerable<PrintObject> GetPrintObjectsByCreatorCompany(long companyId);
 
 		IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds);
-		PrintObject GetPrintObjectsById(long printObjectId);
+		PrintObject GetPrintObjectById(long printObjectId);
 
 		IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId);
 

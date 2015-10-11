@@ -1,7 +1,8 @@
 ﻿using Formeo.Models;
 using System;
 using System.Collections.Generic;
-namespace Formeo.BussinessLayer
+
+namespace Formeo.BussinessLayer.Interfaces
 {
 	public interface IPrintObjectsService
 	{

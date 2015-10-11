@@ -1,4 +1,5 @@
 ﻿using Formeo.BussinessLayer;
+using Formeo.BussinessLayer.Interfaces;
 using Formeo.Controllers.CustomAttributes;
 using Formeo.Models;
 using System;
@@ -10,9 +11,11 @@ namespace Formeo.Controllers
 	public class BidsController : Controller
 	{
 		IPrintObjectsService _printObjectsService;
-		public BidsController(IPrintObjectsService printObjectsService)
+		IBidsService _bidsService;
+		public BidsController(IPrintObjectsService printObjectsService, IBidsService bidsService)
 		{
 			_printObjectsService = printObjectsService;
+			_bidsService = bidsService;
 		}
 
 		[HttpGet]
@@ -28,9 +31,11 @@ namespace Formeo.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CreateBid() 
+		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
+		[JsonQueryParamFilter(JsonDataType = typeof(decimal), Param = "price")]
+		public ActionResult CreateBid(long printObjectId, decimal price)
 		{
-			throw new NotImplementedException();
+			return Json(_bidsService.CreateBidJSON(printObjectId, price));
 		}
 	}
 }

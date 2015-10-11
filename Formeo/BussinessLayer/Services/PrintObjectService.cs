@@ -42,7 +42,7 @@ namespace Formeo.BussinessLayer.Services
 
 		public string GetPrintObjectsByIdJSON(long printObjectId)
 		{
-			var printObject = _printObjectsManager.GetPrintObjectsById(printObjectId);
+			var printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
 
 			if (printObject == null )
 			{
@@ -119,7 +119,8 @@ namespace Formeo.BussinessLayer.Services
 				Id = printObject.ID,
 				ArtNo = printObject.ArticleNo,
 				Name = printObject.Name,
-				IsNeedBid = printObject.IsNeedBid
+				IsNeedBid = printObject.IsNeedBid,
+				CompanyName = printObject.CompanyCreator.Name
 			};
 		}
 
@@ -130,7 +131,7 @@ namespace Formeo.BussinessLayer.Services
 			public long ArtNo { get; set; }
 			public bool IsNeedBid { get; set; } //finish togglebid on UI
 			public int  Quantity { get; set; }
+			public string CompanyName { get; set; }
 		}
-
 	}
 }

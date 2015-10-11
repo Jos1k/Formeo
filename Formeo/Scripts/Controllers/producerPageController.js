@@ -72,7 +72,9 @@
                     });
 
                     modalInstance.result.then(function (response) {
-                        //moda success
+                        //modal success
+
+                        $scope.removeItemById($scope.needBidPrintObjects, printObjectId);
                     }, function (response) {
                         //modal error
                         $modalInstance.dismiss('cancel');
@@ -85,6 +87,14 @@
                     //http error
                     $window.alert('error');
                 });
+    }
+
+    $scope.removeItemById = function (elements, id) {
+        angular.forEach(elements, function (element, index) {
+            if (element.Id == id) {
+                elements.splice(index, 1);
+            }
+        });
     }
 
     $scope.cleanUserModel = function () {

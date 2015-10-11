@@ -12,9 +12,10 @@ namespace Formeo.Models
 	{
 		[Key]
 		public long ID { get; set; }
+		[Required]
 		public decimal Price { get; set; }
 		[Required]
-		public virtual ApplicationUser Producer { get; set; }
+		public virtual Company CompanyProducer { get; set; }
 		[Required]
 		public virtual PrintObject PrintObject { get; set; }
 	}

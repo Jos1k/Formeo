@@ -1,6 +1,6 @@
 ﻿@model Formeo.Models._BidPrintObjectPartialViewModel
 
-<div ng-init="printObjectsInfoModal = @Model.PrintObjectJSON"/>
+<div ng-init="printObjectInfoModal = @Model.PrintObjectJSON"/>
 <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Bid Product</h4>
@@ -15,8 +15,8 @@
                 </div>
 
                     <div class="row data-row">
-                        <div class="col-md-3">{{printObjectsInfoModal.ArtNo}}</div>
-                        <div class="col-md-3">{{printObjectsInfoModal.Name}}</div>
+                        <div class="col-md-3">{{printObjectInfoModal.ArtNo}}</div>
+                        <div class="col-md-3">{{printObjectInfoModal.Name}}</div>
                         <div class="col-md-3">
                             <a href="#"><i class="fa fa-download"></i></a>
                         </div>

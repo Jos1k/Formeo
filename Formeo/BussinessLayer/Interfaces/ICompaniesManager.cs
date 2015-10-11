@@ -10,5 +10,7 @@ namespace Formeo.BussinessLayer.Interfaces
 	public interface ICompaniesManager
 	{
 		Company GetCompanyByUserId(string userId);
+
+		Company GetCompanyById(long companyId);
 	}
 }
