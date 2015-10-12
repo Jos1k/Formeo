@@ -26,5 +26,11 @@ namespace Formeo.Controllers
 			Console.WriteLine(printObjectId);
 			return Json(toggleRes);
 		}
+
+		//[HttpGet]
+		public ActionResult UploadProductShowModal() 
+		{
+			return PartialView( "_UploadProductModal" );
+		}
 	}
 }

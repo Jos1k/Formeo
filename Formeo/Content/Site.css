@@ -33,7 +33,7 @@ input, select, textarea {
   background-color: #34495E;
   width: auto; }
 
-.btn-upload-product {
+.btn-upload-product, .btn-upload-product:active {
   background-color: #49c9af;
   border-radius: 0;
   border-width: 0;
@@ -41,6 +41,11 @@ input, select, textarea {
   .btn-upload-product:hover {
     background-color: #49c9af;
     color: white; }
+
+.btn-default, .btn-default:active:focus {
+	background-color: #49c9af;
+	color: white; 
+}
 
 .lable-green-1 {
   color: #32ba9e; }
@@ -292,4 +297,28 @@ a.list-group-item {
   border-width: 0;
   border-style: none; }
 
+.app-modal-window .modal-dialog {
+  width: 500px;
+  border-radius: 0;
+  padding-top: 150px;
+}
+.app-modal-window .modal-dialog .modal-content{
+  border-radius: 0;
+  border:none;
+}
+
+.modal-content .modal-footer {
+	border-top: none;
+	margin-top: 0px;
+	padding-top:5px;
+}
+
+.modal-content .modal-body {
+	padding-bottom: 0px;
+}
+
+.uploadProductModalButton {
+	padding-right: 5px;
+    padding-left: 5px;
+}
 /*# sourceMappingURL=Site.css.map */
