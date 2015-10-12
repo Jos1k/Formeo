@@ -98,20 +98,6 @@
         return $scope.selectedClientsMenu === item;
     };
 
-    $scope.cleanUserModel = function () {
-        $scope.userModel = {
-            username: '',
-            password: '',
-            email: '',
-            address: '',
-            postal: '',
-            country: '',
-            isProduction: false,
-            isCustomer: false,
-            isAdmin: false
-        };
-    };
-
     $scope.toogleIsNeedBid = function (printObject) {
 
 
@@ -131,4 +117,46 @@
         });
 
     }
+
+
+    $scope.ShowBidsForPrintObject = function (printObjectId) {
+
+        $http({
+            method: 'GET',
+            url: '/Bids/GetBidsForPrintObject',
+            params: { 'printObjectId': printObjectId },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+                then(function (response) {
+                    //success
+                    var modalInstance = $modal.open({
+                        template: (response.data),
+                        controller: 'bidsForPrintObjectController',
+                        backdrop: 'static',
+                        resolve: {
+                            printObjectId: function () { return printObjectId; }
+                        }
+                    });
+
+                    modalInstance.result.then(function (response) {
+                        $scope.activeProjects.push(response);
+                        $scope.selectedPrintObjectIds = [];
+                        $scope.layOrderButtonIsDisabled = true;
+                    }, function (response) {
+                        //error
+                        $modalInstance.dismiss('cancel');
+
+                    });
+
+                    $scope.layOrderButtonIsDisabled = false;
+
+
+                }, function (response) {
+                    //error
+                    $window.alert('error');
+                    $scope.layOrderButtonIsDisabled = false;
+
+                });
+    }
+
 }

@@ -8,3 +8,4 @@ formeoAngularMVCApp.controller('layOrderPartialController', layOrderPartialContr
 formeoAngularMVCApp.controller('layOrderConfirmPartialController', layOrderConfirmPartialController);
 formeoAngularMVCApp.controller('addProductsPartialController', addProductsPartialController);
 formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
+formeoAngularMVCApp.controller('bidsForPrintObjectController', bidsForPrintObjectController);

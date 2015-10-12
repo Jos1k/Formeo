@@ -9,7 +9,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 {
 	public class BidsManager : IBidsManager
 	{
-		ApplicationDbContext _dbCongtext;
+		ApplicationDbContext _dbContext;
 		IPrintObjectsManager _printObjectsManager;
 		ICompaniesManager _companiesManager;
 		public BidsManager(
@@ -18,10 +18,11 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			ICompaniesManager companiesManager
 			)
 		{
-			_dbCongtext = dbCongtext;
+			_dbContext = dbCongtext;
 			_printObjectsManager = printObjectsManager;
 			_companiesManager = companiesManager;
 		}
+
 		public Bid CreateBid(long printObjectId, string userId, decimal price)
 		{
 			PrintObject printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
@@ -36,13 +37,13 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newBid.Price = price;
 			newBid.CompanyProducer = bidCompany;
 
-			_dbCongtext.Bids.Add(newBid);
-			_dbCongtext.SaveChanges();
+			_dbContext.Bids.Add(newBid);
+			_dbContext.SaveChanges();
 
 			return newBid;
 		}
 
-		public Bid CreateBid(long printObjectId, long companyId, decimal price) 
+		public Bid CreateBid(long printObjectId, long companyId, decimal price)
 		{
 			PrintObject printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
 			Company bidCompany = _companiesManager.GetCompanyById(companyId);
@@ -56,11 +57,19 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newBid.Price = price;
 			newBid.CompanyProducer = bidCompany;
 
-			_dbCongtext.Bids.Add(newBid);
-			_dbCongtext.SaveChanges();
+			_dbContext.Bids.Add(newBid);
+			_dbContext.SaveChanges();
 
 			return newBid;
 		}
+
+		public IReadOnlyList<Bid> GetBidsForPrintObject(long printObjectId) 
+		{
+			return _dbContext.Bids
+					.Where(bid => bid.PrintObject.ID == printObjectId)
+					.ToArray(); //to array because connection will be closed beforehand
+		}
+
 
 	}
 }

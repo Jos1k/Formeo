@@ -18,6 +18,12 @@ namespace Formeo.Controllers
 			_bidsService = bidsService;
 		}
 
+
+		/// <summary>
+		/// for now - used for producer when he tries to bid product
+		/// </summary>
+		/// <param name="printObjectId"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
 		public ActionResult GetBidModal(long printObjectId)
@@ -37,5 +43,16 @@ namespace Formeo.Controllers
 		{
 			return Json(_bidsService.CreateBidJSON(printObjectId, price));
 		}
+
+		[HttpGet]
+		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
+		public ActionResult GetBidsForPrintObject(long printObjectId) 
+		{
+			_BidsForPrintObjectsViewModel viewModel = new _BidsForPrintObjectsViewModel();
+			viewModel.BidsJSON = _bidsService.GetBidsForPrintObjectJSON(printObjectId);
+
+			return PartialView("_BidsForPrintObjectPatrial", viewModel);
+		}
+
 	}
 }

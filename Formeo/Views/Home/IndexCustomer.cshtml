@@ -196,8 +196,9 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-2">Art.No.</div>
                             <div class="col-md-3">Product Name</div>
-                            <div class="col-md-3">Demand Bids</div>
-                            <div class="col-md-3">Actions</div>
+                            <div class="col-md-2">Select bid</div>
+                            <div class="col-md-2">Demand Bids</div>
+                            <div class="col-md-2">Actions</div>
                         </div>
 
                         <div ng-repeat="printObject in printObjects">
@@ -205,15 +206,24 @@
                                 <div class="col-md-1">
                                     <input type="checkbox" ng-checked="printObjectIsSelected(printObject.Id)" ng-click="addOrRemovePrintobject(printObject.Id)" />
                                 </div>
-                                <div class="col-md-2">{{printObject.ArtNo}}</div>
-                                <div class="col-md-3">{{printObject.Name}}</div>
+                                <div class="col-md-2">
+                                    {{printObject.ArtNo}}
+                                </div>
                                 <div class="col-md-3">
+                                    {{printObject.Name}}
+                                </div>
+                                <div class="col-md-2">
+                                    <a ng-show="printObject.HasBids">
+                                        <i class="fa fa-usd" ng-click="ShowBidsForPrintObject(printObject.Id)"></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
                                     <a href="#" ng-click="toogleIsNeedBid(printObject);">
                                         <i class=" fa fa-square-o" ng-show="!printObject.IsNeedBid"></i>
                                         <i class="fa fa-check-square-o" ng-show="printObject.IsNeedBid"></i>
                                     </a>
                                 </div>
-                                <div class="col-md-3 actions">
+                                <div class="col-md-2 actions">
                                     <i class="fa fa-stack-exchange"></i>
                                     <i class="fa fa-photo"></i>
                                     <i class="fa fa-download"></i>

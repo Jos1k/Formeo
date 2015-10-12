@@ -16,5 +16,6 @@ namespace Formeo.BussinessLayer.Interfaces
 		Bid CreateBid(long printObjectId, string userId, decimal price);
 
 		Bid CreateBid(long printObjectId, long companyId, decimal price);
+		IReadOnlyList<Bid> GetBidsForPrintObject(long printObjectId);
 	}
 }

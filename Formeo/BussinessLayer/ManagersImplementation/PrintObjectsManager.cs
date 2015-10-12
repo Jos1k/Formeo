@@ -70,7 +70,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				where
 					!(from bid in _dbContext.Bids
 					  where bid.CompanyProducer.ID == producerCompany.ID
-						select bid.PrintObject.ID)
+					  select bid.PrintObject.ID)
 					.Contains(printObject.ID)
 					&& printObject.IsNeedBid == isNeedBid
 				select printObject;
@@ -78,16 +78,21 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObjectsResult;
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer(
-				long companyId,
-				Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-			)
+		public IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer
+		(
+			long companyId,
+			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
+		)
 		{
-			return from printObject in _dbContext.PrintObjects
-				   join projectInfo in _dbContext.ProjectsInfo
-				   on printObject.ID equals projectInfo.PrintObject.ID
-				   where projectInfo.CompanyProducer.ID == companyId
-				   select printObject;
+			return _dbContext.PrintObjects
+				.Where(po => po.CompanyProducer.ID == companyId)
+				.Join(
+					_dbContext.ProjectsInfo
+					, printObject => printObject.ID
+					, projectInfo => projectInfo.PrintObjectId
+					, (printObject, projectInfo) => printObject
+				)
+				.ToArray();
 		}
 
 		public IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId)
@@ -111,6 +116,15 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			_dbContext.SaveChanges();
 
 			return printObject.IsNeedBid;
+		}
+
+		public void AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
+		{
+			PrintObject printObject = GetPrintObjectById(printObjectId);
+			Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
+
+			printObject.CompanyProducer = producerCompany;
+			_dbContext.SaveChanges();
 		}
 
 		#endregion

@@ -8,7 +8,10 @@ using System.Web.Mvc;
 
 namespace Formeo.Controllers.CustomAttributes
 {
-
+	/// <summary>
+	/// this helper attribute was vreated because angular not always converts data as MVC expects
+	/// To make sure that everything goes as expexted and to be able modify logic of passing data - this attrubute was created
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class JsonQueryParamFilter : ActionFilterAttribute
 	{

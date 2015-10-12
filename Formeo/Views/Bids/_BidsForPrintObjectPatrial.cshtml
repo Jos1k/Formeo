@@ -1,0 +1,36 @@
+﻿
+@model Formeo.Models._BidsForPrintObjectsViewModel
+
+<div ng-init="bids = @Model.BidsJSON" />
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Bid Product</h4>
+    </div>
+    <div class="modal-body">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row head">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">Company Name</div>
+                    <div class="col-md-6">Price</div>
+                </div>
+                <div ng-repeat="bid in bids">
+                    <div class="row data-row">
+                        <div class="col-md-1">
+                            <input type="checkbox" ng-click="selectSingleItem($index,bids)" />
+                        </div>
+                        <div class="col-md-5">{{bid.ProducerCompanyName}}</div>
+                        <div class="col-md-6">{{bid.Price}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-disabled="!HasSelectedProducer()" class="btn btn-default" ng-click="SaveSelectProducerCompany()">Bid price</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+
+
