@@ -42,7 +42,7 @@
             }
 
             Upload.upload({
-                url: '/Home/UploadProduct',
+                url: '/PrintObjects/UploadProducts',
                 data: {
                     products: uploadListProducts,
                     files: uploadListFiles
@@ -54,7 +54,7 @@
                             .success(function (data, status, headers, config) {
                                 $scope.isUploadInProgress = false;
                                 alert("Uploading finished!");
-                                $modalInstance.dismiss('cancel');
+                                $modalInstance.close(data);
                             });
         }
     };

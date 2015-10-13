@@ -32,7 +32,7 @@ namespace Formeo.Models
 
 		public virtual ICollection<Bid> Bids { get; set; }
 
-		public virtual PrintMaterial PrintMaterial { get; set; }
+		public virtual string PrintMaterial { get; set; }
 		public bool IsNeedBid { get; set; }
 	}
 }

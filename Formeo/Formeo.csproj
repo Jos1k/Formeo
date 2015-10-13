@@ -216,7 +216,7 @@
     <Compile Include="BussinessLayer\Interfaces\IProjectsManager.cs" />
     <Compile Include="BussinessLayer\Interfaces\IUserService.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\BidsManager.cs" />
-    <Compile Include="BussinessLayer\ManagersImplementation\CompanyManager.cs" />
+    <Compile Include="BussinessLayer\ManagersImplementation\CompaniesManager.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\PrintObjectsManager.cs" />
     <Compile Include="BussinessLayer\Interfaces\IPrintObjectService.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\ProjectsManager.cs" />
@@ -243,6 +243,7 @@
     <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DeliveryInfo.cs" />
+    <Compile Include="Models\HelperModels\PrintObjectFileInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LayOrderPrintObjectInfo.cs" />
     <Compile Include="Models\LayOrderViewModel.cs" />

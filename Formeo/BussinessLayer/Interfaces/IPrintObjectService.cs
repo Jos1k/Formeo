@@ -1,4 +1,5 @@
 ﻿using Formeo.Models;
+using Formeo.Models.HelperModels;
 using System;
 using System.Collections.Generic;
 
@@ -24,5 +25,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		);
 
 		string GetPrintObjectByOrderJSON(long orderId);
+
+		string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos);
 	}
 }

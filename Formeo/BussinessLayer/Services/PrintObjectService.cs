@@ -1,6 +1,7 @@
 ﻿using Formeo.BussinessLayer.Interfaces;
 using Formeo.BussinessLayer.ManagersImplementation;
 using Formeo.Models;
+using Formeo.Models.HelperModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,6 @@ namespace Formeo.BussinessLayer.Services
 
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
-
-
 
 		public string GetPrintObjectsByIdForProducerJSON(long printObjectId)
 		{
@@ -115,6 +114,25 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
+
+		public string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos)
+		{
+			if (fileInfos == null || fileInfos.Count() == 0)
+			{
+				return string.Empty;
+			}
+
+			IEnumerable<PrintObject> createdPrintObjects = _printObjectsManager.UploadPrintObjects(fileInfos);
+
+			//here - even producers should get view as customers 
+			IEnumerable<PrintObjectForCustomerShort> printObjectsShort =
+				createdPrintObjects.Select(
+					po => PrintObjectForCustomerToShort(po)
+				);
+
+			return JsonConvert.SerializeObject(printObjectsShort);
+		}
+
 		#endregion
 
 		private PrintObjectForProducerShort PrintObjectForProducerToShort(PrintObject printObject, int quantity = 0)
@@ -124,7 +142,7 @@ namespace Formeo.BussinessLayer.Services
 				throw new InvalidOperationException("Cannot cast null printobject");
 			}
 
-			bool hasBidsForPrintObject =  printObject.Bids !=null && printObject.Bids.ToArray().Length > 0;
+			bool hasBidsForPrintObject = printObject.Bids != null && printObject.Bids.ToArray().Length > 0;
 
 			return new PrintObjectForProducerShort()
 			{
@@ -143,7 +161,7 @@ namespace Formeo.BussinessLayer.Services
 				throw new InvalidOperationException("Cannot cast null printobject");
 			}
 
-			bool hasBidsForPrintObject = printObject.Bids.ToArray().Length > 0;
+			bool hasBidsForPrintObject = printObject.Bids != null && printObject.Bids.Count > 0;
 
 			return new PrintObjectForCustomerShort()
 			{
@@ -158,6 +176,7 @@ namespace Formeo.BussinessLayer.Services
 			};
 		}
 
+		#region Classes
 		private class PrintObjectBaseShort
 		{
 			public long Id { get; set; }
@@ -180,5 +199,7 @@ namespace Formeo.BussinessLayer.Services
 			//Customer-creator name
 			public string CompanyName { get; set; }
 		}
+		#endregion
+
 	}
 }

@@ -1,16 +1,5 @@
-﻿var customerPageController = function ($scope, $window, $http, $modal) {
-    $scope.userModel = {
-        username: '',
-        password: '',
-        email: '',
-        address: '',
-        postal: '',
-        country: '',
-        isProduction: false,
-        isCustomer: false,
-        isAdmin: false
-    };
-
+﻿var customerPageController = function ($scope, $window, $http, $modal, UploadPrinObject) {
+    
     $scope.selectedMainMenu = '/Dashboard';
     $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
@@ -157,6 +146,11 @@
                     $scope.layOrderButtonIsDisabled = false;
 
                 });
+    }
+
+    $scope.showUploadProductModal = function () {
+        var newPrintObjects = UploadPrinObject.showUpload();
+        $scope.printObjects.push(newPrintObjects);
     }
 
 }
