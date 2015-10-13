@@ -264,6 +264,7 @@
     <Compile Include="UnityDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\ajax-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -315,12 +316,17 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Controllers\bidProductPartialController.js" />
     <Content Include="Scripts\Controllers\addProductsPartialController.js" />
+    <Content Include="Scripts\Controllers\uploadProductController.js" />
+    <Content Include="Scripts\Controllers\commonController.js" />
     <Content Include="Scripts\Controllers\layOrderConfirmPartialController.js" />
     <Content Include="Scripts\Controllers\layOrderPartialController.js" />
     <Content Include="Scripts\Controllers\bidsForPrintObjectController.js" />
     <Content Include="Scripts\Controllers\producerPageController.js" />
     <Content Include="Scripts\Controllers\customerPageController.js" />
     <Content Include="Scripts\Controllers\adminPageController.js" />
+    <Content Include="Scripts\FileAPI.flash.swf" />
+    <Content Include="Scripts\FileAPI.js" />
+    <Content Include="Scripts\FileAPI.min.js" />
     <Content Include="Scripts\formeoAngularMVCApp.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
@@ -333,6 +339,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ng-file-upload-all.js" />
+    <Content Include="Scripts\ng-file-upload-all.min.js" />
+    <Content Include="Scripts\ng-file-upload-shim.js" />
+    <Content Include="Scripts\ng-file-upload-shim.min.js" />
+    <Content Include="Scripts\ng-file-upload.js" />
+    <Content Include="Scripts\ng-file-upload.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -371,10 +383,10 @@
     <Content Include="Views\Project\_AddProductsPartial.cshtml" />
     <Content Include="Views\Bids\_BidPrintObjectPartial.cshtml" />
     <Content Include="Views\Bids\_BidsForPrintObjectPatrial.cshtml" />
+    <Content Include="Views\PrintObjects\_UploadProductModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Views\PrintObjects\" />
+    <Folder Include="App_Data\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

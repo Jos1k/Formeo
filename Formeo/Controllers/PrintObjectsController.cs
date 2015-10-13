@@ -35,5 +35,10 @@ namespace Formeo.Controllers
 			_printObjecsManager.AssignProducerToPrintObject(producerCompanyId, printObjectId);
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
-	}
+
+		//[HttpGet]
+		public ActionResult UploadProductShowModal() 
+		{
+			return PartialView( "_UploadProductModal" );
+		}	}
 }

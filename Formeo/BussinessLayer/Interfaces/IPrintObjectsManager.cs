@@ -29,5 +29,6 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		void AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 
+		PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
 	}
 }

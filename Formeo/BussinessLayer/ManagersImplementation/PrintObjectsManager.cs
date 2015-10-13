@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Formeo.BussinessLayer.ManagersImplementation
-{
-	public class PrintObjectsManager : IPrintObjectsManager
-	{
+namespace Formeo.BussinessLayer.ManagersImplementation {
+	public class PrintObjectsManager : IPrintObjectsManager {
 
 		private ApplicationDbContext _dbContext;
 		private ICompaniesManager _comaniesManager;
@@ -16,43 +14,38 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 		public PrintObjectsManager(
 			ApplicationDbContext dbContext,
 			ICompaniesManager comaniesManager
-			)
-		{
+			) {
 			_dbContext = dbContext;
 			_comaniesManager = comaniesManager;
 		}
 
 		#region  IPrintObjectsManager members
-		public IEnumerable<PrintObject> GetPrintObjectsByCreatorCompany(long comapnyId)
-		{
+		public IEnumerable<PrintObject> GetPrintObjectsByCreatorCompany( long comapnyId ) {
 			List<PrintObject> printObjects =
 				_dbContext
 					.PrintObjects
 					.Where(
-						po => po.CompanyCreator.ID == comapnyId)
+						po => po.CompanyCreator.ID == comapnyId )
 					.ToList();
 
 			return printObjects;
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds)
-		{
+		public IEnumerable<PrintObject> GetPrintObjectsByIds( IEnumerable<long> printObjectIds ) {
 			List<PrintObject> printObjects = _dbContext.PrintObjects.Where(
-				po => printObjectIds.Contains(po.ID)
+				po => printObjectIds.Contains( po.ID )
 			).ToList();
 			return printObjects;
 		}
 
-		public PrintObject GetPrintObjectById(long printObjectId)
-		{
+		public PrintObject GetPrintObjectById( long printObjectId ) {
 			PrintObject printObject = _dbContext.PrintObjects.Where(
 				po => po.ID == printObjectId
 			).Single();
 			return printObject;
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId)
-		{
+		public IEnumerable<PrintObject> GetPrintObjectsByOrderId( long orderId ) {
 			return from printObject in _dbContext.PrintObjects
 				   join relation in _dbContext.ProjectsInfo
 				   on printObject.ID equals relation.PrintObjectId
@@ -60,10 +53,9 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				   select printObject;
 		}
 
-		public IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId, bool isNeedBid)
-		{
+		public IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer( string producerId, bool isNeedBid ) {
 
-			Company producerCompany = _comaniesManager.GetCompanyByUserId(producerId);
+			Company producerCompany = _comaniesManager.GetCompanyByUserId( producerId );
 
 			IEnumerable<PrintObject> printObjectsResult =
 				from printObject in _dbContext.PrintObjects
@@ -95,22 +87,19 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				.ToArray();
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId)
-		{
+		public IEnumerable<PrintObject> GetPrintObjectsByOrder( long orderId ) {
 			return _dbContext.PrintObjects.Join(
 					_dbContext.ProjectsInfo,
 					po => po.ID,
 					pi => pi.PrintObjectId,
-					(po, pi) => po
+					( po, pi ) => po
 				);
 		}
 
-		public bool ToggleIsNeedBid(long printObjectId)
-		{
-			PrintObject printObject = _dbContext.PrintObjects.Where(po => po.ID == printObjectId).SingleOrDefault();
-			if (printObject == null)
-			{
-				throw new InvalidOperationException("printObjectId is Invalid");
+		public bool ToggleIsNeedBid( long printObjectId ) {
+			PrintObject printObject = _dbContext.PrintObjects.Where( po => po.ID == printObjectId ).SingleOrDefault();
+			if( printObject == null ) {
+				throw new InvalidOperationException( "printObjectId is Invalid" );
 			}
 			printObject.IsNeedBid = !printObject.IsNeedBid;
 			_dbContext.SaveChanges();
@@ -126,9 +115,25 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			printObject.CompanyProducer = producerCompany;
 			_dbContext.SaveChanges();
 		}
+		public PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId ) {
 
+			ApplicationUser creator = _dbContext.Users.FirstOrDefault( x => x.Id == userId );
+			PrintObject resultPrintObject = new PrintObject() {
+				IsNeedBid = false,
+				ArticleNo = Convert.ToInt64( articleNo ),
+				UserCreator = creator,
+				CompanyCreator = creator.Company,
+				Name = productName,
+				PrintMaterial = _dbContext.PrintMaterials.FirstOrDefault( x => x.ID == printMaterialId ),
+				CadFile = pathToFile
+			};
+			_dbContext.PrintObjects.Add( resultPrintObject );
+			_dbContext.SaveChanges();
+
+			return resultPrintObject;
+		}
 		#endregion
-
-
+		#region IPrintObjectsManager Members
+		#endregion
 	}
 }

@@ -1,10 +1,12 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    <div class="nav navbar-nav navbar-right">
-        <button type="button" class="btn btn-default text-center btn-upload-product" style="height:67px;">
-            <i class="fa fa-cloud-upload fa-2x" style="color:white"></i>
-            <br>Upload Product
-        </button>
+
+@if( Request.IsAuthenticated && (User.IsInRole("Customer")||User.IsInRole("Producer"))) {
+    <div class="row" ng-controller="commonController" ng-cloak>
+        <div class="nav navbar-nav navbar-right">
+            <button type="button" class="btn btn-default text-center btn-upload-product" style="height:67px;" ng-click="showUploadProductModal()">
+                <i class="fa fa-cloud-upload fa-2x" style="color:white"></i>
+                <br>Upload Product
+            </button>
+        </div>
     </div>
 }

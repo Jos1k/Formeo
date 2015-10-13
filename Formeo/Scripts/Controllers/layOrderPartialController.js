@@ -65,7 +65,7 @@
         var pObjectIds = []
 
         angular.forEach($scope.printObjectsInfoModal, function (index) {
-            pObjectIds.push(index.PrintObjectId);
+            pObjectIds.push(index.Id);
         });
 
         $http({
