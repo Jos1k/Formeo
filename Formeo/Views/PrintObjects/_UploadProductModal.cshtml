@@ -15,8 +15,8 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat ="product in products">
-                        <td>{{product.ArtNo}}</td>
-                        <td>{{product.ProductName}}</td>
+                        <td>{{product.artNo}}</td>
+                        <td>{{product.productName}}</td>
                         <td style="text-align: center;">
                             <button type="button" class="btn btn-xs btn-default btn-upload-product" style="background-color:#FF8080" ng-click="removeProduct($index)">
                                 <i class="fa fa-times"></i>
@@ -30,7 +30,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 uploadProductModalButton">
-                    <input class="form-control login-textbox" id="ArticleNo" name="ArticleNo" placeholder="Article No." ng-model="artNo" type="text">
+                    <input class="form-control login-textbox" id="ArticleNo" name="ArticleNo" placeholder="Article No." ng-model="artNo" type="number">
                 </div>
                 <div class="col-md-6 uploadProductModalButton">
                     <input class="form-control login-textbox" id="ProductName" name="ProductName" placeholder="Product Name" ng-model="productName" type="text">
@@ -38,13 +38,23 @@
             </div>
             <div class="row uploadProductModalButton">
                 <div class="col-md-11" style="padding:0px;">
-                    <input class="form-control login-textbox" id="FileLocation" name="FileLocation" placeholder="Choose File" type="text">
+                    <input class="form-control login-textbox" id="FileLocation" name="FileLocation" placeholder="Choose File" type="text" readonly ng-model="picFile.name">
                 </div>
                 <div class="col-md-1" style="padding:0px;">
-                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color: #34495E; height: 34px;" ng-click="cancel()">
+                    <button type="file" ngf-select ng-model="picFile" class="btn btn-default btn-block btn-upload-product" style="background-color: #34495E; height: 34px;">
                         <i class="fa fa-caret-right "></i>
                     </button>
                 </div>
+            </div>
+            <div id="ballsWaveG">          
+                <div id="ballsWaveG_1" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_2" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_3" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_4" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_5" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_6" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_7" class="ballsWaveG" ng-show="isUploadInProgress"></div>
+                <div id="ballsWaveG_8" class="ballsWaveG" ng-show="isUploadInProgress"></div>
             </div>
         </div>
     </div>
@@ -58,13 +68,13 @@
                     </button>
                 </div>
                 <div class="col-md-4 uploadProductModalButton">
-                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#C2C2C2;" ng-click="addProduct()">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#C2C2C2;" ng-click="addProduct(picFile)">
                         <i class="fa fa-plus"></i>
                         Add Product
                     </button>
                 </div>
                 <div class="col-md-4 uploadProductModalButton">
-                    <button type="button" class="btn btn-default btn-block btn-upload-product" ng-click="cancel()">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" ng-click="upload()">
                         <i class="fa fa-cloud-upload"></i>
                         Upload
                     </button>

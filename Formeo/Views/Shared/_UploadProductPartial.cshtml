@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 
-@if( Request.IsAuthenticated ) {
+@if( Request.IsAuthenticated && (User.IsInRole("Customer")||User.IsInRole("Producer"))) {
     <div class="row" ng-controller="commonController" ng-cloak>
         <div class="nav navbar-nav navbar-right">
             <button type="button" class="btn btn-default text-center btn-upload-product" style="height:67px;" ng-click="showUploadProductModal()">

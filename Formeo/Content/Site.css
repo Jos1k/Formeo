@@ -321,4 +321,179 @@ a.list-group-item {
 	padding-right: 5px;
     padding-left: 5px;
 }
+
+.loadingAnimation {
+	height: 10px;
+    width: 100%;
+	    background: rgba( 255, 255, 255, .8 ) 
+                url('~/../../images/ajax-loader.gif') 
+                50% 50% 
+                no-repeat;
+}
 /*# sourceMappingURL=Site.css.map */
+
+/*loading*/
+#ballsWaveG{
+	position:relative;
+	width:144px;
+	height:34px;
+	margin:auto;
+}
+
+.ballsWaveG{
+	position:absolute;
+	top:0;
+	background-color:rgb(52,73,94);
+	width:18px;
+	height:18px;
+	animation-name:ballsWaveG;
+		-o-animation-name:ballsWaveG;
+		-ms-animation-name:ballsWaveG;
+		-webkit-animation-name:ballsWaveG;
+		-moz-animation-name:ballsWaveG;
+	animation-duration:1.3s;
+		-o-animation-duration:1.3s;
+		-ms-animation-duration:1.3s;
+		-webkit-animation-duration:1.3s;
+		-moz-animation-duration:1.3s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:normal;
+		-o-animation-direction:normal;
+		-ms-animation-direction:normal;
+		-webkit-animation-direction:normal;
+		-moz-animation-direction:normal;
+	border-radius:9px;
+		-o-border-radius:9px;
+		-ms-border-radius:9px;
+		-webkit-border-radius:9px;
+		-moz-border-radius:9px;
+}
+
+#ballsWaveG_1{
+	left:0;
+	animation-delay:0.52s;
+		-o-animation-delay:0.52s;
+		-ms-animation-delay:0.52s;
+		-webkit-animation-delay:0.52s;
+		-moz-animation-delay:0.52s;
+}
+
+#ballsWaveG_2{
+	left:18px;
+	animation-delay:0.65s;
+		-o-animation-delay:0.65s;
+		-ms-animation-delay:0.65s;
+		-webkit-animation-delay:0.65s;
+		-moz-animation-delay:0.65s;
+}
+
+#ballsWaveG_3{
+	left:36px;
+	animation-delay:0.78s;
+		-o-animation-delay:0.78s;
+		-ms-animation-delay:0.78s;
+		-webkit-animation-delay:0.78s;
+		-moz-animation-delay:0.78s;
+}
+
+#ballsWaveG_4{
+	left:54px;
+	animation-delay:0.91s;
+		-o-animation-delay:0.91s;
+		-ms-animation-delay:0.91s;
+		-webkit-animation-delay:0.91s;
+		-moz-animation-delay:0.91s;
+}
+
+#ballsWaveG_5{
+	left:72px;
+	animation-delay:1.04s;
+		-o-animation-delay:1.04s;
+		-ms-animation-delay:1.04s;
+		-webkit-animation-delay:1.04s;
+		-moz-animation-delay:1.04s;
+}
+
+#ballsWaveG_6{
+	left:90px;
+	animation-delay:1.17s;
+		-o-animation-delay:1.17s;
+		-ms-animation-delay:1.17s;
+		-webkit-animation-delay:1.17s;
+		-moz-animation-delay:1.17s;
+}
+
+#ballsWaveG_7{
+	left:108px;
+	animation-delay:1.3s;
+		-o-animation-delay:1.3s;
+		-ms-animation-delay:1.3s;
+		-webkit-animation-delay:1.3s;
+		-moz-animation-delay:1.3s;
+}
+
+#ballsWaveG_8{
+	left:126px;
+	animation-delay:1.43s;
+		-o-animation-delay:1.43s;
+		-ms-animation-delay:1.43s;
+		-webkit-animation-delay:1.43s;
+		-moz-animation-delay:1.43s;
+}
+
+
+
+@keyframes ballsWaveG{
+	0%{
+		background-color:rgb(65,201,235);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-o-keyframes ballsWaveG{
+	0%{
+		background-color:rgb(65,201,235);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-ms-keyframes ballsWaveG{
+	0%{
+		background-color:rgb(65,201,235);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-webkit-keyframes ballsWaveG{
+	0%{
+		background-color:rgb(65,201,235);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-moz-keyframes ballsWaveG{
+	0%{
+		background-color:rgb(65,201,235);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+/*end loading*/

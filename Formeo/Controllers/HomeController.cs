@@ -13,6 +13,7 @@ using Formeo.BussinessLayer;
 using Newtonsoft.Json;
 using Microsoft.Practices.Unity;
 using Formeo.BussinessLayer.Interfaces;
+using System.IO;
 
 namespace Formeo.Controllers
 {
@@ -25,6 +26,7 @@ namespace Formeo.Controllers
 		private IUserManager _userManager;
 		private IProjectService _projectService;
 		private ICompaniesManager _companiesManager;
+		private IPrintObjectsManager _printObjectManager;
 
 		[InjectionConstructor]
 		public HomeController(
@@ -32,13 +34,15 @@ namespace Formeo.Controllers
 			IUserService userService,
 			IUserManager userManager,
 			IProjectService projectService,
-			ICompaniesManager companiesManager)
+			ICompaniesManager companiesManager,
+			IPrintObjectsManager printObjectManager )
 		{
 			_printObjectService = printObjectService;
 			_userService = userService;
 			_userManager = userManager;
 			_projectService = projectService;
 			_companiesManager = companiesManager;
+			_printObjectManager = printObjectManager;
 		}
 
 
@@ -149,6 +153,22 @@ namespace Formeo.Controllers
 			ViewBag.Message = "Your contact page.";
 
 			return View();
+		}
+
+		[HttpPost]
+		public ActionResult UploadProduct( string artNo, string productName, HttpPostedFileBase file ) {
+
+			if( file.ContentLength > 0 ) {
+				var user = UserManager.FindById( User.Identity.GetUserId() );
+				var fileName = Path.GetFileName( file.FileName );
+				var path = Path.Combine( Server.MapPath( "~/App_Data/uploads" ), user.Company.Name );
+				( new FileInfo( path ) ).Directory.Create();
+				path = Path.Combine( path , fileName );
+				( new FileInfo( path ) ).Directory.Create();
+				file.SaveAs( path );
+				var result = _printObjectManager.UploadPrintObject( user.Id, artNo, productName, path, 1 );
+			}
+			return RedirectToAction( "Index" );
 		}
 
 

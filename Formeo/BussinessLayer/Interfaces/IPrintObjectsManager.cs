@@ -26,5 +26,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId);
 
 		bool ToggleIsNeedBid(long printObjectId);
+
+		PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
 	}
 }
