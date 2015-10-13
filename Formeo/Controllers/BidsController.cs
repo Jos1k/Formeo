@@ -28,7 +28,7 @@ namespace Formeo.Controllers
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
 		public ActionResult GetBidModal(long printObjectId)
 		{
-			var printObject = _printObjectsService.GetPrintObjectsByIdJSON(printObjectId);
+			var printObject = _printObjectsService.GetPrintObjectsByIdForProducerJSON(printObjectId);
 
 			_BidPrintObjectPartialViewModel viewModel = new _BidPrintObjectPartialViewModel();
 			viewModel.PrintObjectJSON = printObject;

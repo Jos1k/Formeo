@@ -8,9 +8,9 @@ namespace Formeo.BussinessLayer.Interfaces
 	{
 		string GetPrintObjectsByCompanyCreatorJSON(long companyId);
 
-		string GetPrintObjectsByIdsJSON(IEnumerable<long> printObjectIds);
+		string GetPrintObjectsByIdsForCustomerJSON(IEnumerable<long> printObjectIds);
 
-		string GetPrintObjectsByIdJSON(long printObjectId);
+		string GetPrintObjectsByIdForProducerJSON(long printObjectId);
 
 		string GetExclusivePrintObjectsByIdsForCompanyJSON(
 			long companyId,
