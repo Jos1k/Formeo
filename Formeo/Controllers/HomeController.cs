@@ -178,6 +178,7 @@ namespace Formeo.Controllers
 						( new FileInfo( path ) ).Directory.Create();
 						files.ElementAt( i ).SaveAs( path );
 						var result = _printObjectManager.UploadPrintObject( user.Id, products.ElementAt(i).artNo, products.ElementAt(i).productName, path, 1 );
+						
 					}
 				}
 			}

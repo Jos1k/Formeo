@@ -116,7 +116,7 @@ namespace Formeo.BussinessLayer.Services
 				throw new InvalidOperationException("Cannot cast null printobject");
 			}
 
-			bool hasBidsForPrintObject = printObject.Bids.ToArray().Length > 0;
+			bool hasBidsForPrintObject =  printObject.Bids !=null && printObject.Bids.ToArray().Length > 0;
 
 			return new PrintObjectShort()
 			{
