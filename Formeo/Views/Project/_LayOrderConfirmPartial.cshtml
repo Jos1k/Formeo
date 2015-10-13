@@ -1,52 +1,69 @@
-﻿
-<div class="modal-content">
-    <div class="modal-header">
-        <h4 class="modal-title">Lay Order</h4>
+﻿<div class="modal-content">
+    <div class="modal-header" style="background-color: #34495E; color: white;">
+        <h5 class="modal-title"><b>Order Confirmation</b></h5>
     </div>
-    <div class="modal-body">
-        <p>You're about to order following</p>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row head">
-                    <div class="col-md-3">Art.No.</div>
-                    <div class="col-md-3">Product Name</div>
-                    <div class="col-md-3">Quantity</div>
+    <div class="modal-body" style="padding-bottom:25px;">
+        <p>The following order has been layed:</p>
+        <div class="container">
+            @*<p>Order Info:</p>
+                <span ng-bind="orderName"></span>*@
+            <br />
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Art. No.</th>
+                        <th class="col-md-8">Product Name</th>
+                        <th class="col-md-2">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="printObject in printObjectsInfoModal">
+                        <td class="col-md-2">{{printObject.ArtNo}}</td>
+                        <td class="col-md-9">{{printObject.Name}}</td>
+                        <td class="col-md-1">{{printObject.Quantity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><span><b>Order Info: </b>{{orderName}}</span></p>
+            <p><span><b>To:</b> {{deliveryInfo.Surname}} {{deliveryInfo.LastName}}</span></p>
+            <div class="container" style="padding-left:45px;">
+                <div class="row">
+                    <span>{{deliveryInfo.PostCode}}, {{deliveryInfo.Country}}, {{deliveryInfo.City}}</span>
                 </div>
-
-
-                <div ng-repeat="printObject in printObjectsInfoModal">
-                    <div class="row data-row">
-                        <div class="col-md-3">{{printObject.ArtNo}}</div>
-                        <div class="col-md-3">{{printObject.Name}}</div>
-                        <div class="col-md-3">
-                                {{printObject.Quantity}}
-                        </div>
-                    </div>
+                <div class="row">
+                    <span>{{deliveryInfo.Address}}</span>
                 </div>
             </div>
         </div>
 
-        <p>Project Info</p>
+        @*<span ng-bind="deliveryInfo.Surname"></span>
 
-        <span ng-bind="orderName" ></span>
+            <span ng-bind="deliveryInfo.LastName"></span>
 
-        <p>Delivery info</p>
-        <span ng-bind="deliveryInfo.Surname" ></span>
+            <span ng-bind="deliveryInfo.Address"></span>
 
-        <span ng-bind="deliveryInfo.LastName" ></span>
+            <span ng-bind="deliveryInfo.City"></span>
 
-        <span ng-bind="deliveryInfo.Address" ></span>
-
-        <span ng-bind="deliveryInfo.Postal" ></span>
-
-        <span ng-bind="deliveryInfo.City" ></span>
-
-        <span ng-bind="deliveryInfo.Country" ></span>
+            <span ng-bind="deliveryInfo.Country"></span>*@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="CreateOrder()">Lay order</button>
-        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#FF8080" ng-click="cancel()">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+                <div class="col-md-6 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#49c9af;" ng-click="CreateOrder()">
+                        <i class="fa fa-paper-plane-o"></i>
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

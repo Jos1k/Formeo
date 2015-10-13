@@ -43,8 +43,7 @@
                             </button>
                         </li>
                         <li>
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
+                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
                                     <i class="fa fa-sign-out fa-2x" style="color: white"></i>
@@ -56,13 +55,13 @@
                 </div>
                 <div class="sidebar-menu-content">
                     <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
-                        @Html.Partial("Partial/Sections/_dashboard")
+                        @Html.Partial( "Partial/Sections/_dashboard" )
                     </div>
                     <div class="row" ng-show="isActiveMainMenu('/Storage')">
-                        @Html.Partial("Partial/Sections/_storage")
+                        @Html.Partial( "Partial/Sections/_storage" )
                     </div>
                     <div class="row" ng-show="isActiveMainMenu('/Orders')">
-                        @Html.Partial("Partial/Sections/_orders")
+                        @Html.Partial( "Partial/Sections/_orders" )
                     </div>
                 </div>
             </div>
@@ -76,8 +75,8 @@
                 <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
             </span>
 
-            <span ng-show="isActiveMainMenu('/Storage')" style="margin-left:50px">
-                <button type="button" class="btn btn-success" ng-disabled="layOrderButtonIsDisabled" ng-click="showLayOrderModal()">
+            <span style="margin-left:100px">
+                <button type="button" class="btn btn-default btn-upload-product" style="background-color:#49c9af; width:200%;" ng-disabled="isActiveMainMenu('/Storage') && layOrderButtonIsDisabled" ng-click="showLayOrderModal()">
                     <i class="fa fa-paper-plane-o"></i> Lay Order
                 </button>
             </span>

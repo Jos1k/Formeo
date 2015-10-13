@@ -37,45 +37,51 @@
 
     $scope.showLayOrderModal = function () {
 
-        if (!$scope.selectedPrintObjectIds.length) {
-            return;
-        }
+        if ($scope.isActiveMainMenu('/Storage')) {
+            if (!$scope.selectedPrintObjectIds.length) {
+                return;
+            }
 
-        $scope.layOrderButtonIsDisabled = true;
+            $scope.layOrderButtonIsDisabled = true;
 
-        $http({
-            method: 'GET',
-            url: '/Project/LayOrder',
-            params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        }).
-                then(function (response) {
-                    //success
-                    var modalInstance = $modal.open({
-                        template: (response.data),
-                        controller: 'layOrderPartialController',
-                        backdrop: 'static'
-                    });
+            $http({
+                method: 'GET',
+                url: '/Project/LayOrder',
+                params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).
+                    then(function (response) {
+                        //success
+                        var modalInstance = $modal.open({
+                            template: (response.data),
+                            controller: 'layOrderPartialController',
+                            backdrop: 'static',
+                            windowClass: 'app-modal-window-lay-order'
+                        });
 
-                    modalInstance.result.then(function (response) {
-                        $scope.activeProjects.push(response);
-                        $scope.selectedPrintObjectIds = [];
-                        $scope.layOrderButtonIsDisabled = true;
+                        modalInstance.result.then(function (response) {
+                            $scope.activeProjects.push(response);
+                            $scope.selectedPrintObjectIds = [];
+                            $scope.layOrderButtonIsDisabled = true;
+                        }, function (response) {
+                            //error
+                            $modalInstance.dismiss('cancel');
+
+                        });
+
+                        $scope.layOrderButtonIsDisabled = false;
+
+
                     }, function (response) {
                         //error
-                        $modalInstance.dismiss('cancel');
+                        $window.alert('error');
+                        $scope.layOrderButtonIsDisabled = false;
 
                     });
-
-                    $scope.layOrderButtonIsDisabled = false;
-
-
-                }, function (response) {
-                    //error
-                    $window.alert('error');
-                    $scope.layOrderButtonIsDisabled = false;
-
-                });
+        }
+        else {
+            $scope.selectMainMenu('/Storage');
+        }
     }
 
     $scope.isMenuTypeIs = function (type) {

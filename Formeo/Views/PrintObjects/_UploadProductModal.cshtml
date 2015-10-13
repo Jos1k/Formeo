@@ -3,7 +3,7 @@
         <h5 class="modal-title"><b>Upload Product</b></h5>
     </div>
     <div class="modal-body">
-        <p>Products Added</p>
+        <p>Products Added:</p>
         <div class="container">
             <table class="table table-hover">
                 <thead>
@@ -14,19 +14,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat ="product in products">
+                    <tr ng-repeat="product in products">
                         <td>{{product.artNo}}</td>
                         <td>{{product.productName}}</td>
                         <td style="text-align: center;">
-                            <button type="button" class="btn btn-xs btn-default btn-upload-product" style="background-color:#FF8080" ng-click="removeProduct($index)">
-                                <i class="fa fa-times"></i>
-                            </button>
+                            <a href="#" ng-click="removeProduct($index)">
+                                <i class="fa fa-times fa-lg" style="color:#FF8080"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p>Product Info</p>
+        <p>Product Info:</p>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 uploadProductModalButton">
@@ -46,7 +46,7 @@
                     </button>
                 </div>
             </div>
-            <div id="ballsWaveG">          
+            <div id="ballsWaveG">
                 <div id="ballsWaveG_1" class="ballsWaveG" ng-show="isUploadInProgress"></div>
                 <div id="ballsWaveG_2" class="ballsWaveG" ng-show="isUploadInProgress"></div>
                 <div id="ballsWaveG_3" class="ballsWaveG" ng-show="isUploadInProgress"></div>
@@ -83,5 +83,3 @@
         </div>
     </div>
 </div>
-
-

@@ -47,12 +47,10 @@
                       $modalInstance.close(response);
                   }, function (response) {
                       //error
-                      $window.alert('error 123');
-                      $modalInstance.dismiss('cancel');
+                      //$window.alert('error 123');
+                      //$modalInstance.dismiss('cancel');
 
                   });
-
-
               }, function (response) {
                   //error
                   $window.alert('error');
@@ -81,16 +79,14 @@
                       template: (response.data),
                       controller: 'addProductsPartialController',
                       backdrop: 'static',
+                      windowClass: '.app-modal-window-lay-order-add-product',
                       resolve: {
                           parentPrintObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
                       }
                   });
-
-
               }, function (response) {
                   //error
                   $window.alert('error');
-
               });
     }
 

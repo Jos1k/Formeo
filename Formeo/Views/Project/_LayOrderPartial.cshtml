@@ -1,67 +1,104 @@
 ﻿@model Formeo.Models.LayOrderViewModel
 
 <div ng-init="printObjectsInfoModal = @Model.PrintObjectsInfoJSON" />
-<div class="modal-content">
-    <div class="modal-header">
-        <h4 class="modal-title">Lay Order</h4>
+<div class="modal-content" style="border-radius: 0; border:none;">
+    <div class=" modal-header" style="background-color: #34495E; color: white;">
+        <h5 class="modal-title"><b>Lay Order</b></h5>
     </div>
     <div class="modal-body">
-        <p>You're about to order following</p>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row head">
-                    <div class="col-md-3">Art.No.</div>
-                    <div class="col-md-3">Product Name</div>
-                    <div class="col-md-3">Quantity</div>
-                    <div class="col-md-3">Actions</div>
-                </div>
-
-
-                <div ng-repeat="printObject in printObjectsInfoModal">
-                    <div class="row data-row">
-                        <div class="col-md-3">{{printObject.ArtNo}}</div>
-                        <div class="col-md-3">{{printObject.Name}}</div>
-                        <div class="col-md-3">
+        <p>You're about to order following:</p>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">Art.No.</th>
+                        <th class="col-md-9">Product Name</th>
+                        <th class="col-md-1">Quantity</th>
+                        <th class="col-md-1">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="printObject in printObjectsInfoModal">
+                        <td>{{printObject.ArtNo}}</td>
+                        <td>{{printObject.Name}}</td>
+                        <td style="text-align: center;">
                             <div class="input-group">
-                                <a href="#" ng-click="increasePrintObjectQuantity(printObject)"> <i class="fa fa-plus-square"></i></a>
+                                <a href="#" ng-click="increasePrintObjectQuantity(printObject)" style="padding-right:5px;">
+                                    <i class="fa fa-plus-square fa-lg" style="color:#49c9af"></i>
+                                </a>
                                 {{printObject.Quantity}}
-                                <a href="#" ng-click="decreasePrintObjectQuantity(printObject)"> <i class="fa fa-minus-square"></i></a>
+                                <a href="#" ng-click="decreasePrintObjectQuantity(printObject)" style="padding-left:5px;">
+                                    <i class="fa fa-minus-square fa-lg" style="color:#49c9af"></i>
+                                </a>
                             </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <a href="#" ng-click="removePrintObjectFromOrder(printObject)"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="#" ng-click="removePrintObjectFromOrder(printObject)">
+                                <i class="fa fa-times fa-lg" style="color:#FF8080"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Order info:</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="Order Name" ng-model="orderName">
                 </div>
             </div>
         </div>
-
-
-        <p>Order info</p>
-
-        <input placeholder="Order Name" ng-model="orderName" type="text" />
-
-
         <p>Delivery info</p>
-        <div ng-init="deliveryInfo" />
-
-        <input placeholder="Surname" ng-model="deliveryInfo.Surname" type="text" />
-
-        <input placeholder="Last Name" ng-model="deliveryInfo.LastName" type="text" />
-
-        <input placeholder="Delivery address" ng-model="deliveryInfo.Address" type="text" />
-
-        <input placeholder="Postal code" ng-model="deliveryInfo.PostCode" type="text" />
-
-        <input placeholder="City" ng-model="deliveryInfo.City" type="text" />
-
-        <input placeholder="Counry" ng-model="deliveryInfo.Country" type="text" />
-
+        <div class="container" ng-init="deliveryInfo">
+            <div class="row">
+                <div class="col-md-6 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="First Name" ng-model="deliveryInfo.Surname">
+                </div>
+                <div class="col-md-6 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="Last Name" ng-model="deliveryInfo.LastName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 uploadProductModalButton">
+                    <textarea class="form-control login-textbox" rows="2" placeholder="Delivery address" ng-model="deliveryInfo.Address" style="resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="City" ng-model="deliveryInfo.City">
+                </div>
+                <div class="col-md-4 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="Country" ng-model="deliveryInfo.Country">
+                </div>
+                <div class="col-md-3 uploadProductModalButton">
+                    <input type="number" class="form-control login-textbox" placeholder="Postal code" ng-model="deliveryInfo.PostCode">
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="LayOrder()">Lay order</button>
-        <button type="button" class="btn btn-default" ng-click="AddProduct()">Add Product</button>
-        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <div class="modal-footer" style="padding-top:15px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#FF8080" ng-click="cancel()">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+                <div class="col-md-4 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#C2C2C2;" ng-click="AddProduct()">
+                        <i class="fa fa-plus"></i>
+                        Add Product
+                    </button>
+                </div>
+                <div class="col-md-4 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" ng-click="LayOrder()">
+                        <i class="fa fa-paper-plane-o"></i>
+                        Lay order
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

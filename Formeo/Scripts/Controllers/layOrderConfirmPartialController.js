@@ -1,4 +1,4 @@
-﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $modal, $http, printObjectsInfoModal, deliveryInfo, orderName) {
+﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $http, printObjectsInfoModal, deliveryInfo, orderName) {
 
     $scope.orderName = orderName;
 

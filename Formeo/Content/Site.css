@@ -300,9 +300,22 @@ a.list-group-item {
 .app-modal-window .modal-dialog {
   width: 500px;
   border-radius: 0;
-  padding-top: 150px;
+  /*padding-top: 100px;*/
 }
-.app-modal-window .modal-dialog .modal-content{
+
+.app-modal-window-lay-order .modal-dialog {
+  width: 600px;
+  border-radius: 0;
+  /*padding-top: 100px;*/
+}
+
+.app-modal-window-lay-order-add-product .modal-dialog {
+  width: 600px;
+  border-radius: 0;
+  /*padding-top: 100px;*/
+}
+
+.modal-dialog .modal-content{
   border-radius: 0;
   border:none;
 }
