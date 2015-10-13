@@ -255,6 +255,7 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\_BidPrintObjectPartialViewModel.cs" />
+    <Compile Include="Models\_BidsForPrintObjectsViewModal.cs" />
     <Compile Include="Models\_IndexAdminViewModel.cs" />
     <Compile Include="Models\_IndexCustomerViewModel.cs" />
     <Compile Include="Models\_IndexProducerViewModel.cs" />
@@ -319,6 +320,7 @@
     <Content Include="Scripts\Controllers\commonController.js" />
     <Content Include="Scripts\Controllers\layOrderConfirmPartialController.js" />
     <Content Include="Scripts\Controllers\layOrderPartialController.js" />
+    <Content Include="Scripts\Controllers\bidsForPrintObjectController.js" />
     <Content Include="Scripts\Controllers\producerPageController.js" />
     <Content Include="Scripts\Controllers\customerPageController.js" />
     <Content Include="Scripts\Controllers\adminPageController.js" />
@@ -380,6 +382,7 @@
     <Content Include="Views\Project\_LayOrderConfirmPartial.cshtml" />
     <Content Include="Views\Project\_AddProductsPartial.cshtml" />
     <Content Include="Views\Bids\_BidPrintObjectPartial.cshtml" />
+    <Content Include="Views\Bids\_BidsForPrintObjectPatrial.cshtml" />
     <Content Include="Views\PrintObjects\_UploadProductModal.cshtml" />
   </ItemGroup>
   <ItemGroup>

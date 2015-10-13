@@ -60,25 +60,31 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 			IEnumerable<PrintObject> printObjectsResult =
 				from printObject in _dbContext.PrintObjects
 				where
-					!( from bid in _dbContext.Bids
-					   where bid.CompanyProducer.ID == producerCompany.ID
-					   select bid.PrintObject.ID )
-					.Contains( printObject.ID )
+					!(from bid in _dbContext.Bids
+					  where bid.CompanyProducer.ID == producerCompany.ID
+					  select bid.PrintObject.ID)
+					.Contains(printObject.ID)
 					&& printObject.IsNeedBid == isNeedBid
 				select printObject;
 
 			return printObjectsResult;
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer(
-				long companyId,
-				Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-			) {
-			return from printObject in _dbContext.PrintObjects
-				   join projectInfo in _dbContext.ProjectsInfo
-				   on printObject.ID equals projectInfo.PrintObject.ID
-				   where projectInfo.CompanyProducer.ID == companyId
-				   select printObject;
+		public IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer
+		(
+			long companyId,
+			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
+		)
+		{
+			return _dbContext.PrintObjects
+				.Where(po => po.CompanyProducer.ID == companyId)
+				.Join(
+					_dbContext.ProjectsInfo
+					, printObject => printObject.ID
+					, projectInfo => projectInfo.PrintObjectId
+					, (printObject, projectInfo) => printObject
+				)
+				.ToArray();
 		}
 
 		public IEnumerable<PrintObject> GetPrintObjectsByOrder( long orderId ) {
@@ -101,6 +107,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 			return printObject.IsNeedBid;
 		}
 
+		public void AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
+		{
+			PrintObject printObject = GetPrintObjectById(printObjectId);
+			Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
+
+			printObject.CompanyProducer = producerCompany;
+			_dbContext.SaveChanges();
+		}
 		public PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId ) {
 
 			ApplicationUser creator = _dbContext.Users.FirstOrDefault( x => x.Id == userId );

@@ -12,9 +12,11 @@ namespace Formeo.BussinessLayer.Services
 	public class PrintObjectService : IPrintObjectsService
 	{
 		IPrintObjectsManager _printObjectsManager;
-		public PrintObjectService(IPrintObjectsManager printObjectsManager)
+		IBidsManager _bidsManager;
+		public PrintObjectService(IPrintObjectsManager printObjectsManager, IBidsManager bidsManager)
 		{
 			_printObjectsManager = printObjectsManager;
+			_bidsManager = bidsManager;
 		}
 
 		#region IPrintObjectService Members
@@ -32,7 +34,7 @@ namespace Formeo.BussinessLayer.Services
 				return string.Empty;
 			}
 
-			IReadOnlyList<PrintObjectShort> printObjectsShort = 
+			IReadOnlyList<PrintObjectShort> printObjectsShort =
 				printObjects.Select(po =>
 					PrintObjectToShort(po))
 					.ToArray();
@@ -44,7 +46,7 @@ namespace Formeo.BussinessLayer.Services
 		{
 			var printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
 
-			if (printObject == null )
+			if (printObject == null)
 			{
 				return string.Empty;
 			}
@@ -58,7 +60,7 @@ namespace Formeo.BussinessLayer.Services
 		{
 			var printObjects = _printObjectsManager.GetPrintObjectsByCreatorCompany(companyId);
 			var printObjectsShort = printObjects.Select(
-				 po => PrintObjectToShort(po)
+					po => PrintObjectToShort(po)
 				).ToList();
 
 			return JsonConvert.SerializeObject(printObjectsShort);
@@ -71,21 +73,20 @@ namespace Formeo.BussinessLayer.Services
 			var printObjectsShort = printObjects
 				.Where(po => !printObjectIdsToExlude.Contains(po.ID))
 				.Select(po =>
-					PrintObjectToShort(po)
+						PrintObjectToShort(po)
 					)
-				 .ToList();
+				.ToList();
 
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
-		public string GetNeedBidPrintObjectsForProducerJSON(string producerId,bool isNeedBid)
+		public string GetNeedBidPrintObjectsForProducerJSON(string producerId, bool isNeedBid)
 		{
 			var printObject = _printObjectsManager.GetNeedBidPrintObjectsForProducer(producerId, isNeedBid);
 			var printObjectShort = printObject.Select(po => PrintObjectToShort(po));
 
 			return JsonConvert.SerializeObject(printObjectShort);
 		}
-
 
 		public string GetPrintObjectsByCompanyProducerJSON(
 			long companyId,
@@ -108,19 +109,24 @@ namespace Formeo.BussinessLayer.Services
 
 		#endregion
 
-		private PrintObjectShort PrintObjectToShort(PrintObject printObject)
+		private PrintObjectShort PrintObjectToShort(PrintObject printObject, bool hasBids = false)
 		{
 			if (printObject == null)
 			{
 				throw new InvalidOperationException("Cannot cast null printobject");
 			}
+
+			bool hasBidsForPrintObject = printObject.Bids.ToArray().Length > 0;
+
 			return new PrintObjectShort()
 			{
 				Id = printObject.ID,
 				ArtNo = printObject.ArticleNo,
 				Name = printObject.Name,
 				IsNeedBid = printObject.IsNeedBid,
-				CompanyName = printObject.CompanyCreator.Name
+				CompanyName = printObject.CompanyCreator.Name,
+				HasBids = hasBidsForPrintObject,
+				Quantity = 1
 			};
 		}
 
@@ -130,8 +136,9 @@ namespace Formeo.BussinessLayer.Services
 			public string Name { get; set; }
 			public long ArtNo { get; set; }
 			public bool IsNeedBid { get; set; } //finish togglebid on UI
-			public int  Quantity { get; set; }
+			public int Quantity { get; set; }
 			public string CompanyName { get; set; }
+			public bool HasBids { get; set; }
 		}
 	}
 }

@@ -17,6 +17,7 @@ namespace Formeo.Models
 		public virtual ApplicationUser UserCreator { get; set; }
 
 		public virtual Company CompanyCreator { get; set; }
+		public Company CompanyProducer { get; set; }
 
 		public long ArticleNo { get; set; }
 
@@ -29,8 +30,9 @@ namespace Formeo.Models
 
 		public virtual ICollection<ProjectInfo> ProjectPrintObjectQuantityRelatios { get; set; }
 
-		public virtual PrintMaterial PrintMaterial { get; set; }
+		public virtual ICollection<Bid> Bids { get; set; }
 
+		public virtual PrintMaterial PrintMaterial { get; set; }
 		public bool IsNeedBid { get; set; }
 	}
 }

@@ -8,5 +8,7 @@ namespace Formeo.BussinessLayer.Interfaces
 	public interface IBidsService
 	{
 		string CreateBidJSON(long printObjectId, decimal price);
+
+		string GetBidsForPrintObjectJSON(long printObjectId);
 	}
 }

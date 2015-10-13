@@ -96,7 +96,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			throw new NotImplementedException();
 		}
 
-
 		public IEnumerable<Project> GetProjectsByStatus(StaticData.OrderStatusEnum ordersStatus)
 		{
 			return _dbcontext

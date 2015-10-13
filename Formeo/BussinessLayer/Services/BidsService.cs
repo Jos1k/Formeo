@@ -30,8 +30,19 @@ namespace Formeo.BussinessLayer.Services
 			}
 
 			Bid newBid = _bidsManager.CreateBid(printObjectId, user.Company.ID, price);
-			BidShort bshort = BidToShort(newBid);
+			BidForProducerShort bshort = BidToForProducerShort(newBid);
 			return JsonConvert.SerializeObject(bshort);
+		}
+
+		public string GetBidsForPrintObjectJSON(long printObjectId) 
+		{
+			IEnumerable<Bid> bids = _bidsManager.GetBidsForPrintObject(printObjectId);
+			IEnumerable<BidForCustomerShort> bidsShort = bids.
+				Select(
+				bid =>
+					BidToForCustomerShort(bid)
+				).ToArray();
+			return JsonConvert.SerializeObject(bidsShort);
 		}
 
 		#endregion
@@ -39,13 +50,29 @@ namespace Formeo.BussinessLayer.Services
 
 		#region Helpers
 
-		private BidShort BidToShort(Bid bid)
+		private BidForCustomerShort BidToForCustomerShort(Bid bid)
 		{
 			if (bid == null)
 			{
 				return null;
 			}
-			BidShort shortBid = new BidShort();
+			BidForCustomerShort shortBid = new BidForCustomerShort();
+			shortBid.ProducerCompanyName = bid.CompanyProducer.Name;
+			shortBid.ProducerCompanyId = bid.CompanyProducer.ID;
+			shortBid.Price = bid.Price;
+			shortBid.PrintObjectId = bid.PrintObject.ID;
+			shortBid.PrintObjectName = bid.PrintObject.Name;
+			shortBid.ArtNo = bid.PrintObject.ArticleNo;
+			return shortBid;
+		}
+
+		private BidForProducerShort BidToForProducerShort(Bid bid)
+		{
+			if (bid == null)
+			{
+				return null;
+			}
+			BidForProducerShort shortBid = new BidForProducerShort();
 			shortBid.CompanyCreatorName = bid.PrintObject.CompanyCreator.Name;
 			shortBid.Price = bid.Price;
 			shortBid.PrintObjectId = bid.PrintObject.ID;
@@ -55,12 +82,22 @@ namespace Formeo.BussinessLayer.Services
 
 		#endregion
 
-		class BidShort
+		class BidForProducerShort
 		{
 			public string PrintObjectName { get; set; }
 			public long PrintObjectId { get; set; }
 			public string CompanyCreatorName { get; set; }
 			public decimal Price { get; set; }
+		}
+
+		class BidForCustomerShort
+		{
+			public string PrintObjectName { get; set; }
+			public long PrintObjectId { get; set; }
+			public long ArtNo { get; set; }
+			public decimal Price { get; set; }
+			public long ProducerCompanyId { get; set; }
+			public string ProducerCompanyName { get; set; }
 		}
 	}
 }

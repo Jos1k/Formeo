@@ -16,7 +16,7 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId);
 
-		IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId,bool isNeedBid);
+		IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId, bool isNeedBid);
 
 		IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer(
 			long companyId,
@@ -26,6 +26,8 @@ namespace Formeo.BussinessLayer.Interfaces
 		IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId);
 
 		bool ToggleIsNeedBid(long printObjectId);
+
+		void AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 
 		PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
 	}
