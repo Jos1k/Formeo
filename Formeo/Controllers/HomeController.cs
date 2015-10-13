@@ -1,4 +1,5 @@
-﻿using Formeo.Models;
+﻿using Formeo.Controllers.CustomAttributes;
+using Formeo.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -155,22 +156,33 @@ namespace Formeo.Controllers
 			return View();
 		}
 
-		[HttpPost]
-		public ActionResult UploadProduct( string artNo, string productName, HttpPostedFileBase file ) {
 
-			if( file.ContentLength > 0 ) {
-				var user = UserManager.FindById( User.Identity.GetUserId() );
-				var fileName = Path.GetFileName( file.FileName );
-				var path = Path.Combine( Server.MapPath( "~/App_Data/uploads" ), user.Company.Name );
-				( new FileInfo( path ) ).Directory.Create();
-				path = Path.Combine( path , fileName );
-				( new FileInfo( path ) ).Directory.Create();
-				file.SaveAs( path );
-				var result = _printObjectManager.UploadPrintObject( user.Id, artNo, productName, path, 1 );
-			}
-			return RedirectToAction( "Index" );
+		public class Product {
+			public string artNo { get;set;}
+			public string productName { get; set; }
 		}
 
+		[HttpPost]
+		public ActionResult UploadProduct(IEnumerable<Product> products, IEnumerable<HttpPostedFileBase> files ) {
+
+			if (files.Count() > 0)
+			{
+				for (int i = 0; i < products.Count(); i++)
+				{
+					if( files.ElementAt(i).ContentLength > 0 ) {
+						var user = UserManager.FindById( User.Identity.GetUserId() );
+						var fileName = Path.GetFileName( files.ElementAt( i ).FileName );
+						var path = Path.Combine( Server.MapPath( "~/App_Data/uploads" ), user.Company.Name );
+						( new FileInfo( path ) ).Directory.Create();
+						path = Path.Combine( path, fileName );
+						( new FileInfo( path ) ).Directory.Create();
+						files.ElementAt( i ).SaveAs( path );
+						var result = _printObjectManager.UploadPrintObject( user.Id, products.ElementAt(i).artNo, products.ElementAt(i).productName, path, 1 );
+					}
+				}
+			}
+			return RedirectToAction( "Index" );
+		} 
 
 		#region Helpers
 		private _IndexAdminViewModel GetAdminHomepageViewModel()

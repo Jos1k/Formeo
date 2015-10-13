@@ -8,4 +8,6 @@ formeoAngularMVCApp.controller('producerPageController', producerPageController)
 formeoAngularMVCApp.controller('layOrderPartialController', layOrderPartialController);
 formeoAngularMVCApp.controller('layOrderConfirmPartialController', layOrderConfirmPartialController);
 formeoAngularMVCApp.controller('addProductsPartialController', addProductsPartialController);
-formeoAngularMVCApp.controller('bidsForPrintObjectController', bidsForPrintObjectController);formeoAngularMVCApp.controller('uploadProductController', uploadProductController);
+formeoAngularMVCApp.controller('bidsForPrintObjectController', bidsForPrintObjectController);
+formeoAngularMVCApp.controller('uploadProductController', uploadProductController);
+formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
