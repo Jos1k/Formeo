@@ -177,10 +177,11 @@
             </div>
 
 
-            <div ng-init="printObjects = @Model.PrintObjectsJSON" />
+          
 
             <div ng-show="isActiveMainMenu('/Storage')">
 
+                <div ng-init="printObjects = @Model.PrintObjectsJSON" />
 
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -229,24 +230,27 @@
                                     <i class="fa fa-download"></i>
                                 </div>
                             </div>
-                            <div class="row data-row" ng-show="pr">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-3">{{}}</div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2 actions"></div>
+                            <div class="row data-row" ng-show="printObject.SelecterProducerCompanyId!=null">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">{{printObject.CompanyName}}</div>
+                                <div class="col-md-6"></div>
+                            </div>
+                            <div class="row data-row" ng-show="printObject.SelecterProducerCompanyId!=null">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">{{printObject.CurrentPrice}}</div>
+                                <div class="col-md-6"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div ng-init="activeProjects = @Model.ActiveProjectsJSON" />
-            <div ng-init="completedProjects = @Model.CompletedProjectsJSON" />
+
 
             <div ng-show="isActiveMainMenu('/Orders')">
 
+                <div ng-init="activeProjects = @Model.ActiveProjectsJSON" />
+                <div ng-init="completedProjects = @Model.CompletedProjectsJSON" />
 
                 <div class="panel panel-default">
                     <div class="panel-body">

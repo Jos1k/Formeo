@@ -133,6 +133,15 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
+		public string AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
+		{
+			PrintObject printObject =
+				_printObjectsManager.AssignProducerToPrintObject(producerCompanyId, printObjectId);
+
+			PrintObjectForCustomerShort poShort = PrintObjectForCustomerToShort(printObject);
+			return JsonConvert.SerializeObject(poShort);
+		}
+
 		#endregion
 
 		private PrintObjectForProducerShort PrintObjectForProducerToShort(PrintObject printObject, int quantity = 0)
@@ -163,6 +172,19 @@ namespace Formeo.BussinessLayer.Services
 
 			bool hasBidsForPrintObject = printObject.Bids != null && printObject.Bids.Count > 0;
 
+			long? selectedCompanyProducerID = null;
+			string selectedProducerCompanyName = null;
+			decimal? selectedPrice = null;
+
+			if (printObject.CompanyProducer != null)
+			{
+				selectedProducerCompanyName = printObject.CompanyProducer == null ? null : printObject.CompanyProducer.Name;
+				selectedCompanyProducerID = printObject.CompanyProducer == null ? (long?)null : printObject.CompanyProducer.ID;
+
+				Bid selectedBid = _bidsManager.GetSelecetdBidForPrintObject(printObject.ID);
+				selectedPrice = selectedBid == null ? (decimal?)null : selectedBid.Price;
+			}
+
 			return new PrintObjectForCustomerShort()
 			{
 				Id = printObject.ID,
@@ -171,9 +193,11 @@ namespace Formeo.BussinessLayer.Services
 				IsNeedBid = printObject.IsNeedBid,
 				HasBids = hasBidsForPrintObject,
 				Quantity = 1,
-				SelecterProducerCompanyId = printObject.CompanyProducer == null ? -1 : printObject.CompanyProducer.ID,
-				CompanyName = printObject.CompanyProducer == null ? null : printObject.CompanyProducer.Name
+				SelecterProducerCompanyId = selectedCompanyProducerID,
+				CompanyName = selectedProducerCompanyName,
+				CurrentPrice = selectedPrice
 			};
+
 		}
 
 		#region Classes
@@ -191,7 +215,9 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 			public bool IsNeedBid { get; set; }
 			public bool HasBids { get; set; }
-			public long SelecterProducerCompanyId { get; set; }
+			public long? SelecterProducerCompanyId { get; set; }
+			public decimal? CurrentPrice { get; set; }
+
 		}
 
 		private class PrintObjectForProducerShort : PrintObjectBaseShort
@@ -200,6 +226,9 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 		}
 		#endregion
+
+
+
 
 	}
 }

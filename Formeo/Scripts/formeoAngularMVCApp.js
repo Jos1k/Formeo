@@ -1,6 +1,6 @@
 ﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', ['ngFileUpload', 'ui.bootstrap']);
 
-formeoAngularMVCApp.controller('commonController', commonController);
+//formeoAngularMVCApp.controller('commonController', commonController);
 formeoAngularMVCApp.controller('adminPageController', adminPageController);
 formeoAngularMVCApp.controller('customerPageController', customerPageController);
 formeoAngularMVCApp.controller('producerPageController', producerPageController);
@@ -15,7 +15,7 @@ formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialC
 
 formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal) {
     var root = {};
-    root.showUpload = function () {
+    root.showUpload = function (parentPrintObjectList) {
         $http({
             method: 'GET',
             url: '/PrintObjects/UploadProductShowModal',
@@ -34,7 +34,7 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
 
             modalInstance.result.then(function (response) {
                 //modal success
-                return response;
+                parentPrintObjectList.push(response);
             }, function (response) {
                 //modal error
                // $window.alert('error uploading files');
@@ -50,3 +50,19 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
     }
     return root;
 });
+
+formeoAngularMVCApp.config(['$httpProvider', function ($httpProvider) {
+    //initialize get if not there
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
+
+    // Answer edited to include suggestions from comments
+    // because previous version of code introduced browser-related errors
+
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+    // extra
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+}]);

@@ -27,5 +27,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		string GetPrintObjectByOrderJSON(long orderId);
 
 		string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos);
+
+		string AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 	}
 }

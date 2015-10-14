@@ -12,14 +12,20 @@
     }
 
     $scope.selectSingleItem = function (position, entities) {
-        angular.forEach(entities, function (bid, index) {
-            if (position != index) {
-                bid.IsSelected = false;
+
+        for (var i = 0; i < entities.length; i++) {
+            if (position != i) {
+                $scope.bids[i].IsSelected = false;
             }
             else {
-                $scope.selectedProducerCompanyId = bid.ProducerCompanyId;
+                if ($scope.bids[i].IsSelected) {
+                    $scope.selectedProducerCompanyId = $scope.bids[i].ProducerCompanyId;
+                } else {
+                    $scope.selectedProducerCompanyId = null;
+
+                }
             }
-        });
+        }
     };
 
     $scope.SaveSelectProducerCompany = function () {
@@ -38,7 +44,7 @@
                 then(function (response) {
                     //success
                     //no data here from responce
-                    $modalInstance.close($scope.selectedProducerCompanyId);
+                    $modalInstance.close(response.data);
                 }, function (response) {
                     //http error
                     $modalInstance.dismiss("close");

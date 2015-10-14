@@ -135,6 +135,7 @@ namespace Formeo.Controllers
 			viewModel.Dashboard_BidRequestedPrintObjects = _printObjectService.GetNeedBidPrintObjectsForProducerJSON(currentUser.Id, true);
 			viewModel.Dashboard_PrintObjectsDelivered = _projectService.GetProjectsByCompanyJSON(company.ID, StaticData.OrderStatusEnum.Delivered);
 
+			viewModel.Storage_PrintObjects = _printObjectService.GetPrintObjectsByCompanyCreatorJSON(company.ID);
 			return View(viewModel);
 		}
 

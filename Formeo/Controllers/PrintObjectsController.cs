@@ -35,8 +35,8 @@ namespace Formeo.Controllers
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
 		public ActionResult AssingProducerToPrintObject(long producerCompanyId, long printObjectId)
 		{
-			_printObjecsManager.AssignProducerToPrintObject(producerCompanyId, printObjectId);
-			return new HttpStatusCodeResult(HttpStatusCode.OK);
+			string refreshedPrintObject = _printObjectsService.AssignProducerToPrintObject(producerCompanyId, printObjectId);
+			return Json(refreshedPrintObject);
 		}
 
 		public sealed class Product

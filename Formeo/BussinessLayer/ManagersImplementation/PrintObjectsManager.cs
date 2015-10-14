@@ -3,6 +3,7 @@ using Formeo.Models;
 using Formeo.Models.HelperModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -30,6 +31,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 		#region  IPrintObjectsManager members
 		public IEnumerable<PrintObject> GetPrintObjectsByCreatorCompany(long comapnyId)
 		{
+
 			List<PrintObject> printObjects =
 				_dbContext
 					.PrintObjects
@@ -123,14 +125,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObject.IsNeedBid;
 		}
 
-		public void AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
-		{
-			PrintObject printObject = GetPrintObjectById(printObjectId);
-			Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
+		//public void AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
+		//{
+		//	PrintObject printObject = GetPrintObjectById(printObjectId);
+		//	Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
 
-			printObject.CompanyProducer = producerCompany;
-			_dbContext.SaveChanges();
-		}
+		//	printObject.CompanyProducer = producerCompany;
+		//	_dbContext.SaveChanges();
+		//}
 
 		public IEnumerable<PrintObject> UploadPrintObjects(IEnumerable<PrintObjectFileInfo> fileInfos)
 		{
@@ -146,7 +148,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			{
 				string currentCompanyName = _comaniesManager.GetCurrentCompany().Name;
 				string dirName = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), currentCompanyName);
-				(new FileInfo(dirName)).Directory.Create();
+				Directory.CreateDirectory(dirName);
 
 				string fileName = Path.Combine(dirName, fileInfo.File.FileName);
 
@@ -156,6 +158,23 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			}
 			return resultPrintObjects;
 		}
+
+		public PrintObject AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
+		{
+			PrintObject printObject = GetPrintObjectById(printObjectId);
+			Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
+
+			if (printObject.CompanyProducer == null ||
+				(printObject.CompanyProducer.ID != producerCompany.ID)) //saving the same data causes errors...at it's bad for karma 
+			{
+				printObject.CompanyProducer = producerCompany;
+				_dbContext.SaveChanges();
+			}
+
+			return printObject;
+		}
+
+		#endregion
 
 		private PrintObject CreatePrintObjectByFileInfo(PrintObjectFileInfo fileInfo, string fileName)
 		{
@@ -176,8 +195,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return resultPrintObject;
 		}
 
-
-		#endregion
 
 	}
 }
