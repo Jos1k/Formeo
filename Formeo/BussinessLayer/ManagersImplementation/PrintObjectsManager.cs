@@ -121,7 +121,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			}
 			printObject.IsNeedBid = !printObject.IsNeedBid;
 			_dbContext.SaveChanges();
-
+			_dbContext.Entry(printObject).Reload();
 			return printObject.IsNeedBid;
 		}
 
@@ -169,6 +169,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			{
 				printObject.CompanyProducer = producerCompany;
 				_dbContext.SaveChanges();
+				_dbContext.Entry(printObject).Reload();
 			}
 
 			return printObject;
