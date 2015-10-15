@@ -19,23 +19,22 @@
     $scope.selectedPrintObjectIds = [];
     $scope.layOrderButtonIsDisabled = true;
 
-    $scope.addOrRemovePrintobject = function (printObjectId) {
+    $scope.addOrRemovePrintobject = function(printObjectId) {
         var index = $scope.selectedPrintObjectIds.indexOf(printObjectId);
 
         if (index > -1) {
             $scope.selectedPrintObjectIds.splice(index, 1);
-        }
-        else {
+        } else {
             $scope.selectedPrintObjectIds.push(printObjectId);
         }
         $scope.layOrderButtonIsDisabled = $scope.selectedPrintObjectIds.length > 0 ? false : true;
-    }
+    };
 
     $scope.printObjectIsSelected = function (printObjectId) {
         return $scope.selectedPrintObjectIds.indexOf(printObjectId) > -1;
-    }
+    };
 
-    $scope.showLayOrderModal = function () {
+    $scope.showLayOrderModal = function() {
 
         if ($scope.isActiveMainMenu('/Storage')) {
             if (!$scope.selectedPrintObjectIds.length) {
@@ -50,39 +49,38 @@
                 params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
-                    then(function (response) {
-                        //success
-                        var modalInstance = $modal.open({
-                            template: (response.data),
-                            controller: 'layOrderPartialController',
-                            backdrop: 'static',
-                            windowClass: 'app-modal-window-lay-order'
-                        });
+                then(function(response) {
+                    //success
+                    var modalInstance = $modal.open({
+                        template: (response.data),
+                        controller: 'layOrderPartialController',
+                        backdrop: 'static',
+                        windowClass: 'app-modal-window-lay-order'
+                    });
 
-                        modalInstance.result.then(function (response) {
-                            $scope.activeProjects.push(response);
-                            $scope.selectedPrintObjectIds = [];
-                            $scope.layOrderButtonIsDisabled = true;
-                        }, function (response) {
-                            //error
-                            $modalInstance.dismiss('cancel');
-
-                        });
-
-                        $scope.layOrderButtonIsDisabled = false;
-
-
-                    }, function (response) {
+                    modalInstance.result.then(function(response) {
+                        $scope.activeProjects.push(response);
+                        $scope.selectedPrintObjectIds = [];
+                        $scope.layOrderButtonIsDisabled = true;
+                    }, function(response) {
                         //error
-                        $window.alert('error');
-                        $scope.layOrderButtonIsDisabled = false;
+                        $modalInstance.dismiss('cancel');
 
                     });
-        }
-        else {
+
+                    $scope.layOrderButtonIsDisabled = false;
+
+
+                }, function(response) {
+                    //error
+                    $window.alert('error');
+                    $scope.layOrderButtonIsDisabled = false;
+
+                });
+        } else {
             $scope.selectMainMenu('/Storage');
         }
-    }
+    };
 
     $scope.isMenuTypeIs = function (type) {
         return $scope.menuType === type;

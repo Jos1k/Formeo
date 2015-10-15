@@ -54,15 +54,18 @@
     };
 
     $scope.showBidProductModal = function (printObjectId) {
+        if ($scope.isActiveMainMenu('/Dashboard')) {
 
-        if (printObjectId == "" || printObjectId <= 0) { return; }
+            if (printObjectId == "" || printObjectId <= 0) {
+                return;
+            }
 
-        $http({
-            method: 'GET',
-            url: '/Bids/GetBidModal',
-            params: { 'printObjectId': printObjectId },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        }).
+            $http({
+                method: 'GET',
+                url: '/Bids/GetBidModal',
+                params: { 'printObjectId': printObjectId },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).
                 then(function (response) {
                     //success
                     var modalInstance = $modal.open({
@@ -82,12 +85,15 @@
                     });
 
 
-
                 }, function (response) {
                     //http error
                     $window.alert('error');
                 });
-    }
+        }
+        else {
+            $scope.selectMainMenu('/Dashboard');
+        }
+    };
 
     $scope.removeItemById = function (elements, id) {
         angular.forEach(elements, function (element, index) {

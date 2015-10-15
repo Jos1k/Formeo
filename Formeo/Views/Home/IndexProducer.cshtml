@@ -71,11 +71,12 @@
             <input type="text" class="form-control" placeholder="Search user">
             <span class="input-group-btn">
                 <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
+            </span>            
+            <span style="margin-left:100px">
+                <button type="button" class="btn btn-default btn-upload-product" style="background-color:#49c9af; width:200%;" ng-disabled="isActiveMainMenu('/Dashboard') && layOrderButtonIsDisabled" ng-click="showBidProductModal(selectedPrintObjectToBidId)">
+                    <i class="fa fa-money"></i> Bid product
+                </button>
             </span>
-
-            <button type="button" class="btn btn-success" style="margin-left:50px" ng-disabled="layOrderButtonIsDisabled" ng-click="showBidProductModal(selectedPrintObjectToBidId)">
-                <i class="fa fa-money"></i> Bid product
-            </button>
         </div>
 
         <br />
