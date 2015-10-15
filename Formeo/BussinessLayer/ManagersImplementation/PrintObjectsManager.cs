@@ -198,6 +198,12 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return resultPrintObject;
 		}
 
+		public string GetPrintObjectFilePath( long printObjectId ) {
+			return _dbContext.PrintObjects.Find( printObjectId ).CadFile;
+		}
 
+		#region IPrintObjectsManager Members
+
+		#endregion
 	}
 }

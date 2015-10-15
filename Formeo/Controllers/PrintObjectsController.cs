@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Formeo.Controllers
 {
@@ -61,6 +62,12 @@ namespace Formeo.Controllers
 		public ActionResult UploadProductShowModal()
 		{
 			return PartialView("_UploadProductModal");
+		}
+
+		[HttpPost]
+		public FileResult Download( long printObjectId ) {
+			return new FileStreamResult( new FileStream( _printObjecsManager.GetPrintObjectFilePath( printObjectId ), FileMode.Open ), "application/pdf" ); 
+				//File( _printObjecsManager.GetPrintObjectFilePath( printObjectId ), System.Net.Mime.MediaTypeNames.Application.Octet );
 		}
 	}
 }

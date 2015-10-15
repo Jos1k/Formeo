@@ -7,12 +7,13 @@ using Formeo.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Security;
+using System.IO;
 
 
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+						DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -247,40 +248,45 @@ namespace Formeo.EFInfrastructure
 			{
 				new PrintObject()
 				{
+					ArticleNo = "1",
 					Name = "PrintObject1",
-					CadFile = "CadFile1",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(0),
-					CompanyCreator = companies.ElementAt(0)
+					CompanyCreator = companies.ElementAt(0),
+					UserCreator = users.ElementAt(0)
 				},
 
 				new PrintObject()
 				{
+					ArticleNo = "2",
 					Name = "PrintObject2",
-					CadFile = "CadFile2",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(1),
-					CompanyCreator = companies.ElementAt(0)
-
+					CompanyCreator = companies.ElementAt(0),
+					UserCreator = users.ElementAt(0)
 				},
 
 				new PrintObject()
 				{
+					ArticleNo = "3",
 					Name = "PrintObject3",
-					CadFile = "CadFile3",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(2),
-					CompanyCreator = companies.ElementAt(0)
+					CompanyCreator = companies.ElementAt(0),
 
 				},
 
 				new PrintObject()
 				{
+					ArticleNo = "4",
 					Name = "PrintObject4",
-					CadFile = "CadFile4",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile4",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(3),
@@ -291,8 +297,9 @@ namespace Formeo.EFInfrastructure
 
 				new PrintObject()
 				{
+					ArticleNo = "5",
 					Name = "PrintObject5",
-					CadFile = "CadFile5",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(4),
@@ -303,24 +310,26 @@ namespace Formeo.EFInfrastructure
 				new PrintObject()
 				{
 					Name = "PrintObject6",
-					CadFile = "CadFile7",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
-					ArticleNo = "123456789"
+					ArticleNo = "123456789",
+					CompanyCreator = users.ElementAt(0).Company
 				},
 
 				
 				new PrintObject()
 				{
 					Name = "PrintObject7",
-					CadFile = "CadFile7",
+					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
-					ArticleNo = "1"
+					ArticleNo = "99",
+					CompanyCreator = users.ElementAt(0).Company
 				}
 			};
 

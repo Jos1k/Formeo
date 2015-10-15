@@ -48,14 +48,14 @@
                     files: uploadListFiles
                 }
             })
-                            .progress(function (evt) {
-                                $scope.isUploadInProgress = true;
-                            })
-                            .success(function (data, status, headers, config) {
-                                $scope.isUploadInProgress = false;
-                                alert("Uploading finished!");
-                                $modalInstance.close(data);
-                            });
+                .progress(function (evt) {
+                $scope.isUploadInProgress = true;
+                })
+                .success(function (data, status, headers, config) {
+                $scope.isUploadInProgress = false;
+                alert("Uploading finished!");
+                $modalInstance.close(data);
+            });
         }
     };
     $scope.removeProduct = function (productIndex) {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Formeo.BussinessLayer.Interfaces
 {
@@ -32,5 +33,6 @@ namespace Formeo.BussinessLayer.Interfaces
 		//PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
 
 		IEnumerable<PrintObject> UploadPrintObjects(IEnumerable<Models.HelperModels.PrintObjectFileInfo> fileInfos);
+		string GetPrintObjectFilePath( long printObjectId );
 	}
 }
