@@ -1,4 +1,4 @@
-﻿var producerPageController = function ($scope, $http, $modal, UploadPrinObject, productService) {
+﻿var producerPageController = function ($scope, $http, $modal, UploadPrinObject) {
     $scope.userModel = {
         username: '',
         password: '',
@@ -11,6 +11,7 @@
         isAdmin: false
     };
 
+    UploadPrinObject.storeScope($scope, 'printObjects');
     $scope.selectedMainMenu = '/Dashboard';
     $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
