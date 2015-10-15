@@ -205,7 +205,7 @@ namespace Formeo.BussinessLayer.Services
 		{
 			public long Id { get; set; }
 			public string Name { get; set; }
-			public long ArtNo { get; set; }
+			public string ArtNo { get; set; }
 			public int Quantity { get; set; }
 		}
 

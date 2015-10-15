@@ -1,4 +1,4 @@
-﻿var producerPageController = function ($scope, $http, $modal, UploadPrinObject) {
+﻿var producerPageController = function ($scope, $http, $modal, UploadPrinObject, productService) {
     $scope.userModel = {
         username: '',
         password: '',
@@ -118,7 +118,6 @@
     };
 
     $scope.showUploadProductModal = function () {
-        var newPrintObjects = UploadPrinObject.showUpload();
-        $scope.printObjects.push(newPrintObjects);
+        UploadPrinObject.showUpload();
     }
 }

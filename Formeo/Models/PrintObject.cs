@@ -19,7 +19,7 @@ namespace Formeo.Models
 		public virtual Company CompanyCreator { get; set; }
 		public Company CompanyProducer { get; set; }
 
-		public long ArticleNo { get; set; }
+		public string ArticleNo { get; set; }
 
 		public string CadFile { get; set; }
 

@@ -95,7 +95,7 @@ namespace Formeo.BussinessLayer.Services
 		{
 			public string PrintObjectName { get; set; }
 			public long PrintObjectId { get; set; }
-			public long ArtNo { get; set; }
+			public string ArtNo { get; set; }
 			public decimal Price { get; set; }
 			public long ProducerCompanyId { get; set; }
 			public string ProducerCompanyName { get; set; }

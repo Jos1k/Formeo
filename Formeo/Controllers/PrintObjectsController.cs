@@ -41,7 +41,7 @@ namespace Formeo.Controllers
 
 		public sealed class Product
 		{
-			public int artNo { get; set; }
+			public string artNo { get; set; }
 			public string productName { get; set; }
 		}
 

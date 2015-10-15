@@ -1,5 +1,5 @@
 ﻿var customerPageController = function ($scope, $window, $http, $modal, UploadPrinObject) {
-
+    UploadPrinObject.storeScope($scope, 'printObjects');
     $scope.selectedMainMenu = '/Dashboard';
     $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';

@@ -308,7 +308,7 @@ namespace Formeo.EFInfrastructure
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
-					ArticleNo = 123456789
+					ArticleNo = "123456789"
 				},
 
 				
@@ -320,7 +320,7 @@ namespace Formeo.EFInfrastructure
 					CustomerArticleNumber = "CustomerArticleNumber",
 					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
-					ArticleNo = 1
+					ArticleNo = "1"
 				}
 			};
 

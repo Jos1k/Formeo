@@ -318,7 +318,6 @@
     <Content Include="Scripts\Controllers\bidProductPartialController.js" />
     <Content Include="Scripts\Controllers\addProductsPartialController.js" />
     <Content Include="Scripts\Controllers\uploadProductController.js" />
-    <Content Include="Scripts\Controllers\commonController.js" />
     <Content Include="Scripts\Controllers\layOrderConfirmPartialController.js" />
     <Content Include="Scripts\Controllers\layOrderPartialController.js" />
     <Content Include="Scripts\Controllers\bidsForPrintObjectController.js" />

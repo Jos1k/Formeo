@@ -150,8 +150,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				string dirName = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), currentCompanyName);
 				Directory.CreateDirectory(dirName);
 
-				string fileName = Path.Combine(dirName, fileInfo.File.FileName);
+				dirName = Path.Combine(dirName, Guid.NewGuid().ToString());
+				Directory.CreateDirectory( dirName );
 
+				string fileName = Path.Combine(dirName, fileInfo.File.FileName);
 				fileInfo.File.SaveAs(fileName);
 
 				resultPrintObjects.Add(CreatePrintObjectByFileInfo(fileInfo, fileName));

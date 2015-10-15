@@ -15,7 +15,13 @@ formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialC
 
 formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal) {
     var root = {};
-    root.showUpload = function (parentPrintObjectList) {
+    var scope = {};
+
+    root.storeScope = function (scopeInstance, propertyName) {
+        scope.instance = scopeInstance;
+        scope.printObjectsProperty = propertyName;
+    };
+    root.showUpload = function () {
         $http({
             method: 'GET',
             url: '/PrintObjects/UploadProductShowModal',
@@ -34,10 +40,15 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
 
             modalInstance.result.then(function (response) {
                 //modal success
-                parentPrintObjectList.push(response);
+                var products = JSON.parse(response);
+                if (products && products.length != 0) {
+                    for (var i = 0; i < products.length; i++) {
+                        scope.instance[scope.printObjectsProperty].push(products[i]);
+                    }
+                }
             }, function (response) {
                 //modal error
-               // $window.alert('error uploading files');
+                // $window.alert('error uploading files');
 
             });
         }, function (response) {
