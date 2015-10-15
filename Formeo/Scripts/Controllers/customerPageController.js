@@ -160,4 +160,8 @@
         UploadPrinObject.showUpload($scope.printObjects);
     }
 
+    $scope.download = function (printObjectId) {
+        UploadPrinObject.download(printObjectId);
+    }
+
 }

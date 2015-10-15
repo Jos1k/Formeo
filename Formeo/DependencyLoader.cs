@@ -39,7 +39,7 @@ namespace Formeo
 			container.RegisterType<IProjectService, ProjectService>();
 			container.RegisterType<IBidsService, BidsService>();
 
-			container.RegisterType<ApplicationDbContext>(new PerThreadLifetimeManager());
+			container.RegisterType<ApplicationDbContext>(new PerRequestLifetimeManager());
 
 			return container;
 		}

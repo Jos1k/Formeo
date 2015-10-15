@@ -1,6 +1,5 @@
 ﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', ['ngFileUpload', 'ui.bootstrap']);
 
-//formeoAngularMVCApp.controller('commonController', commonController);
 formeoAngularMVCApp.controller('adminPageController', adminPageController);
 formeoAngularMVCApp.controller('customerPageController', customerPageController);
 formeoAngularMVCApp.controller('producerPageController', producerPageController);
@@ -13,7 +12,7 @@ formeoAngularMVCApp.controller('uploadProductController', uploadProductControlle
 formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
 
 
-formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal) {
+formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal, $timeout) {
     var root = {};
     var scope = {};
 
@@ -21,6 +20,28 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
         scope.instance = scopeInstance;
         scope.printObjectsProperty = propertyName;
     };
+
+    root.download = function (printObjectId) {
+        return $http({
+            url: '/PrintObjects/Download',
+            method: 'POST',
+            data: { printObjectId: printObjectId },
+            responseType: 'blob'
+        })
+            .then(function (response) {
+                try {
+                    $timeout(function () {
+                        saveAs(response.data, "printobjectProduct.pdf");
+                    });
+                } catch (ex) {
+                    console.log(ex);
+                }
+            }, function (response) {
+                // error
+                //return $q.reject(response.data);
+            });
+    }
+
     root.showUpload = function () {
         $http({
             method: 'GET',
@@ -44,6 +65,7 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
                 if (products && products.length != 0) {
                     for (var i = 0; i < products.length; i++) {
                         scope.instance[scope.printObjectsProperty].push(products[i]);
+                        scope.instance['selectedMainMenu'] = '/Storage';
                     }
                 }
             }, function (response) {

@@ -1,4 +1,4 @@
-﻿var bidProductPartialController = function ($scope, $modalInstance, $window, $http) {
+﻿var bidProductPartialController = function ($scope, $modalInstance, $window, $http, UploadPrinObject) {
 
     $scope.asd = "Hi";
     $scope.price = 0.01;
@@ -7,7 +7,9 @@
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-
+    $scope.download = function (printObjectId) {
+        UploadPrinObject.download(printObjectId);
+    };
     $scope.BidProduct = function () {
         $http({
             method: 'POST',
