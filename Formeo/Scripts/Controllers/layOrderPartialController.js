@@ -52,7 +52,8 @@
                       resolve: {
                           orderName: function () { return $scope.orderName; },
                           printObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
-                          deliveryInfo: function () { return $scope.deliveryInfo; }
+                          deliveryInfo: function () { return $scope.deliveryInfo; },
+                          totalPrice: function () { return $scope.TotalPrice; }
                       }
                   });
                   modalInstance.result.then(function (response) {

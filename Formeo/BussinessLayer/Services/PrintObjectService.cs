@@ -217,6 +217,7 @@ namespace Formeo.BussinessLayer.Services
 			public bool HasBids { get; set; }
 			public long? SelectedProducerCompanyId { get; set; }
 			public decimal? CurrentPrice { get; set; }
+			public bool IsSelected { get; set; }
 
 		}
 
@@ -226,9 +227,6 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 		}
 		#endregion
-
-
-
 
 	}
 }

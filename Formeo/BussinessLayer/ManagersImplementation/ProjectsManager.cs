@@ -10,19 +10,22 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 	public class ProjectsManager : IProjectsManager
 	{
 		private IPrintObjectsManager _printObjectsManager;
-		IUserManager _userManager;
-		ICompaniesManager _companiesManager;
-		ApplicationDbContext _dbcontext;
+		private IUserManager _userManager;
+		private ICompaniesManager _companiesManager;
+		private IBidsManager _bidsManager;
+		private ApplicationDbContext _dbcontext;
 
 		public ProjectsManager(IPrintObjectsManager printObjectsManager,
 			IUserManager userManager,
 			ApplicationDbContext dbContext,
-			ICompaniesManager companiesManager)
+			ICompaniesManager companiesManager,
+			IBidsManager bidsManager)
 		{
 			_printObjectsManager = printObjectsManager;
 			_userManager = userManager;
 			_dbcontext = dbContext;
 			_companiesManager = companiesManager;
+			_bidsManager = bidsManager;
 		}
 
 		public Project CreateProject(
@@ -62,31 +65,32 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newProject.ZipCode = deliveryInfo.PostCode;
 			newProject.Creator = creatorUser;
 			newProject.Status = newStatus;
+			newProject.CompanyCreator = company;
 
 			_dbcontext.Projects.Add(newProject);
 			//_dbcontext.SaveChanges();
 
-
+			decimal totalPrice = 0;
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
 			{
-				PrintObject poEntity = _dbcontext
-					.PrintObjects
-					.Where(po => po.ID == poInfo.PrintObjectId)
-					.FirstOrDefault(); //the same hack
-				//_printObjectsManager.GetPrintObjectById(poInfo.PrintObjectId);
+				PrintObject poEntity = _printObjectsManager.GetPrintObjectById(poInfo.PrintObjectId);
+				Bid selectedBid = _bidsManager.GetSelecetdBidForPrintObject(poInfo.PrintObjectId);
 
-				if (poEntity != null)
+				if (poEntity != null && selectedBid != null)
 				{
 					ProjectInfo rel = new ProjectInfo();
 					rel.PrintObject = poEntity;
 					rel.Project = newProject;
 					rel.Quantity = poInfo.Quantity;
+
+					totalPrice += selectedBid.Price * poInfo.Quantity;
+
 					_dbcontext.ProjectsInfo.Add(rel);
 					_dbcontext.SaveChanges();
 				}
 				overallQuantity += poInfo.Quantity;
 			}
-
+			newProject.OrderPrice = totalPrice;
 			_dbcontext.SaveChanges();
 			return newProject;
 		}

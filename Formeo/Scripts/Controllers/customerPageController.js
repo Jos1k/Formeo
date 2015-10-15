@@ -8,8 +8,9 @@
     $scope.selectedPrintObjectIds = [];
     $scope.layOrderButtonIsDisabled = true;
 
-    $scope.addOrRemovePrintobject = function(printObjectId) {
+    $scope.addOrRemovePrintobject = function (printObjectId) {
         var index = $scope.selectedPrintObjectIds.indexOf(printObjectId);
+        $scope.selectedPrintObjectIds.IsSelected = $scope.selectedPrintObjectIds.IsSelected;
 
         if (index > -1) {
             $scope.selectedPrintObjectIds.splice(index, 1);
@@ -23,7 +24,7 @@
         return $scope.selectedPrintObjectIds.indexOf(printObjectId) > -1;
     };
 
-    $scope.showLayOrderModal = function() {
+    $scope.showLayOrderModal = function () {
 
         if ($scope.isActiveMainMenu('/Storage')) {
             if (!$scope.selectedPrintObjectIds.length) {
@@ -38,7 +39,7 @@
                 params: { 'selectedPrintObjectIds': $scope.selectedPrintObjectIds },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
-                then(function(response) {
+                then(function (response) {
                     //success
                     var modalInstance = $modal.open({
                         template: (response.data),
@@ -47,21 +48,26 @@
                         windowClass: 'app-modal-window-lay-order'
                     });
 
-                    modalInstance.result.then(function(response) {
+                    modalInstance.result.then(function (response) {
                         $scope.activeProjects.push(response);
                         $scope.selectedPrintObjectIds = [];
                         $scope.layOrderButtonIsDisabled = true;
+
+                        angular.forEach($scope.printObjects, function (printObject, index) {
+                            printObject.IsSelected = false;
+                        });
+
                     },
                     function (response) {
                         //error
-                      // modalInstance.dismiss('cancel');
+                        // modalInstance.dismiss('cancel');
 
                     });
 
                     $scope.layOrderButtonIsDisabled = false;
 
 
-                }, function(response) {
+                }, function (response) {
                     //error
                     $window.alert('error');
                     $scope.layOrderButtonIsDisabled = false;
@@ -136,7 +142,7 @@
 
                         for (var i = 0; i < $scope.printObjects.length; i++) {
                             if ($scope.printObjects[i].Id == printObjectId) {
-                                $scope.printObjects[i] =JSON.parse(  response);
+                                $scope.printObjects[i] = JSON.parse(response);
                             }
                         }
 

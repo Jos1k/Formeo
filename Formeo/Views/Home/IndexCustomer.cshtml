@@ -204,7 +204,7 @@
                         <div ng-repeat="printObject in printObjects">
                             <div class="row data-row">
                                 <div class="col-md-1">
-                                    <input type="checkbox" ng-show="printObject.SelectedProducerCompanyId != null" ng-checked="printObject.IsSelected" ng-click="addOrRemovePrintobject(printObject.Id)" />
+                                    <input type="checkbox" ng-show="printObject.SelectedProducerCompanyId != null" ng-model="printObject.IsSelected" ng-click="addOrRemovePrintobject(printObject.Id)" />
                                 </div>
                                 <div class="col-md-2">
                                     {{printObject.ArtNo}}

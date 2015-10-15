@@ -1,6 +1,7 @@
-﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $http, printObjectsInfoModal, deliveryInfo, orderName) {
+﻿var layOrderConfirmPartialController = function ($scope, $modalInstance, $window, $http, printObjectsInfoModal, deliveryInfo, orderName, totalPrice) {
 
     $scope.orderName = orderName;
+    $scope.totalPrice = totalPrice;
 
     $scope.deliveryInfo = deliveryInfo;
     $scope.printObjectsInfoModal = printObjectsInfoModal;
@@ -15,9 +16,7 @@
         $scope.printObjectsInfoModal.forEach(function (item, i, arr) {
             infosParam.push
                 ({
-                    PrintObjectId: item.PrintObjectId,
-                    //ArtNo: item.ArtNo,
-                    //Name: item.Name,
+                    PrintObjectId: item.Id,
                     Quantity: item.Quantity
                 });
         });

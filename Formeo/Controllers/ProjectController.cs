@@ -101,7 +101,7 @@ namespace Formeo.Controllers
 				ProjectId = newProject.ID,
 				Name = newProject.Name,
 				Quantity = newProject.OverallQuantity,
-				IsCompleted = false, //hack. should fix later
+				IsCompleted = false, //hack. should fix later to do by services
 			};
 	
 			return Json(result);
