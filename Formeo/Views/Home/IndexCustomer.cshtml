@@ -204,7 +204,7 @@
                         <div ng-repeat="printObject in printObjects">
                             <div class="row data-row">
                                 <div class="col-md-1">
-                                    <input type="checkbox" ng-checked="printObjectIsSelected(printObject.Id)" ng-click="addOrRemovePrintobject(printObject.Id)" />
+                                    <input type="checkbox" ng-show="printObject.SelectedProducerCompanyId != null" ng-checked="printObject.IsSelected" ng-click="addOrRemovePrintobject(printObject.Id)" />
                                 </div>
                                 <div class="col-md-2">
                                     {{printObject.ArtNo}}
@@ -229,12 +229,12 @@
                                     <i class="fa fa-download"></i>
                                 </div>
                             </div>
-                            <div class="row data-row" ng-show="printObject.SelecterProducerCompanyId!=null">
+                            <div class="row data-row" ng-show="printObject.SelectedProducerCompanyId!=null">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-3">{{printObject.CompanyName}}</div>
                                 <div class="col-md-6"></div>
                             </div>
-                            <div class="row data-row" ng-show="printObject.SelecterProducerCompanyId!=null">
+                            <div class="row data-row" ng-show="printObject.SelectedProducerCompanyId!=null">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-3">{{printObject.CurrentPrice}}</div>
                                 <div class="col-md-6"></div>

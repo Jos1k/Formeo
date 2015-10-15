@@ -39,6 +39,8 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 			_dbContext.Bids.Add(newBid);
 			_dbContext.SaveChanges();
+			_dbContext.Entry(newBid.PrintObject).Reload();
+			_dbContext.Entry(newBid.CompanyProducer).Reload();
 
 			return newBid;
 		}

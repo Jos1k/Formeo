@@ -15,7 +15,7 @@
             index.Quantity = 1;//hack
             $scope.parentPrintObjectsInfoModal.push(index);
         });
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close($scope.parentPrintObjectsInfoModal);
     };
 
     $scope.printObjectIsSelected = function (printObject) {

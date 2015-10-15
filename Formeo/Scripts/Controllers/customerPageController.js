@@ -51,9 +51,10 @@
                         $scope.activeProjects.push(response);
                         $scope.selectedPrintObjectIds = [];
                         $scope.layOrderButtonIsDisabled = true;
-                    }, function(response) {
+                    },
+                    function (response) {
                         //error
-                        $modalInstance.dismiss('cancel');
+                      // modalInstance.dismiss('cancel');
 
                     });
 
@@ -139,7 +140,6 @@
                             }
                         }
 
-                        $scope.printObjects.push(response);
                         $scope.selectedPrintObjectIds = [];
                     }, function (response) {
                         //error

@@ -1,6 +1,6 @@
 ﻿var layOrderPartialController = function ($scope, $modalInstance, $window, $modal, $http) {
 
-    $scope.asd = "Hi";
+    $scope.TotalPrice = 0;
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
@@ -8,11 +8,13 @@
 
     $scope.increasePrintObjectQuantity = function (printObject) {
         printObject.Quantity += 1;
+        $scope.TotalPrice += printObject.CurrentPrice;
     }
 
     $scope.decreasePrintObjectQuantity = function (printObject) {
         if (printObject.Quantity - 1 > 0) {
             printObject.Quantity -= 1;
+            $scope.TotalPrice -= printObject.CurrentPrice;
         }
     }
 
@@ -21,7 +23,17 @@
 
         if (index > -1) {
             $scope.printObjectsInfoModal.splice(index, 1);
+            $scope.RecalculateTotalPrice();
         }
+    }
+
+    $scope.RecalculateTotalPrice = function () {
+        $scope.TotalPrice = 0;
+        angular.forEach($scope.printObjectsInfoModal, function (printObject, index) {
+            $scope.TotalPrice += printObject.CurrentPrice * printObject.Quantity;
+        });
+
+        return $scope.TotalPrice;
     }
 
     $scope.LayOrder = function () {
@@ -84,10 +96,23 @@
                           parentPrintObjectsInfoModal: function () { return $scope.printObjectsInfoModal; },
                       }
                   });
+
+                  modalInstance.result.then(function (response) {
+                      $scope.RecalculateTotalPrice();
+                  },
+                    function (response) {
+                        //error
+                        // modalInstance.dismiss('cancel');
+
+                    });
+
+
               }, function (response) {
                   //error
                   $window.alert('error');
+
               });
+
     }
 
 }

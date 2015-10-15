@@ -44,9 +44,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds)
 		{
-			List<PrintObject> printObjects = _dbContext.PrintObjects.Where(
-				po => printObjectIds.Contains(po.ID)
-			).ToList();
+			List<PrintObject> printObjects = _dbContext
+				.PrintObjects
+				.Include("Bids")
+				.Include("CompanyProducer")
+				.Where(
+					po => printObjectIds.Contains(po.ID)
+				).ToList();
+
 			return printObjects;
 		}
 
@@ -151,7 +156,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				Directory.CreateDirectory(dirName);
 
 				dirName = Path.Combine(dirName, Guid.NewGuid().ToString());
-				Directory.CreateDirectory( dirName );
+				Directory.CreateDirectory(dirName);
 
 				string fileName = Path.Combine(dirName, fileInfo.File.FileName);
 				fileInfo.File.SaveAs(fileName);

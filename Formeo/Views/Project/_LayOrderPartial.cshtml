@@ -6,13 +6,15 @@
         <h5 class="modal-title"><b>Lay Order</b></h5>
     </div>
     <div class="modal-body">
+        <div ng-init="TotalPrice = RecalculateTotalPrice()"/>
         <p>You're about to order following:</p>
         <div class="container">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th class="col-md-1">Art.No.</th>
-                        <th class="col-md-9">Product Name</th>
+                        <th class="col-md-6">Product Name</th>
+                        <th class="col-md-3">Current Price</th>
                         <th class="col-md-1">Quantity</th>
                         <th class="col-md-1">Actions</th>
                     </tr>
@@ -21,6 +23,7 @@
                     <tr ng-repeat="printObject in printObjectsInfoModal">
                         <td>{{printObject.ArtNo}}</td>
                         <td>{{printObject.Name}}</td>
+                        <td>{{printObject.CurrentPrice}}</td>
                         <td style="text-align: center;">
                             <div class="input-group">
                                 <a href="#" ng-click="increasePrintObjectQuantity(printObject)" style="padding-right:5px;">
@@ -40,6 +43,13 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    Total Price: {{TotalPrice}}
+                </div>
+            </div>
         </div>
         <p>Order info:</p>
         <div class="container">

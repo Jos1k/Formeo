@@ -193,7 +193,7 @@ namespace Formeo.BussinessLayer.Services
 				IsNeedBid = printObject.IsNeedBid,
 				HasBids = hasBidsForPrintObject,
 				Quantity = 1,
-				SelecterProducerCompanyId = selectedCompanyProducerID,
+				SelectedProducerCompanyId = selectedCompanyProducerID,
 				CompanyName = selectedProducerCompanyName,
 				CurrentPrice = selectedPrice
 			};
@@ -215,7 +215,7 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 			public bool IsNeedBid { get; set; }
 			public bool HasBids { get; set; }
-			public long? SelecterProducerCompanyId { get; set; }
+			public long? SelectedProducerCompanyId { get; set; }
 			public decimal? CurrentPrice { get; set; }
 
 		}
