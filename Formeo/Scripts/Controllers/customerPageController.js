@@ -1,15 +1,4 @@
-﻿var customerPageController = function ($scope, $window, $http, $modal) {
-    $scope.userModel = {
-        username: '',
-        password: '',
-        email: '',
-        address: '',
-        postal: '',
-        country: '',
-        isProduction: false,
-        isCustomer: false,
-        isAdmin: false
-    };
+﻿var customerPageController = function ($scope, $window, $http, $modal, UploadPrinObject) {
 
     $scope.selectedMainMenu = '/Dashboard';
     $scope.selectedClientsMenu = '/AddUser';
@@ -143,24 +132,32 @@
                     });
 
                     modalInstance.result.then(function (response) {
-                        $scope.activeProjects.push(response);
+
+                        for (var i = 0; i < $scope.printObjects.length; i++) {
+                            if ($scope.printObjects[i].Id == printObjectId) {
+                                $scope.printObjects[i] =JSON.parse(  response);
+                            }
+                        }
+
+                        $scope.printObjects.push(response);
                         $scope.selectedPrintObjectIds = [];
-                        $scope.layOrderButtonIsDisabled = true;
                     }, function (response) {
                         //error
                         $modalInstance.dismiss('cancel');
 
                     });
 
-                    $scope.layOrderButtonIsDisabled = false;
 
 
                 }, function (response) {
                     //error
                     $window.alert('error');
-                    $scope.layOrderButtonIsDisabled = false;
 
                 });
+    }
+
+    $scope.showUploadProductModal = function () {
+        UploadPrinObject.showUpload($scope.printObjects);
     }
 
 }

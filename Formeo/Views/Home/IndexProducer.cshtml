@@ -152,10 +152,66 @@
 
             </div> @*Dashboard*@
 
-            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <br />
+            <div ng-show="isActiveMainMenu('/Storage')">
+
+                <div ng-init="printObjects = @Model.Storage_PrintObjects" />
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Results</h4>
+                            </div>
+                            <div class="col-md-2 line-height">
+                                <i class="fa fa-plus right"></i>
+                            </div>
+                        </div>
+                        <div class="row head">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">Art.No.</div>
+                            <div class="col-md-3">Product Name</div>
+                            @*<div class="col-md-2">Select bid</div>
+                                <div class="col-md-2">Demand Bids</div>*@
+                            <div class="col-md-2">Actions</div>
+                        </div>
+
+                        <div ng-repeat="printObject in printObjects">
+                            <div class="row data-row">
+                                <div class="col-md-1">
+                                    <input type="checkbox" ng-checked="printObjectIsSelected(printObject.Id)" ng-click="addOrRemovePrintobject(printObject.Id)" />
+                                </div>
+                                <div class="col-md-2">
+                                    {{printObject.ArtNo}}
+                                </div>
+                                <div class="col-md-3">
+                                    {{printObject.Name}}
+                                </div>
+                                @*<div class="col-md-2">
+                                        <a ng-show="printObject.HasBids">
+                                            <i class="fa fa-usd" ng-click="ShowBidsForPrintObject(printObject.Id)"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="#" ng-click="toogleIsNeedBid(printObject);">
+                                            <i class=" fa fa-square-o" ng-show="!printObject.IsNeedBid"></i>
+                                            <i class="fa fa-check-square-o" ng-show="printObject.IsNeedBid"></i>
+                                        </a>
+                                    </div>*@
+                                <div class="col-md-2 actions">
+                                    <i class="fa fa-stack-exchange"></i>
+                                    <i class="fa fa-photo"></i>
+                                    <i class="fa fa-download"></i>
+                                </div>
+                            </div>
+                            <div class="row data-row" ng-show="pr">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">{{}}</div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2 actions"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

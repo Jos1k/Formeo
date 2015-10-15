@@ -12,5 +12,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		Company GetCompanyByUserId(string userId);
 
 		Company GetCompanyById(long companyId);
+
+		Company GetCurrentCompany();
 	}
 }

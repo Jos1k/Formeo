@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Formeo.Models
 {
-	public class PrintMaterial
-	{
-		[Key]
-		public long ID { get; set; }
-		public string Name { get; set; }
-	}
+	//public class PrintMaterial
+	//{
+	//	[Key]
+	//	public long ID { get; set; }
+	//	public string Name { get; set; }
+	//}
 }

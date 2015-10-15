@@ -63,6 +63,7 @@ namespace Formeo.BussinessLayer.Services
 			shortBid.PrintObjectId = bid.PrintObject.ID;
 			shortBid.PrintObjectName = bid.PrintObject.Name;
 			shortBid.ArtNo = bid.PrintObject.ArticleNo;
+			shortBid.IsSelected = bid.PrintObject.CompanyProducer == null ? false : bid.PrintObject.CompanyProducer.ID == bid.CompanyProducer.ID;
 			return shortBid;
 		}
 
@@ -98,6 +99,7 @@ namespace Formeo.BussinessLayer.Services
 			public decimal Price { get; set; }
 			public long ProducerCompanyId { get; set; }
 			public string ProducerCompanyName { get; set; }
+			public bool IsSelected { get; set; }
 		}
 	}
 }

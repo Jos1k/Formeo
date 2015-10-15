@@ -42,7 +42,7 @@ namespace Formeo.Controllers
 
 			viewModel.PrintObjectsInfoJSON =
 				_printObjectService
-				.GetPrintObjectsByIdsJSON(selectedPrintObjectIds);
+				.GetPrintObjectsByIdsForCustomerJSON(selectedPrintObjectIds);
 
 			return PartialView("_LayOrderPartial", viewModel);
 		}
@@ -106,19 +106,5 @@ namespace Formeo.Controllers
 	
 			return Json(result);
 		}
-
-		#region Helpers
-
-		private LayOrderViewModel GetLayOrderViewModel(long[] selectedPrintObjectIds)
-		{
-			LayOrderViewModel viewModel = new LayOrderViewModel();
-
-			viewModel.PrintObjectsInfoJSON =
-				_printObjectService.GetPrintObjectsByIdsJSON(selectedPrintObjectIds);
-
-			return viewModel;
-		}
-
-		#endregion
 	}
 }

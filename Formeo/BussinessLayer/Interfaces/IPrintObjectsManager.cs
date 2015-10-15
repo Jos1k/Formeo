@@ -27,8 +27,10 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		bool ToggleIsNeedBid(long printObjectId);
 
-		void AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
+		PrintObject AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 
-		PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
+		//PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
+
+		IEnumerable<PrintObject> UploadPrintObjects(IEnumerable<Models.HelperModels.PrintObjectFileInfo> fileInfos);
 	}
 }

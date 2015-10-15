@@ -37,5 +37,13 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				.Where(company => company.ID == companyId)
 				.SingleOrDefault();
 		}
+
+		public Company GetCurrentCompany() 
+		{
+			ApplicationUser currentUser = _userManager.GetCurrentUser();
+			return currentUser.Company;
+		}
+
+
 	}
 }

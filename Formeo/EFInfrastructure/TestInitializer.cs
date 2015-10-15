@@ -208,36 +208,36 @@ namespace Formeo.EFInfrastructure
 
 			#region PrintMaterial
 
-			List<PrintMaterial> printMaterials = new List<PrintMaterial>()
-			{
-				new PrintMaterial()
-				{
-					Name = "PrintMaterial1",
+			//List<PrintMaterial> printMaterials = new List<PrintMaterial>()
+			//{
+			//	new PrintMaterial()
+			//	{
+			//		Name = "PrintMaterial1",
 				
-				},
+			//	},
 
-				new PrintMaterial()
-				{
-					Name = "PrintMaterial2",
-				},
-				new PrintMaterial()
-				{
-					Name = "PrintMaterial3",
-				},
-				new PrintMaterial()
-				{
-					Name = "PrintMaterial4",
-				},
-				new PrintMaterial()
-				{
-					Name = "PrintMaterial5",
-				}
+			//	new PrintMaterial()
+			//	{
+			//		Name = "PrintMaterial2",
+			//	},
+			//	new PrintMaterial()
+			//	{
+			//		Name = "PrintMaterial3",
+			//	},
+			//	new PrintMaterial()
+			//	{
+			//		Name = "PrintMaterial4",
+			//	},
+			//	new PrintMaterial()
+			//	{
+			//		Name = "PrintMaterial5",
+			//	}
 
-			};
+			//};
 
-			printMaterials.ForEach(pm => context.PrintMaterials.Add(pm));
+			//printMaterials.ForEach(pm => context.PrintMaterials.Add(pm));
 
-			context.SaveChanges();
+			//context.SaveChanges();
 
 			#endregion
 
@@ -251,7 +251,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile1",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(0),
+					//PrintMaterial = printMaterials.ElementAt(0),
 					CompanyCreator = companies.ElementAt(0)
 				},
 
@@ -261,7 +261,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile2",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(1),
+					//PrintMaterial = printMaterials.ElementAt(1),
 					CompanyCreator = companies.ElementAt(0)
 
 				},
@@ -272,7 +272,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile3",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(2),
+					//PrintMaterial = printMaterials.ElementAt(2),
 					CompanyCreator = companies.ElementAt(0)
 
 				},
@@ -283,7 +283,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile4",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile4",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(3),
+					//PrintMaterial = printMaterials.ElementAt(3),
 					//Project = projects.ElementAt(2)
 
 
@@ -295,7 +295,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile5",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(4),
+					//PrintMaterial = printMaterials.ElementAt(4),
 					//Project = projects.ElementAt(2)
 				},
 
@@ -306,7 +306,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile7",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(4),
+					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
 					ArticleNo = 123456789
 				},
@@ -318,7 +318,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = "CadFile7",
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					PrintMaterial = printMaterials.ElementAt(4),
+					//PrintMaterial = printMaterials.ElementAt(4),
 					UserCreator = users.ElementAt(0),
 					ArticleNo = 1
 				}

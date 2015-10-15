@@ -1,4 +1,5 @@
 ﻿using Formeo.Models;
+using Formeo.Models.HelperModels;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +9,9 @@ namespace Formeo.BussinessLayer.Interfaces
 	{
 		string GetPrintObjectsByCompanyCreatorJSON(long companyId);
 
-		string GetPrintObjectsByIdsJSON(IEnumerable<long> printObjectIds);
+		string GetPrintObjectsByIdsForCustomerJSON(IEnumerable<long> printObjectIds);
 
-		string GetPrintObjectsByIdJSON(long printObjectId);
+		string GetPrintObjectsByIdForProducerJSON(long printObjectId);
 
 		string GetExclusivePrintObjectsByIdsForCompanyJSON(
 			long companyId,
@@ -24,5 +25,9 @@ namespace Formeo.BussinessLayer.Interfaces
 		);
 
 		string GetPrintObjectByOrderJSON(long orderId);
+
+		string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos);
+
+		string AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 	}
 }

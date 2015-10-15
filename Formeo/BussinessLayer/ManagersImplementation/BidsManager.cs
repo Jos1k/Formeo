@@ -63,13 +63,26 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return newBid;
 		}
 
-		public IReadOnlyList<Bid> GetBidsForPrintObject(long printObjectId) 
+		public IReadOnlyList<Bid> GetBidsForPrintObject(long printObjectId)
 		{
 			return _dbContext.Bids
 					.Where(bid => bid.PrintObject.ID == printObjectId)
 					.ToArray(); //to array because connection will be closed beforehand
 		}
 
+		public Bid GetSelecetdBidForPrintObject(long printObjectId) 
+		{
+			PrintObject printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
+			if (printObject==null||printObject.CompanyProducer == null) 
+			{
+				return null;
+			}
 
+			return _dbContext.Bids
+				.Where(bid => 
+						bid.CompanyProducer.ID == printObject.CompanyProducer.ID 
+						&& bid.PrintObject.ID == printObjectId)
+					.SingleOrDefault();
+		}
 	}
 }
