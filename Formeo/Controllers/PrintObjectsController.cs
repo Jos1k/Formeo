@@ -44,15 +44,22 @@ namespace Formeo.Controllers
 		{
 			public string artNo { get; set; }
 			public string productName { get; set; }
+			public string printMaterial { get; set; }
 		}
 
 		[HttpPost]
 		public ActionResult UploadProducts(IEnumerable<Product> products, IEnumerable<HttpPostedFileBase> files)
 		{
 
-			IEnumerable<PrintObjectFileInfo> res = products.Zip(files,
-				(product, file) =>
-					new PrintObjectFileInfo(product.artNo, product.productName, file)
+			IEnumerable<PrintObjectFileInfo> res = products.Zip( files,
+				( product, file ) =>
+					new PrintObjectFileInfo( product.artNo, product.productName, file ) 
+					{
+						ArtNo = product.artNo,
+						ProductName = product.productName,
+						PrintMaterial = product.printMaterial,
+						File = file
+					}
 				).ToArray();
 
 			return Json(_printObjectsService.UploadProducts(res));

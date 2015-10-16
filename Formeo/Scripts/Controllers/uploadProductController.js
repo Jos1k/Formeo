@@ -1,6 +1,7 @@
 ﻿var uploadProductController = function ($scope, Upload, $timeout, $modalInstance, $window, $http) {
     $scope.isUploadInProgress = false;
     $scope.artNo;
+    $scope.printMaterial = "";
     $scope.productName = "";
     $picFile = null;
     //$scope.fileName = "";
@@ -10,14 +11,16 @@
         $modalInstance.dismiss('cancel');
     };
     $scope.addProduct = function (file) {
-        if ($scope.artNo && !$scope.isBlank($scope.productName) && file != null && !$scope.isBlank($scope.picFile.name)) {
+        if (!$scope.isBlank($scope.printMaterial) && $scope.artNo && !$scope.isBlank($scope.productName) && file != null && !$scope.isBlank($scope.picFile.name)) {
             var product = {
                 artNo: $scope.artNo,
+                printMaterial: $scope.printMaterial,
                 productName: $scope.productName,
                 file: file
             };
             $scope.products.push(product);
             $scope.artNo = "";
+            $scope.printMaterial = "";
             $scope.productName = "";
             $scope.fileName = "";
             $scope.picFile = null;
@@ -32,6 +35,7 @@
                 if (!product.$error) {
                     var uploadProduct = {
                         artNo: product.artNo,
+                        printMaterial: product.printMaterial,
                         productName: product.productName
                     };
                     var uploadFile = product.file;
@@ -49,13 +53,13 @@
                 }
             })
                 .progress(function (evt) {
-                $scope.isUploadInProgress = true;
+                    $scope.isUploadInProgress = true;
                 })
                 .success(function (data, status, headers, config) {
-                $scope.isUploadInProgress = false;
-                alert("Uploading finished!");
-                $modalInstance.close(data);
-            });
+                    $scope.isUploadInProgress = false;
+                    alert("Uploading finished!");
+                    $modalInstance.close(data);
+                });
         }
     };
     $scope.removeProduct = function (productIndex) {
