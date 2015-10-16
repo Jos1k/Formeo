@@ -36,6 +36,7 @@ namespace Formeo
 
 			container.RegisterType<IPrintObjectsService, PrintObjectService>();
 			container.RegisterType<IUserService, UserService>();
+			container.RegisterType<ICompaniesService, CompaniesService>();
 			container.RegisterType<IProjectService, ProjectService>();
 			container.RegisterType<IBidsService, BidsService>();
 

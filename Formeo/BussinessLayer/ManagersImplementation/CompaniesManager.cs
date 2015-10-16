@@ -44,6 +44,9 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return currentUser.Company;
 		}
 
-
-	}
+		public IEnumerable<Company> GetCompanies()
+		{
+			return _dbContext.Companies.ToArray();
+		}
+}
 }

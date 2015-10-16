@@ -9,6 +9,6 @@ namespace Formeo.Models
 	{
 		public string CustomersJSON { get; set; }
 		public string ProducersJSON { get; set; }
-		
+		public string CompaniesJSON { get; set; }	
 	}
 }

@@ -1,0 +1,161 @@
+﻿<div class="row">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectCompaniesMenu('/AddCompany')" ng-class="{'btn-menu-selected': isActiveCompaniesMenu('/AddCompany')}">
+            <i class="fa fa-plus-square fa-2x"></i>
+            <br>Add company
+        </button>
+        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectCompaniesMenu('/ManageCompany')" ng-class="{'btn-menu-selected': isActiveCompaniesMenu('/ManageCompany')}">
+            <i class="fa fa-cogs fa-2x"></i>
+            <br>Manage company
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="container">
+        <div ng-show="isActiveCompaniesMenu('/AddCompany')">
+            @using( Html.BeginForm( "RegisterFormeo", "Account", FormMethod.Post ) ) {
+                @Html.AntiForgeryToken()
+                <div class="padding30px">
+                    <div class="row form-group-margin">
+                        <input type="text" ng-model="companyModel.companyname" name="CompanyName" id="CompanyName" placeholder="Company Name" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="companyModel.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="companyModel.orgNumber" name="OrgNumber" id="OrgNumber" placeholder="Org Number" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="companyModel.taxNumber" name="taxNumber" id="taxNumber" placeholder="Tax Number" autofocus class="form-control login-textbox textbox-menu" /> 
+                    </div>
+                    <div class="row form-group-margin">
+                        <div class="left">
+                            <div class="form-group">
+                                <label for="isProduction" style="font-size: medium">Production</label>
+                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="companyModel.isProduction" type="radio" value="@Formeo.Models.StaticData.RoleNames.Producer">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="isCustomer" style="font-size: medium">Customer</label>
+                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="companyModel.isCustomer" type="radio" value="@Formeo.Models.StaticData.RoleNames.Customer">
+                            </div>
+                        </div>
+                        <div class="right">
+                            <button type="submit" class="btn btn-default text-center btn-upload-product" style="height: 50px; width: 70px;">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @*
+        <form role="form" ng-show="isActiveCompaniesMenu('/ManageCompany')">
+            <div class="padding30px">
+                <div class="row form-group-margin">
+                    <div class="row editable-field">
+                        <div class="edit-value-holder">
+                            {{selectedCompany === EMPTY ? "&#60; Company Name &#62;" : selectedCompany.CompanyName}}
+                        </div>
+                    </div>
+
+                    <div ng-init="isShowEditEmail = false"></div>
+                    <div ng-init="isShowEditAddress = false"></div>
+                    <div ng-init="isShowEditPostal = false"></div>
+                    <div ng-init="isShowEditCity = false"></div>
+                    <div ng-init="isShowEditCountry = false"></div>
+
+                    <div class="row editable-field">
+                        <div class="edit-value-holder" ng-show="!isShowEditEmail || selectedCompany==EMPTY" ng-click="selectedCompany===EMPTY ? isShowEditEmail = false : isShowEditEmail=true;">
+                            {{selectedCompany === EMPTY ? "&#60; Email &#62;" : selectedCompany.Email}}
+                        </div>
+                        <div class="edit-value-holder " ng-show="isShowEditEmail && !selectedCompany==EMPTY">
+                            <input type="text" class="form-control textbox-menu" ng-model="selectedCompany.Email" />
+                        </div>
+
+                        <div class="edit-link-holder">
+                            <a class="btn-edit-link" href="#" ng-click="updateCompanyInfo(isShowEditEmail, selectedCompany, 'email', selectedCompany.Email); isShowEditEmail=false">Change</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group-margin">
+                    <div class="row editable-field">
+                        <div class="edit-value-holder" ng-show="!isShowEditAddress || selectedCompany==EMPTY" ng-click="selectedCompany===EMPTY ? isShowEditAddress = false : isShowEditAddress=true;">
+                            {{selectedCompany === EMPTY ? "&#60;Address&#62;" : selectedCompany.Address}}
+                        </div>
+                        <div class="edit-value-holder " ng-show="isShowEditAddress && !selectedCompany==EMPTY">
+                            <input type="text" class="form-control textbox-menu" ng-model="selectedCompany.Address" />
+                        </div>
+
+                        <div class="edit-link-holder">
+                            <a class="btn-edit-link" href="#" ng-click="updateCompanyInfo(isShowEditAddress, selectedCompany, 'address', selectedCompany.Address); isShowEditAddress=false">Change</a>
+                        </div>
+                    </div>
+
+
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditPostal || selectedCompany==EMPTY" ng-click="selectedCompany===EMPTY ? isShowEditPostal = false : isShowEditPostal=true;">
+                                {{selectedCompany === EMPTY ? "&#60;Postal&#62;" : selectedCompany.Postal}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditPostal && !selectedCompany==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedCompany.Postal" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateCompanyInfo(isShowEditPostal, selectedCompany, 'postal', selectedCompany.Postal); isShowEditPostal=false">Change</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditCity || selectedCompany==EMPTY" ng-click="selectedCompany===EMPTY ? isShowEditCity = false : isShowEditCity=true;">
+                                {{selectedCompany === EMPTY ? "&#60;City&#62;" : selectedCompany.City}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditCity && !selectedCompany==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedCompany.City" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateCompanyInfo(isShowEditCity, selectedCompany, 'city', selectedCompany.City); isShowEditCity=false">Change</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group-margin">
+                        <div class="row editable-field">
+                            <div class="edit-value-holder" ng-show="!isShowEditCountry || selectedCompany==EMPTY" ng-click="selectedCompany===EMPTY ? isShowEditCountry = false : isShowEditCountry=true;">
+                                {{selectedCompany === EMPTY ? "&#60;Country&#62;" : selectedCompany.Country}}
+                            </div>
+                            <div class="edit-value-holder " ng-show="isShowEditCountry && !selectedCompany==EMPTY">
+                                <input type="text" class="form-control textbox-menu" ng-model="selectedCompany.Country" />
+                            </div>
+
+                            <div class="edit-link-holder">
+                                <a class="btn-edit-link" href="#" ng-click="updateCompanyInfo(isShowEditCountry, selectedCompany, 'country', selectedCompany.Country); isShowEditCountry=false">Change</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group-margin">
+
+                    <div class="left">
+                        <div class="form-group">
+                            <label for="isProduction" style="font-size: medium" ng-class="{checked: selectedCompany.IsProducer == true}">
+                                Production
+                                <input class="pointer" name="roleRadio" ng-model="selectedCompany.IsProducer" value="true" type="radio">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="isCustomer" style="font-size: medium">Customer</label>
+                            <input class="pointer" name="roleRadio" ng-class="{checked: selectedCompany.IsCustomer}" type="radio" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="isAdmin" style="font-size: medium">Admin</label>
+                            <input class="pointer" name="roleRadio" ng-class="{checked: selectedCompany.IsAdmin}" type="radio" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>*@
+    </div>
+</div>

@@ -24,6 +24,7 @@ namespace Formeo.Controllers
 
 		private IPrintObjectsService _printObjectService;
 		private IUserService _userService;
+		private ICompaniesService _companiesService;
 		private IUserManager _userManager;
 		private IProjectService _projectService;
 		private ICompaniesManager _companiesManager;
@@ -36,7 +37,8 @@ namespace Formeo.Controllers
 			IUserManager userManager,
 			IProjectService projectService,
 			ICompaniesManager companiesManager,
-			IPrintObjectsManager printObjectManager)
+			IPrintObjectsManager printObjectManager,
+			ICompaniesService companiesService)
 		{
 			_printObjectService = printObjectService;
 			_userService = userService;
@@ -44,6 +46,7 @@ namespace Formeo.Controllers
 			_projectService = projectService;
 			_companiesManager = companiesManager;
 			_printObjectManager = printObjectManager;
+			_companiesService = companiesService;
 		}
 
 
@@ -167,6 +170,7 @@ namespace Formeo.Controllers
 
 			viewModel.CustomersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Customer);
 			viewModel.ProducersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Producer);
+			viewModel.CompaniesJSON = _companiesService.GetCompaniesJSON();
 			return viewModel;
 		}
 

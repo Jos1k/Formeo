@@ -11,14 +11,25 @@
         isAdmin: false
     };
 
+    $scope.companyModel = {
+        id: '',
+        orgNumber: '',
+        country: '',
+        taxNumber:'',
+        companyName: '',
+        isCustomer: false
+    };
+
     $scope.EMPTY = "";
 
     $scope.selectedMainMenu = '/Clients';
     $scope.selectedClientsMenu = '/AddUser';
+    $scope.selectedCompaniesMenu = '/AddCompany';
     $scope.helloVariable = 'I work!';
     $scope.mainMenu = [];
     $scope.menuType = "0";
     $scope.selectedUser = $scope.EMPTY;
+    $scope.selectedCompany = $scope.EMPTY;
 
     $scope.updateUserInfo = function (isShownEditableTextbox, user, fieldNameToChange, newValue) {
 
@@ -85,8 +96,16 @@
         $scope.selectedClientsMenu = item;
     };
 
+    $scope.selectCompaniesMenu = function (item) {
+        $scope.selectedCompaniesMenu = item;
+    };
+
     $scope.isActiveCLientsMenu = function (item) {
         return $scope.selectedClientsMenu === item;
+    };
+
+    $scope.isActiveCompaniesMenu = function (item) {
+        return $scope.selectedCompaniesMenu === item;
     };
 
     $scope.cleanUserModel = function () {
@@ -102,4 +121,15 @@
             isAdmin: false
         };
     };
+
+    $scope.cleanCompanyModel = function () {
+        $scope.companyModel = {
+            id: '',
+            orgNumber: '',
+            country: '',
+            taxNumber: '',
+            companyName: '',
+            isCustomer: false
+        };
+    }
 }

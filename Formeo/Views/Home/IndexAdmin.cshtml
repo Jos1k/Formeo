@@ -7,8 +7,9 @@
 
     <div ng-init="customers = @Model.CustomersJSON" />
     <div ng-init="producers = @Model.ProducersJSON" />
+    <div ng-init="companies = @Model.CompaniesJSON" />
 
-    <p class="text-right"> Number of stored products </p>
+    <p></p>
     <div class="col-md-4">
         <div class="navigation">
             <div class="row">
@@ -21,9 +22,9 @@
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Storage')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Storage')}">
-                                <i class="fa fa-cloud fa-2x" style="color:white"></i>
-                                <br>Storage
+                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Companies')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Companies')}">
+                                <i class="fa fa-building-o fa-2x" style="color:white"></i>
+                                <br>Companies
                             </button>
                         </li>
                         <li>
@@ -45,8 +46,7 @@
                             </button>
                         </li>
                         <li>
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
+                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
                                     <i class="fa fa-sign-out fa-2x" style="color:white"></i>
@@ -58,16 +58,16 @@
                 </div>
                 <div class="sidebar-menu-content">
                     <div class="row" ng-show="isActiveMainMenu('/Clients')">
-                        @Html.Partial("Partial/Sections/_clients")
+                        @Html.Partial( "Partial/Sections/_clients" )
                     </div>
-                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
-                        @Html.Partial("Partial/Sections/_storage")
+                    <div class="row" ng-show="isActiveMainMenu('/Companies')">
+                        @Html.Partial( "Partial/Sections/_companies" )
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-8">   
+    <div class="col-md-8">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search user">
             <span class="input-group-btn">
@@ -77,84 +77,109 @@
 
         <br />
         <div class="row custom-greed">
-            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Customer Users</h4>
-                        </div>
-                        <div class="col-md-2 line-height">
-                            <i class="fa fa-plus left"></i>
-                        </div>
-                    </div>
-                    <div class="row head">
-                        <div class="col-md-3">UserName</div>
-                        <div class="col-md-3">Company Name</div>
-                        <div class="col-md-3">Storage Quantity</div>
-                        <div class="col-md-3">Actions</div>
-                    </div>
-                    <div class="row data-row">
-
-                        <div ng-repeat="user in customers">
-                            <div class="col-md-3">{{user.UserName}}</div>
-                            <div class="col-md-3">{{user.Company}} </div>
-                            <div class="col-md-3">300</div>
-
-                            <div class="col-md-3 actions">
-                                <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
-                                <a ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+            <div class="clientsList" ng-show="isActiveMainMenu('/Clients')">
+                <div class="container">
+                    <h4 class="text-right">Customer Users</h4>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4">User Name</th>
+                                <th class="col-md-4">Company Name</th>
+                                <th class="col-md-2" style="text-align: center;">Storage Count</th>
+                                <th class="col-md-2" style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in customers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                <td>{{user.UserName}}</td>
+                                <td>{{user.Company}} </td>
+                                <td style="text-align: center;">300</td>
+                                <td style="text-align: center;">
+                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
                                     <i class="fa fa-cog"></i>
-                                </a>
-                                <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
-                                    <i class="fa fa-times-circle" style="cursor: pointer;"></i>
-                                </a>
+                                    <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
+                                        <i class="fa fa-times-circle" style="cursor: pointer;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <br />
                             </div>
                         </div>
                     </div>
 
+                    <h4 class="text-right">Production Users</h4>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4">User Name</th>
+                                <th class="col-md-4">Company Name</th>
+                                <th class="col-md-2" style="text-align: center;">Storage Count</th>
+                                <th class="col-md-2" style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in producers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                <td>{{user.UserName}}</td>
+                                <td>{{user.Company}} </td>
+                                <td style="text-align: center;">300</td>
+
+                                <td style="text-align: center;">
+                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                    <i class="fa fa-cog"></i>
+                                    <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
+                                        <i class="fa fa-times-circle" style="cursor: pointer;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <br />
-                    </div>
-                </div>
-            </div>
-
-            <div ng-show="isActiveMainMenu('/Clients')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Production Users</h4>
-                        </div>
-                        <div class="col-md-2 line-height">
-                            <i class="fa fa-plus left"></i>
-                        </div>
-                    </div>
-                    <div class="row head">
-                        <div class="col-md-3">UserName.</div>
-                        <div class="col-md-3">Company Name</div>
-                        <div class="col-md-3">Storage Quantity</div>
-                        <div class="col-md-3">Actions</div>
-                    </div>
-
-                    <div ng-repeat="user in producers">
-                        <div class="col-md-3">{{user.UserName}}</div>
-                        <div class="col-md-3">{{user.Company}} </div>
-                        <div class="col-md-3">300</div>
-
-                        <div class="col-md-3 actions">
-                            <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
-                            <a ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <a style="cursor: pointer;" ng-click="removeUser(user, producers)">
-                                <i class="fa fa-times-circle"></i>
-                            </a>
-                        </div>
-                    </div>
+            <div class="companiesList" div ng-show="isActiveMainMenu('/Companies')">
+                <div class="container">
+                    <h4 class="text-right">Companies</h4>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">C/P</th>
+                                <th class="col-md-2">Org Number</th>
+                                <th class="col-md-5">Company Name</th>
+                                <th class="col-md-3">Country</th>
+                                <th class="col-md-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="company in companies">
+                                <td ng-switch on="company.isCustomer">
+                                    <div ng-switch-when="true" style="font-family: fantasy;">
+                                        C
+                                    </div>
+                                    <div ng-switch-when="false" style="font-family: fantasy;">
+                                        P
+                                    </div>
+                                </td>
+                                <td>{{company.orgNumber}}</td>
+                                <td>{{company.companyName}}</td>
+                                <td>{{company.country}}</td>
+                                <td style="text-align: center;">
+                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                    <a style="cursor: pointer;">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                    <a style="cursor: pointer;">
+                                        <i class="fa fa-times-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -30,14 +30,16 @@ namespace Formeo.EFInfrastructure
 					Country = "UK",
 					Name = "Company 1",
 					OrgNumber = "OrgNumber1",
-					TaxNumber = "TaxNumber1"
+					TaxNumber = "TaxNumber1",
+					IsCustomer = true
 				},
 				new Company()
 				{
 					Country = "US",
 					Name = "Company 2",
 					OrgNumber = "OrgNumber2",
-					TaxNumber = "TaxNumber2"
+					TaxNumber = "TaxNumber2",
+					IsCustomer = false
 				},
 			};
 
