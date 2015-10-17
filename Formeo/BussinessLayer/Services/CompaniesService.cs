@@ -27,5 +27,18 @@ namespace Formeo.BussinessLayer.Services {
 				} );
 			return JsonConvert.SerializeObject( short_companies );
 		}
+		public string GetCompanyJSON(long sompanyId) {
+			var company = _manager.GetCompanyById( sompanyId );
+			var short_company = new {
+				id = company.ID,
+				orgNumber = company.OrgNumber,
+				country = company.Country,
+				taxNumber = company.TaxNumber,
+				companyName = company.Name,
+				isCustomer = company.IsCustomer
+			};
+			return JsonConvert.SerializeObject( short_company );
+		}
+		
 	}
 }

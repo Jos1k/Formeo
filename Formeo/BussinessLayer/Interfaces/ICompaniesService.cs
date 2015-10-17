@@ -9,5 +9,6 @@ namespace Formeo.BussinessLayer.Interfaces
 	public interface ICompaniesService
 	{
 		string GetCompaniesJSON();
+		string GetCompanyJSON( long sompanyId );
 	}
 }

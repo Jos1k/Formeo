@@ -19,7 +19,7 @@
                 @Html.AntiForgeryToken()
                 <div class="padding30px">
                     <div class="row form-group-margin">
-                        <input type="text" ng-model="companyModel.companyname" name="CompanyName" id="CompanyName" placeholder="Company Name" autofocus class="form-control login-textbox textbox-menu" />
+                        <input type="text" ng-model="companyModel.companyName" name="CompanyName" id="CompanyName" placeholder="Company Name" autofocus class="form-control login-textbox textbox-menu" />
                         <input type="text" ng-model="companyModel.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" />
                         <input type="text" ng-model="companyModel.orgNumber" name="OrgNumber" id="OrgNumber" placeholder="Org Number" autofocus class="form-control login-textbox textbox-menu" />
                         <input type="text" ng-model="companyModel.taxNumber" name="taxNumber" id="taxNumber" placeholder="Tax Number" autofocus class="form-control login-textbox textbox-menu" /> 
@@ -28,16 +28,16 @@
                         <div class="left">
                             <div class="form-group">
                                 <label for="isProduction" style="font-size: medium">Production</label>
-                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="companyModel.isProduction" type="radio" value="@Formeo.Models.StaticData.RoleNames.Producer">
+                                <input class="pointer" name="SelectedRoleCompany" id="SelectedRoleCompany" ng-model="companyModel.isCustomer" type="radio" ng-value="false">
 
                             </div>
                             <div class="form-group">
                                 <label for="isCustomer" style="font-size: medium">Customer</label>
-                                <input class="pointer" name="SelectedRole" id="SelectedRole" ng-model="companyModel.isCustomer" type="radio" value="@Formeo.Models.StaticData.RoleNames.Customer">
+                                <input class="pointer" name="SelectedRoleCompany" id="SelectedRoleCompany" ng-model="companyModel.isCustomer" type="radio" ng-value="true">
                             </div>
                         </div>
                         <div class="right">
-                            <button type="submit" class="btn btn-default text-center btn-upload-product" style="height: 50px; width: 70px;">
+                            <button type="button" class="btn btn-default text-center btn-upload-product" style="height: 50px; width: 70px;" ng-click="addCompany()">
                                 Add
                             </button>
                         </div>

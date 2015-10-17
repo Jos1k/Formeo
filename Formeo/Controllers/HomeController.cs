@@ -142,6 +142,13 @@ namespace Formeo.Controllers
 			return View(viewModel);
 		}
 
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult CreateCompany( Company company ) {
+			long companyId = _companiesManager.CreateCompany( company );
+			return Json( _companiesService.GetCompanyJSON( companyId ) );
+		}
+
 		#endregion
 
 
@@ -159,9 +166,6 @@ namespace Formeo.Controllers
 
 			return View();
 		}
-
-
-
 		#region Helpers
 		private _IndexAdminViewModel GetAdminHomepageViewModel()
 		{

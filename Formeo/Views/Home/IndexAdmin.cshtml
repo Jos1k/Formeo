@@ -150,32 +150,28 @@
                             <tr>
                                 <th class="col-md-1">C/P</th>
                                 <th class="col-md-2">Org Number</th>
-                                <th class="col-md-5">Company Name</th>
-                                <th class="col-md-3">Country</th>
+                                <th class="col-md-7">Company Name</th>
                                 <th class="col-md-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="company in companies">
                                 <td ng-switch on="company.isCustomer">
-                                    <div ng-switch-when="true" style="font-family: fantasy;">
+                                    <span class="label label-success" ng-switch-when="true">
                                         C
-                                    </div>
-                                    <div ng-switch-when="false" style="font-family: fantasy;">
+                                    </span>
+                                    <span class="label label-info" ng-switch-when="false">
                                         P
-                                    </div>
+                                    </span>
                                 </td>
                                 <td>{{company.orgNumber}}</td>
                                 <td>{{company.companyName}}</td>
-                                <td>{{company.country}}</td>
                                 <td style="text-align: center;">
                                     <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
                                     <a style="cursor: pointer;">
                                         <i class="fa fa-cog"></i>
                                     </a>
-                                    <a style="cursor: pointer;">
                                         <i class="fa fa-times-circle"></i>
-                                    </a>
                                 </td>
                             </tr>
                         </tbody>

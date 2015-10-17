@@ -108,6 +108,27 @@
         return $scope.selectedCompaniesMenu === item;
     };
 
+    $scope.addCompany = function () {
+        $http({
+            method: 'POST',
+            url: '/Home/CreateCompany',
+            headers: { 'Content-Type': 'application/json;' },
+            data: {
+                'Name': $scope.companyModel.companyName,
+                'OrgNumber': $scope.companyModel.orgNumber,
+                'TaxNumber': $scope.companyModel.taxNumber,
+                'Country': $scope.companyModel.country,
+                'IsCustomer': $scope.companyModel.isCustomer?true:false
+            }
+        }).
+           then(function (response) {
+               $scope.companies.push(JSON.parse(response.data));
+               $scope.cleanCompanyModel();
+           }, function (response) {
+               $window.alert('error creating company');
+           });
+    };
+
     $scope.cleanUserModel = function () {
         $scope.userModel = {
             username: '',

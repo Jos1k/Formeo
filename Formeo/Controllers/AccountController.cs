@@ -254,8 +254,6 @@ namespace Formeo.Controllers
 			}
 		}
 
-
-
 		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)
 		{
 			IdentityResult result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
