@@ -22,7 +22,7 @@ namespace Formeo.Models
 
 		public enum PrintObjectStatusEnum
 		{
-			Default,
+			InQueue = 1,
 			Producing,
 			Delivered
 		}
@@ -33,9 +33,9 @@ namespace Formeo.Models
 			switch (status)
 			{
 				case OrderStatusEnum.InProgress:
-					{ 
+					{
 						statusRes = "In Progres";
-						break; 
+						break;
 					}
 				case OrderStatusEnum.Delivered:
 					{

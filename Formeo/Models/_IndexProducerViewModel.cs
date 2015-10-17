@@ -10,5 +10,7 @@ namespace Formeo.Models
 		public string Dashboard_BidRequestedPrintObjects { get; set; }
 		public string Dashboard_PrintObjectsDelivered { get; set; }
 		public string Storage_PrintObjects { get; set; }
+		public string Orders_OrdersInQueue{ get; set; }
+		public string Orders_OrdersInProduction { get; set; }
 	}
 }

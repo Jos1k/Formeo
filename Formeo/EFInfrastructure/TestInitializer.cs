@@ -155,27 +155,6 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			#region Statuses
-			//this could be used as not tests data 
-			List<OrderStatus> statuses = new List<OrderStatus>() 
-			{
-				new OrderStatus()
-				{
-					CurrentOrderStatus = Formeo.Models.StaticData.OrderStatusEnum.InProgress
-				},
-
-				new OrderStatus()
-				{
-					CurrentOrderStatus = Formeo.Models.StaticData.OrderStatusEnum.Delivered
-				}
-			};
-
-			statuses.ForEach(s => context.Statuses.Add(s));
-
-			context.SaveChanges();
-
-			#endregion
-
 			#region Projects
 			List<Project> projects = new List<Project>()
 			{
@@ -183,20 +162,17 @@ namespace Formeo.EFInfrastructure
 				{
 					Name = "Order1",
 					Creator = users.ElementAt(0),
-					Status = statuses.ElementAt(0)
 				},
 				new Project()
 				{
 					Name = "Order2",
 					Creator = users.ElementAt(0),
-					Status = statuses.ElementAt(0)
 
 				},
 				new Project()
 				{
 					Name = "Order3",
 					Creator = users.ElementAt(0),
-					Status = statuses.ElementAt(0),
 				}
 
 			};
@@ -389,12 +365,7 @@ namespace Formeo.EFInfrastructure
 
 			#endregion
 
-			//	projects.ElementAt(0).WinningBid = bids.ElementAt(1);
-
 			context.SaveChanges();
-
-
-
 		}
 	}
 }

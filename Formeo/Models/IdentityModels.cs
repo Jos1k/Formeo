@@ -47,10 +47,9 @@ namespace Formeo.Models
 		public DbSet<Project> Projects { get; set; }
 	//	public DbSet<PrintMaterial> PrintMaterials { get; set; }
 		public DbSet<PrintObject> PrintObjects { get; set; }
-		public DbSet<OrderStatus> Statuses { get; set; }
 		public DbSet<Bid> Bids { get; set; }
 
-		public DbSet<ProjectInfo> ProjectsInfo { get; set; } 
+		public DbSet<ProjectInfo> ProjectInfos { get; set; } 
 
 		public static ApplicationDbContext Create()
 		{

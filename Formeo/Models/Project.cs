@@ -18,7 +18,7 @@ namespace Formeo.Models
 
 		public virtual Company CompanyCreator { get; set; }
 
-		public virtual OrderStatus Status { get; set; }
+		public virtual Formeo.Models.StaticData.OrderStatusEnum Status { get; set; }
 
 		public virtual ICollection<ProjectInfo> ProjectPrintObjectQuantityRelations { get; set; }
 

@@ -24,17 +24,6 @@ namespace Formeo.BussinessLayer.Services
 			_printObjectManager = printObjectManager;
 		}
 
-		public string GetProjectsByCompanyJSON(long companyId, StaticData.OrderStatusEnum orderStatus)
-		{
-			IEnumerable<Project> projects =
-				   _projectsManager
-				   .GetProjectsByCompany(companyId, orderStatus);
-
-			var projectsShort = GetProjectShort(projects);
-
-			return JsonConvert.SerializeObject(projectsShort);
-		}
-
 		public string GetProjectsByCreatorUserJSON(string creatorUserId, Formeo.Models.StaticData.OrderStatusEnum orderStatus)
 		{
 			IEnumerable<Project> projects =
@@ -47,14 +36,14 @@ namespace Formeo.BussinessLayer.Services
 		}
 
 
-		private IEnumerable<ProjectShort> GetProjectShort(IEnumerable<Project> projects)
+		private IEnumerable<ProjectForCreatorShort> GetProjectShort(IEnumerable<Project> projects)
 		{
 
 			if (projects == null || projects.Count() == 0)
 			{
-				return new List<ProjectShort>();
+				return new List<ProjectForCreatorShort>();
 			}
-			var projectsShort = projects.Select(project => new ProjectShort()
+			var projectsShort = projects.Select(project => new ProjectForCreatorShort()
 			{
 				Id = project.ID,
 				Name = project.Name,
@@ -63,11 +52,41 @@ namespace Formeo.BussinessLayer.Services
 			return projectsShort;
 		}
 
-		private class ProjectShort
+		public string GetProjectInfosForProducerJSON(long companyId, Formeo.Models.StaticData.PrintObjectStatusEnum poStatus)
+		{
+			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosForProducer(companyId, poStatus);
+			var pinfosShort = projectInfos.Select(poinfo => ToProjectInfoForProducerShort(poinfo));
+			return JsonConvert.SerializeObject(pinfosShort);
+		}
+
+		private ProjectInfoForProducerShort ToProjectInfoForProducerShort(ProjectInfo projectInfo)
+		{
+			ProjectInfoForProducerShort pinfoShort = new ProjectInfoForProducerShort()
+			{
+				CompanyName = projectInfo.Project.CompanyCreator.Name,
+				PrinObjectID = projectInfo.PrintObjectId,
+				PrintObjectName = projectInfo.PrintObject.Name,
+				ProjectId = projectInfo.ProjectId,
+				Quantity = projectInfo.Quantity,
+			};
+			return pinfoShort;
+		}
+
+		private class ProjectForCreatorShort
 		{
 			public long Id { get; set; }
 			public string Name { get; set; }
 			public int Quantity { get; set; }
+
+		}
+
+		private class ProjectInfoForProducerShort
+		{
+			public long ProjectId { get; set; }
+			public long PrinObjectID { get; set; }
+			public string PrintObjectName { get; set; }
+			public int Quantity { get; set; }
+			public string CompanyName { get; set; }
 
 		}
 	}

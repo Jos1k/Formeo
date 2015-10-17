@@ -66,7 +66,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 		public IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId)
 		{
 			return from printObject in _dbContext.PrintObjects
-				   join relation in _dbContext.ProjectsInfo
+				   join relation in _dbContext.ProjectInfos
 				   on printObject.ID equals relation.PrintObjectId
 				   where relation.ProjectId == orderId
 				   select printObject;
@@ -96,21 +96,20 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
 		)
 		{
-			return _dbContext.PrintObjects
-				.Where(po => po.CompanyProducer.ID == companyId)
-				.Join(
-					_dbContext.ProjectsInfo
-					, printObject => printObject.ID
-					, projectInfo => projectInfo.PrintObjectId
-					, (printObject, projectInfo) => printObject
-				)
-				.ToArray();
+			IEnumerable<PrintObject> printObjects =
+				from printObject in _dbContext.PrintObjects
+				join projectInfo in _dbContext.ProjectInfos
+					on printObject.ID equals projectInfo.PrintObjectId
+				where printObject.CompanyProducer.ID == companyId
+						&& projectInfo.Status == poStatus
+				select printObject;
+			return printObjects;
 		}
 
 		public IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId)
 		{
 			return _dbContext.PrintObjects.Join(
-					_dbContext.ProjectsInfo,
+					_dbContext.ProjectInfos,
 					po => po.ID,
 					pi => pi.PrintObjectId,
 					(po, pi) => po
@@ -182,6 +181,20 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObject;
 		}
 
+		public IEnumerable<PrintObject> GetActivePrintOBjectsForProducer(long producerCompanyId)
+		{
+			IEnumerable<PrintObject> printObjects =
+				_dbContext.ProjectInfos
+					.Join(_dbContext.PrintObjects,
+						project => project.PrintObjectId,
+						printObject => printObject.ID,
+						(projectInfo, printObject) => printObject)
+					.Where(printObject => printObject.CompanyProducer.ID == producerCompanyId)
+					.ToArray();
+
+			return printObjects;
+		}
+
 		#endregion
 
 		private PrintObject CreatePrintObjectByFileInfo(PrintObjectFileInfo fileInfo, string fileName)
@@ -203,12 +216,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return resultPrintObject;
 		}
 
-		public string GetPrintObjectFilePath( long printObjectId ) {
-			return _dbContext.PrintObjects.Find( printObjectId ).CadFile;
+		public string GetPrintObjectFilePath(long printObjectId)
+		{
+			return _dbContext.PrintObjects.Find(printObjectId).CadFile;
 		}
 
-		#region IPrintObjectsManager Members
-
-		#endregion
 	}
 }
