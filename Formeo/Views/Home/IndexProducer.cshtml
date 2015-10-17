@@ -119,32 +119,31 @@
                     </div>
                 </div>
 
-
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Delivered orders</h4>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Delivered Orders</h4>
+                            </div>
+                            <div class="col-md-2 line-height">
+                                <i class="fa fa-plus right"></i>
+                            </div>
                         </div>
-                        <div class="col-md-2 line-height">
-                            <i class="fa fa-plus right"></i>
+                        <div class="row head">
+                            <div class="col-md-3">Customer</div>
+                            <div class="col-md-5">Product Name</div>
+                            <div class="col-md-2">Quantity</div>
+                            <div class="col-md-2">Actions</div>
                         </div>
-                    </div>
-                    <div class="row head">
-                        <div class="col-md-3">Order Name</div>
-                        <div class="col-md-3">Quantity</div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2">Actions</div>
-                    </div>
-
-                    <div ng-repeat="comletedOrder in deliveredPrintObjects">
-                        <div class="row data-row">
-                            <div class="col-md-3">{{comletedOrder.Name}}</div>
-                            <div class="col-md-3">{{comletedOrder.Quantity}}</div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-2 actions">
-                                <i class="fa fa-stack-exchange"></i>
-                                <i class="fa fa-photo"></i>
-                                <a href="#" ng-click="download(comletedOrder.Id)"><i class="fa fa-download"></i></a>
+                        <div ng-repeat="orderInfo in deliveredPrintObjects">
+                            <div class="row data-row">
+                                <div class="col-md-3">{{orderInfo.CompanyName}}</div>
+                                <div class="col-md-5">{{orderInfo.PrintObjectName}}</div>
+                                <div class="col-md-2">{{orderInfo.Quantity}}</div>
+                                <div class="col-md-2 actions">
+                                    <i class="fa fa-stack-exchange"></i>
+                                    <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -238,7 +237,7 @@
                             <div class="col-md-2">{{orderInfo.Quantity}}</div>
                             <div class="col-md-2 actions">
                                 <i class="fa fa-stack-exchange"></i>
-                                <i class="fa fa-photo"></i>
+                                <a href="#" ng-click="SetProductionStatus(orderInfo,2)"><i class="fa fa-gears"></i></a>
                                 <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
@@ -270,7 +269,7 @@
                             <div class="col-md-2">{{orderInfo.Quantity}}</div>
                             <div class="col-md-2 actions">
                                 <i class="fa fa-stack-exchange"></i>
-                                <i class="fa fa-photo"></i>
+                                <a href="#" ng-click="SetProductionStatus(orderInfo,3)"><i class="fa fa-check"></i></a>
                                 <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
                             </div>
                         </div>

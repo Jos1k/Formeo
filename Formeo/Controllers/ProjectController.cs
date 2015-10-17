@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,11 +24,13 @@ namespace Formeo.Controllers
 		ICompaniesManager _companiesManager;
 
 		[InjectionConstructor]
-		public ProjectController(
+		public ProjectController
+		(
 			IPrintObjectsService printObjectService,
 			IUserManager userManager,
 			IProjectsManager projectManager,
-			ICompaniesManager companiesManager)
+			ICompaniesManager companiesManager
+		)
 		{
 			_printObjectService = printObjectService;
 			_userManager = userManager;
@@ -103,8 +106,19 @@ namespace Formeo.Controllers
 				Quantity = newProject.OverallQuantity,
 				IsCompleted = false, //hack. should fix later to do by services
 			};
-	
+
 			return Json(result);
+		}
+
+		[HttpPost]
+		[JsonQueryParamFilter(Param = "projectId", JsonDataType = typeof(long))]
+		[JsonQueryParamFilter(Param = "printObjectId", JsonDataType = typeof(long))]
+		[JsonQueryParamFilter(Param = "status", JsonDataType = typeof(Formeo.Models.StaticData.PrintObjectStatusEnum))]
+		public ActionResult SetProductState(long projectId, long printObjectId, Formeo.Models.StaticData.PrintObjectStatusEnum status)
+		{
+			_projectManager.SetPrintObjectStatus(projectId, printObjectId, status);
+
+			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
 	}
 }

@@ -18,9 +18,7 @@ namespace Formeo.Models
 
 		public virtual Company CompanyCreator { get; set; }
 
-		public virtual Formeo.Models.StaticData.OrderStatusEnum Status { get; set; }
-
-		public virtual ICollection<ProjectInfo> ProjectPrintObjectQuantityRelations { get; set; }
+		public virtual ICollection<ProjectInfo> ProjectInfos { get; set; }
 
 		public decimal OrderPrice { get; set; }
 
@@ -28,6 +26,26 @@ namespace Formeo.Models
 		//quantity of all printobjects in this project
 		public int OverallQuantity { get { return GetOverallQuantity(); } }
 
+		[NotMapped]
+		public virtual Formeo.Models.StaticData.OrderStatusEnum Status
+		{
+			get
+			{
+				return GetOrderStatus();
+			}
+		}
+
+		private StaticData.OrderStatusEnum GetOrderStatus()
+		{
+			foreach (var projectInfo in ProjectInfos)
+			{
+				if (projectInfo.Status != StaticData.PrintObjectStatusEnum.Delivered)
+				{
+					return StaticData.OrderStatusEnum.InProgress;
+				}
+			}
+			return StaticData.OrderStatusEnum.Delivered;
+		}
 
 		#region DeliveryInfo
 
@@ -46,14 +64,14 @@ namespace Formeo.Models
 
 		private int GetOverallQuantity()
 		{
-			if (ProjectPrintObjectQuantityRelations == null
-				|| ProjectPrintObjectQuantityRelations.Count == 0)
+			if (ProjectInfos == null
+				|| ProjectInfos.Count == 0)
 			{
 				return 0;
 			}
 			int overralQuantity = 0;
 
-			foreach (var relation in ProjectPrintObjectQuantityRelations)
+			foreach (var relation in ProjectInfos)
 			{
 				overralQuantity += relation.Quantity;
 			}

@@ -57,11 +57,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newProject.LastName = deliveryInfo.LastName;
 			newProject.ZipCode = deliveryInfo.PostCode;
 			newProject.Creator = creatorUser;
-			newProject.Status = Formeo.Models.StaticData.OrderStatusEnum.InProgress;
 			newProject.CompanyCreator = company;
 
 			_dbcontext.Projects.Add(newProject);
-			//_dbcontext.SaveChanges();
+			_dbcontext.SaveChanges();
 
 			decimal totalPrice = 0;
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
@@ -104,11 +103,11 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus)
 		{
-			return _dbcontext
+			var customersProjects = _dbcontext
 					.Projects
-					.Where(project => project.Creator.Id == customerId
-						&& project.Status == orderStatus)
+					.Where(project => project.Creator.Id == customerId)
 					.ToList();
+			return customersProjects.Where(project => project.Status == orderStatus);
 		}
 		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus) 
 		{
@@ -121,7 +120,15 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					&& projectInfo.Status == printObjectStatus
 				select projectInfo;
 		}
-		
 
+		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)
+		{
+			ProjectInfo projectInfo = _dbcontext.ProjectInfos
+				.Find(projectId, printObjectId);
+			projectInfo.Status = status;
+			_dbcontext.SaveChanges();
+			_dbcontext.Entry(projectInfo).Reload();
+		}
+		
 	}
 }

@@ -9,5 +9,7 @@ namespace Formeo.Models
 	{
 		public long PrintObjectId { get; set; }
 		public int Quantity { get; set; }
+
+		public long ProducerId { get; set; }
 	}
 }

@@ -35,6 +35,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			List<PrintObject> printObjects =
 				_dbContext
 					.PrintObjects
+					.Include("CompanyProducer")
 					.Where(
 						po => po.CompanyCreator.ID == comapnyId)
 					.ToList();
@@ -57,7 +58,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public PrintObject GetPrintObjectById(long printObjectId)
 		{
-			PrintObject printObject = _dbContext.PrintObjects.Where(
+			PrintObject printObject = _dbContext
+				.PrintObjects
+				.Include("CompanyProducer")
+				.Where(
 				po => po.ID == printObjectId
 			).Single();
 			return printObject;

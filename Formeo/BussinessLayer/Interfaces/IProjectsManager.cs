@@ -22,5 +22,7 @@ namespace Formeo.BussinessLayer.Interfaces
 		IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus);
 
 		IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus);
+
+		void SetPrintObjectStatus(long orderId, long printObjectId, StaticData.PrintObjectStatusEnum status);
 	}
 }

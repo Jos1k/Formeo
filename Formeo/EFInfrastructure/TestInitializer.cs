@@ -13,7 +13,7 @@ using System.IO;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+						DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
