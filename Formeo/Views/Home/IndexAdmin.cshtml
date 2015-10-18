@@ -155,7 +155,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="company in companies">
+                            <tr ng-repeat="company in companies" ng-click="selectCompany(company); selectCompaniesMenu('/ManageCompany')" style="cursor: pointer;">
                                 <td ng-switch on="company.isCustomer">
                                     <span class="label label-success" ng-switch-when="true">
                                         C
@@ -171,7 +171,7 @@
                                     <a style="cursor: pointer;">
                                         <i class="fa fa-cog"></i>
                                     </a>
-                                        <i class="fa fa-times-circle"></i>
+                                    <i class="fa fa-times-circle"></i>
                                 </td>
                             </tr>
                         </tbody>

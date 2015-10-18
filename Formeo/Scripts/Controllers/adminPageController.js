@@ -80,6 +80,12 @@
         }
     }
 
+    $scope.selectCompany = function (company) {
+        if (company != $scope.EMPTY) {
+            $scope.selectedCompany = company;
+        }
+    }
+
     $scope.isMenuTypeIs = function (type) {
         return $scope.menuType === type;
     };
