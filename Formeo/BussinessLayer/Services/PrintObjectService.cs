@@ -149,6 +149,7 @@ namespace Formeo.BussinessLayer.Services
 				Name = printObject.Name,
 				CompanyName = printObject.CompanyCreator.Name,
 				Quantity = quantity,
+				PrintMaterial = printObject.PrintMaterial
 			};
 		}
 
@@ -184,7 +185,8 @@ namespace Formeo.BussinessLayer.Services
 				Quantity = 1,
 				SelectedProducerCompanyId = selectedCompanyProducerID,
 				CompanyName = selectedProducerCompanyName,
-				CurrentPrice = selectedPrice
+				CurrentPrice = selectedPrice,
+				PrintMaterial = printObject.PrintMaterial
 			};
 
 		}
@@ -196,6 +198,7 @@ namespace Formeo.BussinessLayer.Services
 			public string Name { get; set; }
 			public string ArtNo { get; set; }
 			public int Quantity { get; set; }
+			public string PrintMaterial { get; set; }
 		}
 
 		private class PrintObjectForCustomerShort : PrintObjectBaseShort

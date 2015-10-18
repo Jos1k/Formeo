@@ -225,6 +225,7 @@
     <Compile Include="BussinessLayer\Interfaces\IPrintObjectsManager.cs" />
     <Compile Include="BussinessLayer\Interfaces\IProjectService.cs" />
     <Compile Include="BussinessLayer\Interfaces\IProjectsManager.cs" />
+    <Compile Include="BussinessLayer\Interfaces\ICompaniesService.cs" />
     <Compile Include="BussinessLayer\Interfaces\IUserService.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\BidsManager.cs" />
     <Compile Include="BussinessLayer\ManagersImplementation\CompaniesManager.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="BussinessLayer\Services\BidsService.cs" />
     <Compile Include="BussinessLayer\Services\PrintObjectService.cs" />
     <Compile Include="BussinessLayer\Services\ProjectService.cs" />
+    <Compile Include="BussinessLayer\Services\CompaniesService.cs" />
     <Compile Include="BussinessLayer\Services\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BidsController.cs" />
@@ -326,6 +328,7 @@
     <Content Include="App_Data\uploads\mypdf.pdf" />
     <None Include="Properties\PublishProfiles\formeo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\companyEditController.js" />
     <Content Include="Scripts\Controllers\bidProductPartialController.js" />
     <Content Include="Scripts\Controllers\addProductsPartialController.js" />
     <Content Include="Scripts\Controllers\uploadProductController.js" />
@@ -397,6 +400,8 @@
     <Content Include="Views\Bids\_BidPrintObjectPartial.cshtml" />
     <Content Include="Views\Bids\_BidsForPrintObjectPatrial.cshtml" />
     <Content Include="Views\PrintObjects\_UploadProductModal.cshtml" />
+    <Content Include="Views\Home\Partial\Sections\_companies.cshtml" />
+    <Content Include="Views\Company\_EditCompany.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

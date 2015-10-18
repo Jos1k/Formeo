@@ -1,0 +1,77 @@
+﻿<div class="row">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectCompaniesMenu('/AddCompany')" ng-class="{'btn-menu-selected': isActiveCompaniesMenu('/AddCompany')}">
+            <i class="fa fa-plus-square fa-2x"></i>
+            <br>Add company
+        </button>
+        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectCompaniesMenu('/ManageCompany')" ng-class="{'btn-menu-selected': isActiveCompaniesMenu('/ManageCompany')}">
+            <i class="fa fa-cogs fa-2x"></i>
+            <br>Company Info
+        </button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="container">
+        <div ng-show="isActiveCompaniesMenu('/AddCompany')">
+            @using( Html.BeginForm( "RegisterFormeo", "Account", FormMethod.Post ) ) {
+                @Html.AntiForgeryToken()
+                <div class="padding30px">
+                    <div class="row form-group-margin">
+                        <input type="text" ng-model="companyModel.companyName" name="CompanyName" id="CompanyName" placeholder="Company Name" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <input type="text" ng-model="companyModel.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <input type="text" ng-model="companyModel.orgNumber" name="OrgNumber" id="OrgNumber" placeholder="Org Number" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <input type="text" ng-model="companyModel.taxNumber" name="taxNumber" id="taxNumber" placeholder="Tax Number" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                    </div>
+                    <div class="row form-group-margin">
+                        <div class="left">
+                            <div class="form-group">
+                                <label for="isProduction" style="font-size: medium">Production</label>
+                                <input class="pointer" name="SelectedRoleCompany" id="SelectedRoleCompany" ng-model="companyModel.isCustomer" type="radio" ng-value="false">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="isCustomer" style="font-size: medium">Customer</label>
+                                <input class="pointer" name="SelectedRoleCompany" id="SelectedRoleCompany" ng-model="companyModel.isCustomer" type="radio" ng-value="true">
+                            </div>
+                        </div>
+                        <div class="right">
+                            <button type="button" class="btn btn-default text-center btn-upload-product" style="height: 50px; width: 70px;" ng-click="addCompany()">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div ng-show="isActiveCompaniesMenu('/ManageCompany')">
+            @using( Html.BeginForm( "RegisterFormeo", "Account", FormMethod.Post ) ) {
+                @Html.AntiForgeryToken()
+                <div class="padding30px">
+                    <div class="row form-group-margin">
+                        <p></p>
+                        <div ng-switch on="selectedCompany.isCustomer">
+                            <label class="label label-success" ng-switch-when="true" style="font-size:18px;">
+                                Customer Company
+                            </label>
+                            <label class="label label-info" ng-switch-when="false" style="font-size:18px;">
+                                Producer Company
+                            </label>
+                        </div>
+                        <p></p>
+                        <p>Company Name:</p>
+                        <h4 style="font-style:italic;margin-left:10px;">{{selectedCompany.companyName}}</h4>
+                        <p>Country:</p>
+                        <h4 style="font-style:italic;margin-left:10px;">{{selectedCompany.country}}</h4>
+                        <p>Organization Number:</p>
+                        <h4 style="font-style:italic;margin-left:10px;">{{selectedCompany.orgNumber}}</h4>
+                        <p>Tax Number:</p>
+                        <h4 style="font-style:italic;margin-left:10px;">{{selectedCompany.taxNumber}}</h4>  
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

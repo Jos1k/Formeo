@@ -30,14 +30,16 @@ namespace Formeo.EFInfrastructure
 					Country = "UK",
 					Name = "Company 1",
 					OrgNumber = "OrgNumber1",
-					TaxNumber = "TaxNumber1"
+					TaxNumber = "TaxNumber1",
+					IsCustomer = true
 				},
 				new Company()
 				{
 					Country = "US",
 					Name = "Company 2",
 					OrgNumber = "OrgNumber2",
-					TaxNumber = "TaxNumber2"
+					TaxNumber = "TaxNumber2",
+					IsCustomer = false
 				},
 			};
 
@@ -229,7 +231,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile1",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(0),
+					PrintMaterial = "Steel",
 					CompanyCreator = companies.ElementAt(0),
 					UserCreator = users.ElementAt(0)
 				},
@@ -241,7 +243,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile2",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(1),
+					PrintMaterial = "Steel",
 					CompanyCreator = companies.ElementAt(0),
 					UserCreator = users.ElementAt(0)
 				},
@@ -253,7 +255,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile3",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(2),
+					PrintMaterial = "Steel",
 					CompanyCreator = companies.ElementAt(0),
 
 				},
@@ -265,10 +267,8 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile4",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(3),
+					PrintMaterial = "Wood",
 					//Project = projects.ElementAt(2)
-
-
 				},
 
 				new PrintObject()
@@ -278,7 +278,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(4),
+					PrintMaterial = "Wood",
 					//Project = projects.ElementAt(2)
 				},
 
@@ -289,7 +289,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(4),
+					PrintMaterial = "Wood",
 					UserCreator = users.ElementAt(0),
 					ArticleNo = "123456789",
 					CompanyCreator = users.ElementAt(0).Company
@@ -302,7 +302,7 @@ namespace Formeo.EFInfrastructure
 					CadFile = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/uploads"), "mypdf.pdf"),
 					PropertiesSpecificationFile = "PropertiesSpecificationFile5",
 					CustomerArticleNumber = "CustomerArticleNumber",
-					//PrintMaterial = printMaterials.ElementAt(4),
+					PrintMaterial = "Wood",
 					UserCreator = users.ElementAt(0),
 					ArticleNo = "99",
 					CompanyCreator = users.ElementAt(0).Company

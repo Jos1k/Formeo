@@ -26,6 +26,8 @@ namespace Formeo.Models
 
 		public string TaxNumber { get; set; }
 
+		public bool IsCustomer { get; set; } 
+
 		public virtual ICollection<ApplicationUser> Users { get; set; }
 
 	}

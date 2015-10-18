@@ -14,5 +14,13 @@ namespace Formeo.BussinessLayer.Interfaces
 		Company GetCompanyById(long companyId);
 
 		Company GetCurrentCompany();
+
+		IEnumerable<Company> GetCompanies();
+
+		long CreateCompany( Company company);
+
+		void UpdateCompany( Company company );
+
+		void RemoveCompany( long companyId );
 	}
 }

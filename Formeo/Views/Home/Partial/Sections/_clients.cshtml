@@ -5,14 +5,14 @@
             <i class="fa fa-plus"></i>
             <br>Add user
         </button>
-        <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/GetInfo')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/GetInfo')}">
-            <i class="fa fa-file-text fa-2x"></i>
-            <br>Get info
-        </button>
         <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/ManageUser')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/ManageUser')}">
             <i class="fa fa-user fa-2x"></i>
             <i class="fa fa-cog" ng-class="{'fa-spin': isActiveCLientsMenu('/ManageUser')}"></i>
             <br>Manage user
+        </button>
+        <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/GetInfo')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/GetInfo')}">
+            <i class="fa fa-file-text fa-2x"></i>
+            <br>Get info
         </button>
     </div>
 </div>

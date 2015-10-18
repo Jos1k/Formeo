@@ -24,6 +24,7 @@ namespace Formeo.Controllers
 
 		private IPrintObjectsService _printObjectService;
 		private IUserService _userService;
+		private ICompaniesService _companiesService;
 		private IUserManager _userManager;
 		private IProjectService _projectService;
 		private ICompaniesManager _companiesManager;
@@ -36,7 +37,8 @@ namespace Formeo.Controllers
 			IUserManager userManager,
 			IProjectService projectService,
 			ICompaniesManager companiesManager,
-			IPrintObjectsManager printObjectManager)
+			IPrintObjectsManager printObjectManager,
+			ICompaniesService companiesService)
 		{
 			_printObjectService = printObjectService;
 			_userService = userService;
@@ -44,6 +46,7 @@ namespace Formeo.Controllers
 			_projectService = projectService;
 			_companiesManager = companiesManager;
 			_printObjectManager = printObjectManager;
+			_companiesService = companiesService;
 		}
 
 
@@ -143,6 +146,26 @@ namespace Formeo.Controllers
 			return View(viewModel);
 		}
 
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult CreateCompany( Company company ) {
+			long companyId = _companiesManager.CreateCompany( company );
+			return Json( _companiesService.GetCompanyJSON( companyId ) );
+		}
+
+		[HttpGet]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditCompanyModal() {
+			return PartialView( "~/Views/Company/_EditCompany.cshtml" );
+		}
+
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditCompany( Company company ) {
+			_companiesManager.UpdateCompany( company );
+			return Json( _companiesService.GetCompanyJSON( company.ID ) );
+		}
+
 		#endregion
 
 
@@ -160,9 +183,6 @@ namespace Formeo.Controllers
 
 			return View();
 		}
-
-
-
 		#region Helpers
 		private _IndexAdminViewModel GetAdminHomepageViewModel()
 		{
@@ -171,6 +191,7 @@ namespace Formeo.Controllers
 
 			viewModel.CustomersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Customer);
 			viewModel.ProducersJSON = _userService.GetUsersByRoleJSON(StaticData.RoleNames.Producer);
+			viewModel.CompaniesJSON = _companiesService.GetCompaniesJSON();
 			return viewModel;
 		}
 

@@ -343,6 +343,10 @@ a.list-group-item {
                 50% 50% 
                 no-repeat;
 }
+
+.modal-editCompany {
+	width:400px;
+}
 /*# sourceMappingURL=Site.css.map */
 
 /*loading*/
