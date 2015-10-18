@@ -149,6 +149,19 @@ namespace Formeo.Controllers
 			return Json( _companiesService.GetCompanyJSON( companyId ) );
 		}
 
+		[HttpGet]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditCompanyModal() {
+			return PartialView( "~/Views/Company/_EditCompany.cshtml" );
+		}
+
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditCompany( Company company ) {
+			_companiesManager.UpdateCompany( company );
+			return Json( _companiesService.GetCompanyJSON( company.ID ) );
+		}
+
 		#endregion
 
 

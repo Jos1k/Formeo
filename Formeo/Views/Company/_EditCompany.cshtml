@@ -1,1 +1,37 @@
-﻿
+﻿<div class="modal-content" style="border-radius: 0; border:none;">
+    <div class="modal-header" style="background-color: #34495E; color: white;">
+        <h5 class="modal-title"><b>Edit Company</b></h5>
+    </div>
+    <div class="modal-body">
+                <div class="padding30px">
+                    <div class="row form-group-margin">
+                        <p style="font-weight:bold">Company Name:</p>
+                        <input type="text" ng-model="company.companyName" name="CompanyName" id="CompanyName" placeholder="Company Name" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <p style="font-weight:bold">Country:</p>
+                        <input type="text" ng-model="company.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <p style="font-weight:bold">Organization Number:</p>
+                        <input type="text" ng-model="company.orgNumber" name="OrgNumber" id="OrgNumber" placeholder="Org Number" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                        <p style="font-weight:bold">Tax Number:</p>
+                        <input type="text" ng-model="company.taxNumber" name="taxNumber" id="taxNumber" placeholder="Tax Number" autofocus class="form-control login-textbox textbox-menu" maxlength="23" />
+                    </div>
+                </div>
+    </div>
+    <div class="modal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#FF8080" ng-click="cancel()">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+                <div class="col-md-6 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#49c9af;" ng-click="EditCompany()">
+                        <i class="fa fa-plus"></i>
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

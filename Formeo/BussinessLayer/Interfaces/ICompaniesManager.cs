@@ -19,6 +19,8 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		long CreateCompany( Company company);
 
+		void UpdateCompany( Company company );
+
 		void RemoveCompany( long companyId );
 	}
 }

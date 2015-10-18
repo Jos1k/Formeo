@@ -69,6 +69,19 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 				throw new InvalidOperationException( "Company not found!" );
 			}
 		}
+		public void UpdateCompany( Company company ) {
+			bool ifSuchCompanyPresent = _dbContext.Companies.Where( x => x.OrgNumber == company.OrgNumber ).Count()>1;
+			if( !ifSuchCompanyPresent ) {
+				Company resultCompany = _dbContext.Companies.Find( company.ID );
+				resultCompany.Name = company.Name;
+				resultCompany.OrgNumber = company.OrgNumber;
+				resultCompany.TaxNumber = company.TaxNumber;
+				resultCompany.Country = company.Country;
+				_dbContext.SaveChanges();
+			} else {
+				throw new InvalidOperationException( "Company with such orgNumber already exist!" );
+			}
+		}
 
 		#endregion
 	}

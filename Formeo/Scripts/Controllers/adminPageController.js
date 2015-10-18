@@ -1,4 +1,4 @@
-﻿var adminPageController = function ($scope, $window, $http) {
+﻿var adminPageController = function ($scope, $window, $modal, $http) {
     $scope.userModel = {
         username: '',
         password: '',
@@ -80,83 +80,109 @@
         }
     }
 
-    $scope.selectCompany = function (company) {
-        if (company != $scope.EMPTY) {
-            $scope.selectedCompany = company;
-        }
-    }
+    $scope.showEditCompanyModal = function () {
 
-    $scope.isMenuTypeIs = function (type) {
-        return $scope.menuType === type;
-    };
-
-    $scope.selectMainMenu = function (item) {
-        $scope.selectedMainMenu = item;
-    };
-
-    $scope.isActiveMainMenu = function (item) {
-        return $scope.selectedMainMenu === item;
-    };
-
-    $scope.selectClientMenu = function (item) {
-        $scope.selectedClientsMenu = item;
-    };
-
-    $scope.selectCompaniesMenu = function (item) {
-        $scope.selectedCompaniesMenu = item;
-    };
-
-    $scope.isActiveCLientsMenu = function (item) {
-        return $scope.selectedClientsMenu === item;
-    };
-
-    $scope.isActiveCompaniesMenu = function (item) {
-        return $scope.selectedCompaniesMenu === item;
-    };
-
-    $scope.addCompany = function () {
-        $http({
-            method: 'POST',
-            url: '/Home/CreateCompany',
-            headers: { 'Content-Type': 'application/json;' },
-            data: {
-                'Name': $scope.companyModel.companyName,
-                'OrgNumber': $scope.companyModel.orgNumber,
-                'TaxNumber': $scope.companyModel.taxNumber,
-                'Country': $scope.companyModel.country,
-                'IsCustomer': $scope.companyModel.isCustomer?true:false
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: "/Home/EditCompanyModal/",
+            controller: 'companyEditController',
+            size: "editCompany",
+            resolve: {
+                company: function () {
+                    return $scope.selectedCompany;
+                }
             }
-        }).
-           then(function (response) {
-               $scope.companies.push(JSON.parse(response.data));
-               $scope.cleanCompanyModel();
-           }, function (response) {
-               $window.alert('error creating company');
-           });
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selectedCompany = selectedItem;
+            var result = $.grep($scope.companies, function (e) { return e.id == selectedItem.id; })[0];
+            result.companyName = selectedItem.companyName;
+            result.country = selectedItem.country;
+            result.orgNumber = selectedItem.orgNumber;
+            result.taxNumber = selectedItem.taxNumber;
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
     };
 
-    $scope.cleanUserModel = function () {
-        $scope.userModel = {
-            username: '',
-            password: '',
-            email: '',
-            address: '',
-            postal: '',
-            country: '',
-            isProduction: false,
-            isCustomer: false,
-            isAdmin: false
-        };
-    };
-
-    $scope.cleanCompanyModel = function () {
-        $scope.companyModel = {
-            id: '',
-            orgNumber: '',
-            country: '',
-            taxNumber: '',
-            companyName: '',
-            isCustomer: false
-        };
+$scope.selectCompany = function (company) {
+    if (company != $scope.EMPTY) {
+        $scope.selectedCompany = company;
     }
+}
+
+$scope.isMenuTypeIs = function (type) {
+    return $scope.menuType === type;
+};
+
+$scope.selectMainMenu = function (item) {
+    $scope.selectedMainMenu = item;
+};
+
+$scope.isActiveMainMenu = function (item) {
+    return $scope.selectedMainMenu === item;
+};
+
+$scope.selectClientMenu = function (item) {
+    $scope.selectedClientsMenu = item;
+};
+
+$scope.selectCompaniesMenu = function (item) {
+    $scope.selectedCompaniesMenu = item;
+};
+
+$scope.isActiveCLientsMenu = function (item) {
+    return $scope.selectedClientsMenu === item;
+};
+
+$scope.isActiveCompaniesMenu = function (item) {
+    return $scope.selectedCompaniesMenu === item;
+};
+
+$scope.addCompany = function () {
+    $http({
+        method: 'POST',
+        url: '/Home/CreateCompany',
+        headers: { 'Content-Type': 'application/json;' },
+        data: {
+            'Name': $scope.companyModel.companyName,
+            'OrgNumber': $scope.companyModel.orgNumber,
+            'TaxNumber': $scope.companyModel.taxNumber,
+            'Country': $scope.companyModel.country,
+            'IsCustomer': $scope.companyModel.isCustomer?true:false
+        }
+    }).
+       then(function (response) {
+           $scope.companies.push(JSON.parse(response.data));
+           $scope.cleanCompanyModel();
+       }, function (response) {
+           $window.alert('error creating company');
+       });
+};
+
+$scope.cleanUserModel = function () {
+    $scope.userModel = {
+        username: '',
+        password: '',
+        email: '',
+        address: '',
+        postal: '',
+        country: '',
+        isProduction: false,
+        isCustomer: false,
+        isAdmin: false
+    };
+};
+
+$scope.cleanCompanyModel = function () {
+    $scope.companyModel = {
+        id: '',
+        orgNumber: '',
+        country: '',
+        taxNumber: '',
+        companyName: '',
+        isCustomer: false
+    };
+}
 }
