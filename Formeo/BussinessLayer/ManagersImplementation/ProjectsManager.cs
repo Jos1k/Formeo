@@ -75,6 +75,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					projInfo.Project = newProject;
 					projInfo.Quantity = poInfo.Quantity;
 					projInfo.Status = Formeo.Models.StaticData.PrintObjectStatusEnum.InQueue;
+					projInfo.CompanyProducer = poEntity.CompanyProducer;
 
 					totalPrice += selectedBid.Price * poInfo.Quantity;
 
@@ -111,14 +112,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 		}
 		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus) 
 		{
-			return
-				from projectInfo in _dbcontext.ProjectInfos
-												.Include("Project")
-												.Include("PrintObject")
-				join printObject in _dbcontext.PrintObjects on projectInfo.PrintObjectId equals printObject.ID
-				where printObject.CompanyProducer.ID == companyId
-					&& projectInfo.Status == printObjectStatus
-				select projectInfo;
+			return _dbcontext
+				.ProjectInfos
+				.Include("Project")
+				.Include("PrintObject")
+				.Where(
+					projectInfo => projectInfo.CompanyProducer.ID == companyId
+								&& projectInfo.Status == printObjectStatus
+				);
 		}
 
 		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)
@@ -129,6 +130,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			_dbcontext.SaveChanges();
 			_dbcontext.Entry(projectInfo).Reload();
 		}
-		
+
 	}
 }

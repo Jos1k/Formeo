@@ -133,6 +133,7 @@
 
                 if (index > -1) {
                     $scope.ordersInProduction.splice(index, 1);
+                    $scope.deliveredPrintObjects.push(projectInfo);
                 } else {
                     $window.alert('UI error');
                 }

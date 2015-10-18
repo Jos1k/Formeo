@@ -67,12 +67,12 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObject;
 		}
 
-		public IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId)
+		public IEnumerable<PrintObject> GetPrintObjectByOrderId(long orderId)
 		{
 			return from printObject in _dbContext.PrintObjects
-				   join relation in _dbContext.ProjectInfos
-				   on printObject.ID equals relation.PrintObjectId
-				   where relation.ProjectId == orderId
+				   join projectInfo in _dbContext.ProjectInfos
+				   on printObject.ID equals projectInfo.PrintObjectId
+				   where projectInfo.ProjectId == orderId
 				   select printObject;
 		}
 
@@ -92,22 +92,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				select printObject;
 
 			return printObjectsResult;
-		}
-
-		public IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer
-		(
-			long companyId,
-			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-		)
-		{
-			IEnumerable<PrintObject> printObjects =
-				from printObject in _dbContext.PrintObjects
-				join projectInfo in _dbContext.ProjectInfos
-					on printObject.ID equals projectInfo.PrintObjectId
-				where printObject.CompanyProducer.ID == companyId
-						&& projectInfo.Status == poStatus
-				select printObject;
-			return printObjects;
 		}
 
 		public IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId)
@@ -132,15 +116,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			_dbContext.Entry(printObject).Reload();
 			return printObject.IsNeedBid;
 		}
-
-		//public void AssignProducerToPrintObject(long producerCompanyId, long printObjectId)
-		//{
-		//	PrintObject printObject = GetPrintObjectById(printObjectId);
-		//	Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
-
-		//	printObject.CompanyProducer = producerCompany;
-		//	_dbContext.SaveChanges();
-		//}
 
 		public IEnumerable<PrintObject> UploadPrintObjects(IEnumerable<PrintObjectFileInfo> fileInfos)
 		{
@@ -175,7 +150,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			Company producerCompany = _comaniesManager.GetCompanyById(producerCompanyId);
 
 			if (printObject.CompanyProducer == null ||
-				(printObject.CompanyProducer.ID != producerCompany.ID)) //saving the same data causes errors...at it's bad for karma 
+				(printObject.CompanyProducer.ID != producerCompany.ID)) //saving the same data causes errors...and it's bad for karma 
 			{
 				printObject.CompanyProducer = producerCompany;
 				_dbContext.SaveChanges();
@@ -185,19 +160,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObject;
 		}
 
-		public IEnumerable<PrintObject> GetActivePrintOBjectsForProducer(long producerCompanyId)
-		{
-			IEnumerable<PrintObject> printObjects =
-				_dbContext.ProjectInfos
-					.Join(_dbContext.PrintObjects,
-						project => project.PrintObjectId,
-						printObject => printObject.ID,
-						(projectInfo, printObject) => printObject)
-					.Where(printObject => printObject.CompanyProducer.ID == producerCompanyId)
-					.ToArray();
-
-			return printObjects;
-		}
 
 		#endregion
 
