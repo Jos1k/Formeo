@@ -16,9 +16,11 @@ namespace Formeo.Models
 		[Key, ForeignKey("PrintObject"), Column(Order = 1)]
 		public virtual long PrintObjectId { get; set; }
 		public virtual PrintObject PrintObject { get; set; }
+
+		public virtual Company CompanyProducer { get; set; }
 		public int Quantity { get; set; }
 		public decimal Price { get; set; }
 
-		public Formeo.Models.StaticData.PrintObjectStatusEnum Status{ get; set; }
+		public Formeo.Models.StaticData.PrintObjectStatusEnum Status { get; set; }
 	}
 }

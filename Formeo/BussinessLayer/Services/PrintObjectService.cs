@@ -92,23 +92,12 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(printObjectShort);
 		}
 
-		public string GetPrintObjectsByCompanyProducerJSON(
-			long companyId,
-			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-		)
-		{
-			var printObjects = _printObjectsManager.GetPrintObjectsByCompanyProducer(companyId, poStatus);
-			var printObjectsShort = printObjects.Select(po => PrintObjectForProducerToShort(po));
-
-			return JsonConvert.SerializeObject(printObjectsShort);
-		}
-
 		/// <summary>
 		/// for customers
 		/// </summary>
 		public string GetPrintObjectByOrderJSON(long orderId)
 		{
-			var printObjects = _printObjectsManager.GetPrintObjectsByOrderId(orderId);
+			var printObjects = _printObjectsManager.GetPrintObjectByOrderId(orderId);
 			var printObjectsShort = printObjects.Select(po => PrintObjectForCustomerToShort(po));
 
 			return JsonConvert.SerializeObject(printObjectsShort);

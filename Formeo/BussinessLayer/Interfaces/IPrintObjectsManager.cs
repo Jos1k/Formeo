@@ -15,14 +15,9 @@ namespace Formeo.BussinessLayer.Interfaces
 		IEnumerable<PrintObject> GetPrintObjectsByIds(IEnumerable<long> printObjectIds);
 		PrintObject GetPrintObjectById(long printObjectId);
 
-		IEnumerable<PrintObject> GetPrintObjectsByOrderId(long orderId);
+		IEnumerable<PrintObject> GetPrintObjectByOrderId(long orderId);
 
 		IEnumerable<PrintObject> GetNeedBidPrintObjectsForProducer(string producerId, bool isNeedBid);
-
-		IEnumerable<PrintObject> GetPrintObjectsByCompanyProducer(
-			long companyId,
-			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-		);
 
 		IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId);
 

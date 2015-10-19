@@ -1,18 +1,5 @@
 ﻿var producerPageController = function ($scope, $http, $modal, UploadPrinObject) {
     UploadPrinObject.storeScope($scope, 'printObjects');
-    $scope.userModel = {
-        username: '',
-        password: '',
-        email: '',
-        address: '',
-        postal: '',
-        country: '',
-        isProduction: false,
-        isCustomer: false,
-        isAdmin: false
-    };
-
-    UploadPrinObject.storeScope($scope, 'printObjects');
     $scope.selectedMainMenu = '/Dashboard';
     $scope.selectedClientsMenu = '/AddUser';
     $scope.helloVariable = 'I work!';
@@ -105,19 +92,61 @@
         });
     }
 
-    $scope.cleanUserModel = function () {
-        $scope.userModel = {
-            username: '',
-            password: '',
-            email: '',
-            address: '',
-            postal: '',
-            country: '',
-            isProduction: false,
-            isCustomer: false,
-            isAdmin: false
-        };
-    };
+    $scope.SetProductionStatus = function (projectInfo, status) {
+        $http({
+            method: 'POST',
+            url: '/Project/SetProductState',
+            params: { 'projectId': projectInfo.ProjectId, 'printObjectId': projectInfo.PrinObjectID, 'status': status },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+               then(function (response) {
+                   //success
+
+                   $scope.UpdateProductOnUI(projectInfo, status);
+
+               }, function (response) {
+                   //http error
+
+               });
+    }
+
+    $scope.UpdateProductOnUI = function (projectInfo, status) {
+
+        switch (status) {
+            case 2: {
+
+                var index = $scope.ordersInQueue.indexOf(projectInfo);
+
+                if (index > -1) {
+
+                    $scope.ordersInQueue.splice(index, 1);
+                    $scope.ordersInProduction.push(projectInfo);
+
+                } else {
+                    $window.alert('UI error');
+                }
+
+                break;
+            }
+            case 3: {
+                var index = $scope.ordersInProduction.indexOf(projectInfo);
+
+                if (index > -1) {
+                    $scope.ordersInProduction.splice(index, 1);
+                    $scope.deliveredPrintObjects.push(projectInfo);
+                } else {
+                    $window.alert('UI error');
+                }
+
+                break;
+            }
+            default: {
+                $window.alert('UI error');
+                break;
+            }
+        }
+
+    }
 
     $scope.showUploadProductModal = function () {
         UploadPrinObject.showUpload();

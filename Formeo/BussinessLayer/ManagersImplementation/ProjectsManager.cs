@@ -46,13 +46,6 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 			int overallQuantity = 0;
 
-			//need status manager...later
-			OrderStatus newStatus =
-				_dbcontext
-					.Statuses
-					.Where(stat => stat.CurrentOrderStatus == Formeo.Models.StaticData.OrderStatusEnum.InProgress)
-					.Single();
-
 			Company company = _companiesManager.GetCompanyByUserId(creatorUserId);
 
 			Project newProject = new Project();
@@ -64,11 +57,10 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			newProject.LastName = deliveryInfo.LastName;
 			newProject.ZipCode = deliveryInfo.PostCode;
 			newProject.Creator = creatorUser;
-			newProject.Status = newStatus;
 			newProject.CompanyCreator = company;
 
 			_dbcontext.Projects.Add(newProject);
-			//_dbcontext.SaveChanges();
+			_dbcontext.SaveChanges();
 
 			decimal totalPrice = 0;
 			foreach (LayOrderPrintObjectInfo poInfo in printObjectInfo)
@@ -78,14 +70,16 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 				if (poEntity != null && selectedBid != null)
 				{
-					ProjectInfo rel = new ProjectInfo();
-					rel.PrintObject = poEntity;
-					rel.Project = newProject;
-					rel.Quantity = poInfo.Quantity;
+					ProjectInfo projInfo = new ProjectInfo();
+					projInfo.PrintObject = poEntity;
+					projInfo.Project = newProject;
+					projInfo.Quantity = poInfo.Quantity;
+					projInfo.Status = Formeo.Models.StaticData.PrintObjectStatusEnum.InQueue;
+					projInfo.CompanyProducer = poEntity.CompanyProducer;
 
 					totalPrice += selectedBid.Price * poInfo.Quantity;
 
-					_dbcontext.ProjectsInfo.Add(rel);
+					_dbcontext.ProjectInfos.Add(projInfo);
 					_dbcontext.SaveChanges();
 				}
 				overallQuantity += poInfo.Quantity;
@@ -104,27 +98,37 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 		{
 			return _dbcontext
 			.Projects
-			.Where(project => project.Status.CurrentOrderStatus == ordersStatus)
+			.Where(project => project.Status == ordersStatus)
 			.ToList();
 		}
 
 		public IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus)
 		{
-			return _dbcontext
+			var customersProjects = _dbcontext
 					.Projects
-					.Where(project => project.Creator.Id == customerId
-						&& project.Status.CurrentOrderStatus == orderStatus)
+					.Where(project => project.Creator.Id == customerId)
 					.ToList();
+			return customersProjects.Where(project => project.Status == orderStatus);
+		}
+		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus) 
+		{
+			return _dbcontext
+				.ProjectInfos
+				.Include("Project")
+				.Include("PrintObject")
+				.Where(
+					projectInfo => projectInfo.CompanyProducer.ID == companyId
+								&& projectInfo.Status == printObjectStatus
+				);
 		}
 
-		public IEnumerable<Project> GetProjectsByCompany(long companyId, StaticData.OrderStatusEnum orderStatus)
+		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)
 		{
-			var projects =
-				from project in _dbcontext.Projects
-				join projectInfo in _dbcontext.ProjectsInfo
-				on project.ID equals projectInfo.ProjectId
-				select project;
-			return projects;
+			ProjectInfo projectInfo = _dbcontext.ProjectInfos
+				.Find(projectId, printObjectId);
+			projectInfo.Status = status;
+			_dbcontext.SaveChanges();
+			_dbcontext.Entry(projectInfo).Reload();
 		}
 
 	}

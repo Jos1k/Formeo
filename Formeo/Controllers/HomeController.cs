@@ -136,9 +136,13 @@ namespace Formeo.Controllers
 			_IndexProducerViewModel viewModel = new _IndexProducerViewModel();
 
 			viewModel.Dashboard_BidRequestedPrintObjects = _printObjectService.GetNeedBidPrintObjectsForProducerJSON(currentUser.Id, true);
-			viewModel.Dashboard_PrintObjectsDelivered = _projectService.GetProjectsByCompanyJSON(company.ID, StaticData.OrderStatusEnum.Delivered);
+			viewModel.Dashboard_PrintObjectsDelivered = _projectService.GetProjectInfosForProducerJSON(company.ID, StaticData.PrintObjectStatusEnum.Delivered);
 
 			viewModel.Storage_PrintObjects = _printObjectService.GetPrintObjectsByCompanyCreatorJSON(company.ID);
+
+			viewModel.Orders_OrdersInQueue = _projectService.GetProjectInfosForProducerJSON(company.ID, StaticData.PrintObjectStatusEnum.InQueue);
+			viewModel.Orders_OrdersInProduction = _projectService.GetProjectInfosForProducerJSON(company.ID, StaticData.PrintObjectStatusEnum.Producing);
+
 			return View(viewModel);
 		}
 

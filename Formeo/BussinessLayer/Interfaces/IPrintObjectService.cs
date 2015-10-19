@@ -19,11 +19,6 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		string GetNeedBidPrintObjectsForProducerJSON(string producerId, bool isNeedBid);
 
-		string GetPrintObjectsByCompanyProducerJSON(
-			long companyId,
-			Formeo.Models.StaticData.PrintObjectStatusEnum poStatus
-		);
-
 		string GetPrintObjectByOrderJSON(long orderId);
 
 		string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos);
