@@ -109,16 +109,16 @@ namespace Formeo.Controllers
 
 			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsByCompanyCreatorJSON(company.ID);
 
-			viewModel.ActiveProjectsJSON =
+			viewModel.Orders_ActiveOrders =
 				_projectService
-				.GetProjectsByCreatorUserJSON(
-				currentUser.Id,
+				.GetProjectsByCreatorCompanyJSON(
+				company.ID,
 				Formeo.Models.StaticData.OrderStatusEnum.InProgress);
 
-			viewModel.CompletedProjectsJSON =
+			viewModel.Orders_CompletedOrders =
 				_projectService
-				.GetProjectsByCreatorUserJSON(
-				currentUser.Id,
+				.GetProjectsByCreatorCompanyJSON(
+				company.ID,
 				Formeo.Models.StaticData.OrderStatusEnum.Delivered);
 
 			return View(viewModel);

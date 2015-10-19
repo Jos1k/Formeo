@@ -72,7 +72,7 @@ namespace Formeo.BussinessLayer.Services
 		/// </summary>
 		public string GetExclusivePrintObjectsByIdsForCompanyJSON(long companyId, IEnumerable<long> printObjectIdsToExlude)
 		{
-			var printObjects = _printObjectsManager.GetPrintObjectsByCreatorCompany(companyId);
+			var printObjects = _printObjectsManager.GetExclusivePrintObjectsByIdsForCompanyJSON(companyId,printObjectIdsToExlude);
 
 			var printObjectsShort = printObjects
 				.Where(po => !printObjectIdsToExlude.Contains(po.ID))

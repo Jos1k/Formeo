@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OrderStatus = Formeo.Models.StaticData.OrderStatusEnum;
+using PrintObjectStatusEnum =Formeo.Models.StaticData.PrintObjectStatusEnum;
 
 namespace Formeo.BussinessLayer.Interfaces
 {
 	public interface IProjectService
 	{
-		string GetProjectsByCreatorUserJSON(string customerId, OrderStatus orderStatus);
-		string GetProjectInfosForProducerJSON(long companyId, Formeo.Models.StaticData.PrintObjectStatusEnum poStatus);
+		string GetProjectsByCreatorCompanyJSON(long companyId, OrderStatus orderStatus);
+		string GetProjectInfosForProducerJSON(long companyId, PrintObjectStatusEnum poStatus);
+		string GetProjectInfosByProjectIdJSON(long projectId);
 	}
 }

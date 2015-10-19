@@ -24,19 +24,19 @@ namespace Formeo.BussinessLayer.Services
 			_printObjectManager = printObjectManager;
 		}
 
-		public string GetProjectsByCreatorUserJSON(string creatorUserId, Formeo.Models.StaticData.OrderStatusEnum orderStatus)
+		public string GetProjectsByCreatorCompanyJSON(long companyId, Formeo.Models.StaticData.OrderStatusEnum orderStatus)
 		{
 			IEnumerable<Project> projects =
 				_projectsManager
-				.GetProjectByCreator(creatorUserId, orderStatus);
+				.GetProjectByCreatorCompany(companyId, orderStatus);
 
-			var projectsShort = GetProjectShort(projects);
+			var projectsShort = GetProjectsShort(projects);
 
 			return JsonConvert.SerializeObject(projectsShort);
 		}
 
 
-		private IEnumerable<ProjectForCreatorShort> GetProjectShort(IEnumerable<Project> projects)
+		private IEnumerable<ProjectForCreatorShort> GetProjectsShort(IEnumerable<Project> projects)
 		{
 
 			if (projects == null || projects.Count() == 0)
@@ -45,7 +45,7 @@ namespace Formeo.BussinessLayer.Services
 			}
 			var projectsShort = projects.Select(project => new ProjectForCreatorShort()
 			{
-				Id = project.ID,
+				ProjectId = project.ID,
 				Name = project.Name,
 				Quantity = project.OverallQuantity,
 			});
@@ -57,6 +57,13 @@ namespace Formeo.BussinessLayer.Services
 			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosForProducer(companyId, poStatus);
 			var pinfosShort = projectInfos.Select(poinfo => ToProjectInfoForProducerShort(poinfo));
 			return JsonConvert.SerializeObject(pinfosShort);
+		}
+
+		public string GetProjectInfosByProjectIdJSON(long projectId)
+		{
+			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosByProjectId(projectId);
+			var printObjectInfosShort = projectInfos.Select(ToProjectInfoForCustomerShort);
+			return JsonConvert.SerializeObject(printObjectInfosShort);
 		}
 
 		private ProjectInfoForProducerShort ToProjectInfoForProducerShort(ProjectInfo projectInfo)
@@ -72,9 +79,24 @@ namespace Formeo.BussinessLayer.Services
 			return pinfoShort;
 		}
 
+		private ProjectInfoForCustomerShort ToProjectInfoForCustomerShort(ProjectInfo projectInfo)
+		{
+			ProjectInfoForCustomerShort pinfoShort = new ProjectInfoForCustomerShort()
+			{
+				CompanyName = projectInfo.CompanyProducer.Name,
+				PrinObjectID = projectInfo.PrintObjectId,
+				PrintObjectName = projectInfo.PrintObject.Name,
+				ArtNo = projectInfo.PrintObject.ArticleNo,
+				ProjectId = projectInfo.ProjectId,
+				Quantity = projectInfo.Quantity,
+				Status = projectInfo.Status.GetPrintObjectStatusName()
+			};
+			return pinfoShort;
+		}
+
 		private class ProjectForCreatorShort
 		{
-			public long Id { get; set; }
+			public long ProjectId { get; set; }
 			public string Name { get; set; }
 			public int Quantity { get; set; }
 
@@ -89,5 +111,19 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 
 		}
+
+		private class ProjectInfoForCustomerShort
+		{
+			public long ProjectId { get; set; }
+			public long PrinObjectID { get; set; }
+			public string PrintObjectName { get; set; }
+			public string ArtNo { get; set; }
+			public int Quantity { get; set; }
+			public string CompanyName { get; set; }
+			public string Status { get; set; }
+		}
+
+
+
 	}
 }

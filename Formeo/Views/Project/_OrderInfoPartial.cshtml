@@ -1,0 +1,47 @@
+﻿@model Formeo.Models._OrderInfoPartialViewModel
+
+<div ng-init="projectInfos = @Model.ProjectInfosJSON" />
+<div class="modal-content" style="border-radius: 0; border:none;">
+    <div class=" modal-header" style="background-color: #34495E; color: white;">
+        <h5 class="modal-title"><b>Lay Order</b></h5>
+    </div>
+    <div class="modal-body">
+        <p>Order status</p>
+
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Art.No.</th>
+                        <th class="col-md-3">Product Name</th>
+                        <th class="col-md-3">Producer</th>
+                        <th class="col-md-3">Current State</th>
+                        <th class="col-md-1">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="projectInfo in projectInfos">
+                        <td>{{projectInfo.ArtNo}}</td>
+                        <td>{{projectInfo.PrintObjectName}}</td>
+                        <td>{{projectInfo.CompanyName}}</td>
+                        <td>{{projectInfo.Status}}</td>
+                        <td>{{projectInfo.Quantity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="modal-footer" style="padding-top:15px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 uploadProductModalButton">
+                        <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#FF8080" ng-click="cancel()">
+                            <i class="fa fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

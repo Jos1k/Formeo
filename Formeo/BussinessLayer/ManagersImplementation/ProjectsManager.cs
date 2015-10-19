@@ -102,14 +102,16 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			.ToList();
 		}
 
-		public IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus)
+		public IEnumerable<Project> GetProjectByCreatorCompany(long companyId, StaticData.OrderStatusEnum orderStatus)
 		{
 			var customersProjects = _dbcontext
 					.Projects
-					.Where(project => project.Creator.Id == customerId)
+					.Include("CompanyCreator")
+					.Where(project => project.CompanyCreator.ID == companyId)
 					.ToList();
-			return customersProjects.Where(project => project.Status == orderStatus);
+			return customersProjects.Where(project => project.Status == orderStatus); //hack. don't touch it
 		}
+	
 		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus) 
 		{
 			return _dbcontext
@@ -120,6 +122,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					projectInfo => projectInfo.CompanyProducer.ID == companyId
 								&& projectInfo.Status == printObjectStatus
 				);
+		}
+
+		public IEnumerable<ProjectInfo> GetProjectInfosByProjectId(long projectId) {
+			return _dbcontext
+				.ProjectInfos
+				.Include("CompanyProducer")
+				.Include("PrintObject")
+				.Where(projectInfo => projectInfo.ProjectId == projectId);
 		}
 
 		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)

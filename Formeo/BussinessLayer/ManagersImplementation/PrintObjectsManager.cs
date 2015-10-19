@@ -160,7 +160,15 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			return printObject;
 		}
 
-
+		public IEnumerable<PrintObject> GetExclusivePrintObjectsByIdsForCompanyJSON(long companyId, IEnumerable<long> printObjectIdsToExlude) 
+		{
+			return _dbContext
+				.PrintObjects
+				.Include("CompanyProducer")
+				.Where(printObject => printObject.CompanyCreator.ID == companyId
+						&& printObject.CompanyProducer != null
+						&& !printObjectIdsToExlude.Contains(printObject.ID));
+		}
 		#endregion
 
 		private PrintObject CreatePrintObjectByFileInfo(PrintObjectFileInfo fileInfo, string fileName)
