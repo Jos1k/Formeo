@@ -35,6 +35,37 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(projectsShort);
 		}
 
+		public string GetProjectInfosForProducerJSON(long companyId, Formeo.Models.StaticData.PrintObjectStatusEnum poStatus)
+		{
+			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosForProducer(companyId, poStatus);
+			var pinfosShort = projectInfos.Select(poinfo => ToProjectInfoForProducerShort(poinfo));
+			return JsonConvert.SerializeObject(pinfosShort);
+		}
+
+		public string GetProjectInfoDetailsForProducerJSON(long projectId, long printObjectId)
+		{
+			ProjectInfo projectInfo = _projectsManager.GetProjectInfo(projectId, printObjectId);
+
+			ProjectInfoDetailsForCustomer printObjectDetails = new ProjectInfoDetailsForCustomer()
+			{
+				Address = projectInfo.Project.Address,
+				ArtNo = projectInfo.PrintObject.ArticleNo,
+				City = projectInfo.Project.City,
+				Country = projectInfo.Project.Country,
+				CompanyName = projectInfo.Project.CompanyCreator.Name,
+				LastName = projectInfo.Project.LastName,
+				OverralPrice = projectInfo.Price,
+				PricePerItem = projectInfo.SelectedBidPrice,
+				PrintMaterial = projectInfo.PrintObject.PrintMaterial,
+				PrintObjectId = projectInfo.PrintObject.ID,
+				ProductName = projectInfo.PrintObject.Name,
+				ProjectID = projectInfo.Project.ID,
+				Quantity = projectInfo.Quantity,
+				Surname = projectInfo.Project.Surname,
+				ZipCode = projectInfo.Project.ZipCode
+			};
+			return JsonConvert.SerializeObject(printObjectDetails);
+		}
 
 		private IEnumerable<ProjectForCreatorShort> GetProjectsShort(IEnumerable<Project> projects)
 		{
@@ -52,20 +83,12 @@ namespace Formeo.BussinessLayer.Services
 			return projectsShort;
 		}
 
-		public string GetProjectInfosForProducerJSON(long companyId, Formeo.Models.StaticData.PrintObjectStatusEnum poStatus)
-		{
-			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosForProducer(companyId, poStatus);
-			var pinfosShort = projectInfos.Select(poinfo => ToProjectInfoForProducerShort(poinfo));
-			return JsonConvert.SerializeObject(pinfosShort);
-		}
-
 		public string GetProjectInfosByProjectIdJSON(long projectId)
 		{
 			IEnumerable<ProjectInfo> projectInfos = _projectsManager.GetProjectInfosByProjectId(projectId);
 			var printObjectInfosShort = projectInfos.Select(ToProjectInfoForCustomerShort);
 			return JsonConvert.SerializeObject(printObjectInfosShort);
 		}
-
 		private ProjectInfoForProducerShort ToProjectInfoForProducerShort(ProjectInfo projectInfo)
 		{
 			ProjectInfoForProducerShort pinfoShort = new ProjectInfoForProducerShort()
@@ -78,7 +101,6 @@ namespace Formeo.BussinessLayer.Services
 			};
 			return pinfoShort;
 		}
-
 		private ProjectInfoForCustomerShort ToProjectInfoForCustomerShort(ProjectInfo projectInfo)
 		{
 			ProjectInfoForCustomerShort pinfoShort = new ProjectInfoForCustomerShort()
@@ -101,7 +123,6 @@ namespace Formeo.BussinessLayer.Services
 			public int Quantity { get; set; }
 
 		}
-
 		private class ProjectInfoForProducerShort
 		{
 			public long ProjectId { get; set; }
@@ -111,7 +132,6 @@ namespace Formeo.BussinessLayer.Services
 			public string CompanyName { get; set; }
 
 		}
-
 		private class ProjectInfoForCustomerShort
 		{
 			public long ProjectId { get; set; }
@@ -123,7 +143,34 @@ namespace Formeo.BussinessLayer.Services
 			public string Status { get; set; }
 		}
 
+		private class ProjectInfoDetailsForCustomer
+		{
+			public long PrintObjectId { get; set; }
+			public long ProjectID { get; set; }
+			public string ProductName { get; set; }
+			public string ArtNo { get; set; }
+			public int Quantity { get; set; }
+			public string PrintMaterial { get; set; }
+			public decimal PricePerItem { get; set; }
+			public decimal OverralPrice { get; set; }
 
+			#region DeliveryInfo
+
+			public string Surname { get; set; }
+
+			public string LastName { get; set; }
+
+			public string Address { get; set; }
+
+			public string ZipCode { get; set; }
+
+			public string City { get; set; }
+			public string Country { get; set; }
+
+			#endregion
+
+			public string CompanyName { get; set; }
+		}
 
 	}
 }

@@ -268,11 +268,12 @@
     <Compile Include="Models\StaticData.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\_BidPrintObjectPartialViewModel.cs" />
-    <Compile Include="Models\_BidsForPrintObjectsViewModal.cs" />
+    <Compile Include="Models\_BidsForPrintObjectsViewModel.cs" />
     <Compile Include="Models\_IndexAdminViewModel.cs" />
     <Compile Include="Models\_IndexCustomerViewModel.cs" />
     <Compile Include="Models\_IndexProducerViewModel.cs" />
     <Compile Include="Models\_OrderPartialViewModel.cs" />
+    <Compile Include="Models\_PrintObjectDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UnityDependencyResolver.cs" />
@@ -332,6 +333,7 @@
     <Content Include="Scripts\Controllers\companyEditController.js" />
     <Content Include="Scripts\Controllers\bidProductPartialController.js" />
     <Content Include="Scripts\Controllers\addProductsPartialController.js" />
+    <Content Include="Scripts\Controllers\printObjectDetailsPartialController.js" />
     <Content Include="Scripts\Controllers\orderInfoPartialController.js" />
     <Content Include="Scripts\Controllers\uploadProductController.js" />
     <Content Include="Scripts\Controllers\layOrderConfirmPartialController.js" />
@@ -405,6 +407,7 @@
     <Content Include="Views\Home\Partial\Sections\_companies.cshtml" />
     <Content Include="Views\Company\_EditCompany.cshtml" />
     <Content Include="Views\Project\_OrderInfoPartial.cshtml" />
+    <Content Include="Views\Project\_ProjectInfoDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

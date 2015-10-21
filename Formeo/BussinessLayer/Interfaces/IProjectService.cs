@@ -12,6 +12,7 @@ namespace Formeo.BussinessLayer.Interfaces
 	{
 		string GetProjectsByCreatorCompanyJSON(long companyId, OrderStatus orderStatus);
 		string GetProjectInfosForProducerJSON(long companyId, PrintObjectStatusEnum poStatus);
+		string GetProjectInfoDetailsForProducerJSON(long projectId, long printObjectId);
 		string GetProjectInfosByProjectIdJSON(long projectId);
 	}
 }

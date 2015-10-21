@@ -103,7 +103,6 @@ namespace Formeo.BussinessLayer.Services
 			return JsonConvert.SerializeObject(printObjectsShort);
 		}
 
-
 		public string UploadProducts(IEnumerable<PrintObjectFileInfo> fileInfos)
 		{
 			if (fileInfos == null || fileInfos.Count() == 0)

@@ -15,7 +15,6 @@ namespace Formeo.Controllers
 {
 	public class ProjectController : Controller
 	{
-
 		ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
 
 		IPrintObjectsService _printObjectService;
@@ -126,12 +125,22 @@ namespace Formeo.Controllers
 
 		[HttpGet]
 		[JsonQueryParamFilter(Param = "projectID", JsonDataType = typeof(long))]
-		public ActionResult GetProjectStatus(long projectID) 
+		public ActionResult GetProjectStatus(long projectID)
 		{
 			_OrderInfoPartialViewModel viewModel = new _OrderInfoPartialViewModel();
 			viewModel.ProjectInfosJSON = _projectsService.GetProjectInfosByProjectIdJSON(projectID);
 
 			return PartialView("_OrderInfoPartial", viewModel);
+		}
+
+		[HttpGet]
+		[JsonQueryParamFilter(Param = "projectId", JsonDataType = typeof(long))]
+		[JsonQueryParamFilter(Param = "printObjectId", JsonDataType = typeof(long))]
+		public ActionResult GetProjectInfoDetails(long projectId, long printObjectId)
+		{
+			_PrintObjectDetailsViewModel viewModel = new _PrintObjectDetailsViewModel();
+			viewModel.PrintObjectDetailsJSON = _projectsService.GetProjectInfoDetailsForProducerJSON(projectId,printObjectId);
+			return PartialView("_ProjectInfoDetails", viewModel);
 		}
 	}
 }

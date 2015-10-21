@@ -110,6 +110,26 @@
                });
     }
 
+    $scope.ShowProductDetails = function (printObject) {
+        $http({
+            method: 'GET',
+            url: '/Project/GetProjectInfoDetails',
+            params: { 'projectId': printObject.ProjectId, 'printObjectId': printObject.PrinObjectID },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+               then(function (response) {
+                   //success
+                   var modalInstance = $modal.open({
+                       template: (response.data),
+                       controller: 'printObjectDetailsPartialController',
+                       backdrop: 'static'
+                   });
+               }, function (response) {
+                   //http error
+
+               });
+    }
+
     $scope.UpdateProductOnUI = function (projectInfo, status) {
 
         switch (status) {
@@ -151,6 +171,7 @@
     $scope.showUploadProductModal = function () {
         UploadPrinObject.showUpload();
     }
+
     $scope.download = function (printObjectId) {
         UploadPrinObject.download(printObjectId);
     }

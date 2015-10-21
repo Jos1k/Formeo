@@ -12,6 +12,8 @@ formeoAngularMVCApp.controller('uploadProductController', uploadProductControlle
 formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
 formeoAngularMVCApp.controller('companyEditController', companyEditController);
 formeoAngularMVCApp.controller('orderInfoPartialController', orderInfoPartialController);
+formeoAngularMVCApp.controller('printObjectDetailsPartialController', printObjectDetailsPartialController);
+
 
 formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal, $timeout) {
     var root = {};
