@@ -41,6 +41,7 @@ namespace Formeo.Models
 		public ApplicationDbContext()
 			: base("DefaultConnection", throwIfV1Schema: false)
 		{
+
 		}
 
 		public DbSet<Company> Companies { get; set; }

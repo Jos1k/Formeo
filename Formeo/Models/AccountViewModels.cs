@@ -11,45 +11,46 @@ namespace Formeo.Models
 		[Required]
 		[StringLength(20)]
 		[Display(Name = "UserName")]
-		public string UserName { get; set; }
+		public string username { get; set; }
 
 		[Required]
 		[EmailAddress]
 		[Display(Name = "Email")]
-		public string Email { get; set; }
+		public string email { get; set; }
 
 		[Required]
 		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
 		[DataType(DataType.Password)]
 		[Display(Name = "Password")]
-		public string Password { get; set; }
+		public string password { get; set; }
 
 		[StringLength(100)]
 		[DataType(DataType.Text)]
 		[Display(Name = "Address")]
-		public string Address { get; set; }
+		public string address { get; set; }
 
 		[StringLength(20)]
 		[DataType(DataType.Text)]
 		[Display(Name = "Postal")]
-		public string Postal { get; set; }
+		public string postal { get; set; }
 
 		[StringLength(100)]
 		[DataType(DataType.Text)]
 		[Display(Name = "City")]
-		public string City { get; set; }
+		public string city { get; set; }
 
 		[StringLength(100)]
 		[DataType(DataType.Text)]
 		[Display(Name = "Country")]
-		public string Country { get; set; }
+		public string country { get; set; }
 
 		//public bool isAdmin { get; set; }
 		//public bool isCustomer { get; set; }
 		//public bool isProduction { get; set; }
 
-		public string SelectedRole { get; set; }
+		public string selectedRole { get; set; }
 
+		public long companyId { get; set; }
 	}
 
 

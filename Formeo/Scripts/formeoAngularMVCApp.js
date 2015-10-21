@@ -1,4 +1,4 @@
-﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', ['ngFileUpload', 'ui.bootstrap']);
+﻿var formeoAngularMVCApp = angular.module('formeoAngularMVCApp', ['ngFileUpload', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
 
 formeoAngularMVCApp.controller('adminPageController', adminPageController);
 formeoAngularMVCApp.controller('customerPageController', customerPageController);
@@ -12,6 +12,38 @@ formeoAngularMVCApp.controller('uploadProductController', uploadProductControlle
 formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
 formeoAngularMVCApp.controller('companyEditController', companyEditController);
 
+
+formeoAngularMVCApp.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
+
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+});
 
 formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal, $timeout) {
     var root = {};

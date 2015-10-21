@@ -9,6 +9,7 @@
     <script src="~/Scripts/ng-file-upload.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render( "~/bundles/jquery" )
 
 </head>
 <body>
@@ -28,8 +29,6 @@
 
         <footer></footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/FormeoAngularMVCApp")

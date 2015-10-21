@@ -6,16 +6,15 @@
         address: '',
         postal: '',
         country: '',
-        isProduction: false,
-        isCustomer: false,
-        isAdmin: false
+        companyId: '',
+        selectedRole: 'Producer'
     };
 
     $scope.companyModel = {
         id: '',
         orgNumber: '',
         country: '',
-        taxNumber:'',
+        taxNumber: '',
         companyName: '',
         isCustomer: false
     };
@@ -33,8 +32,7 @@
 
     $scope.updateUserInfo = function (isShownEditableTextbox, user, fieldNameToChange, newValue) {
 
-        if(!isShownEditableTextbox ||  user == $scope.EMPTY)
-        {
+        if (!isShownEditableTextbox || user == $scope.EMPTY) {
             $window.alert('error');
             return;
         }
@@ -53,11 +51,28 @@
                 });
     }
 
+    $scope.addUser = function () {
+        $scope.userModel.companyId = $scope.userModel.companyId.id;
+        $http({
+            method: 'POST',
+            url: '/Account/RegisterFormeo',
+            data: {
+                model: $scope.userModel
+            }
+            //,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+          then(function (response) {
+              //var index = collectionToHandle.indexOf(user);
+              //collectionToHandle.splice(index, 1);
+              alert(response.data);
+          }, function (response) {
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+          });
+    }
+
     $scope.removeUser = function (user, collectionToHandle) {
-
-
         if (user != $scope.EMPTY) {
-
             $http({
                 method: 'POST',
                 url: '/Account/RemoveUser',
@@ -106,83 +121,82 @@
         });
     };
 
-$scope.selectCompany = function (company) {
-    if (company != $scope.EMPTY) {
-        $scope.selectedCompany = company;
-    }
-}
-
-$scope.isMenuTypeIs = function (type) {
-    return $scope.menuType === type;
-};
-
-$scope.selectMainMenu = function (item) {
-    $scope.selectedMainMenu = item;
-};
-
-$scope.isActiveMainMenu = function (item) {
-    return $scope.selectedMainMenu === item;
-};
-
-$scope.selectClientMenu = function (item) {
-    $scope.selectedClientsMenu = item;
-};
-
-$scope.selectCompaniesMenu = function (item) {
-    $scope.selectedCompaniesMenu = item;
-};
-
-$scope.isActiveCLientsMenu = function (item) {
-    return $scope.selectedClientsMenu === item;
-};
-
-$scope.isActiveCompaniesMenu = function (item) {
-    return $scope.selectedCompaniesMenu === item;
-};
-
-$scope.addCompany = function () {
-    $http({
-        method: 'POST',
-        url: '/Home/CreateCompany',
-        headers: { 'Content-Type': 'application/json;' },
-        data: {
-            'Name': $scope.companyModel.companyName,
-            'OrgNumber': $scope.companyModel.orgNumber,
-            'TaxNumber': $scope.companyModel.taxNumber,
-            'Country': $scope.companyModel.country,
-            'IsCustomer': $scope.companyModel.isCustomer?true:false
+    $scope.selectCompany = function (company) {
+        if (company != $scope.EMPTY) {
+            $scope.selectedCompany = company;
         }
-    }).
-       then(function (response) {
-           $scope.companies.push(JSON.parse(response.data));
-           $scope.cleanCompanyModel();
-       }, function (response) {
-           $window.alert('error creating company');
-       });
-};
+    }
 
-$scope.cleanUserModel = function () {
-    $scope.userModel = {
-        username: '',
-        password: '',
-        email: '',
-        address: '',
-        postal: '',
-        country: '',
-        isProduction: false,
-        isCustomer: false,
-        isAdmin: false
+    $scope.isMenuTypeIs = function (type) {
+        return $scope.menuType === type;
     };
-};
 
-$scope.cleanCompanyModel = function () {
-    $scope.companyModel = {
-        id: '',
-        orgNumber: '',
-        country: '',
-        taxNumber: '',
-        companyName: '',
-        isCustomer: false
+    $scope.selectMainMenu = function (item) {
+        $scope.selectedMainMenu = item;
     };
-}
+
+    $scope.isActiveMainMenu = function (item) {
+        return $scope.selectedMainMenu === item;
+    };
+
+    $scope.selectClientMenu = function (item) {
+        $scope.selectedClientsMenu = item;
+    };
+
+    $scope.selectCompaniesMenu = function (item) {
+        $scope.selectedCompaniesMenu = item;
+    };
+
+    $scope.isActiveCLientsMenu = function (item) {
+        return $scope.selectedClientsMenu === item;
+    };
+
+    $scope.isActiveCompaniesMenu = function (item) {
+        return $scope.selectedCompaniesMenu === item;
+    };
+
+    $scope.addCompany = function () {
+        $http({
+            method: 'POST',
+            url: '/Home/CreateCompany',
+            headers: { 'Content-Type': 'application/json;' },
+            data: {
+                'Name': $scope.companyModel.companyName,
+                'OrgNumber': $scope.companyModel.orgNumber,
+                'TaxNumber': $scope.companyModel.taxNumber,
+                'Country': $scope.companyModel.country,
+                'IsCustomer': $scope.companyModel.isCustomer ? true : false
+            }
+        }).
+           then(function (response) {
+               $scope.companies.push(JSON.parse(response.data));
+               $scope.cleanCompanyModel();
+           }, function (response) {
+               $window.alert('error creating company');
+           });
+    };
+
+    $scope.cleanUserModel = function () {
+        $scope.userModel = {
+            username: '',
+            password: '',
+            email: '',
+            address: '',
+            postal: '',
+            country: '',
+            companyId: '',
+            selectedRole: 'Producer'
+        };
+    };
+
+    $scope.cleanCompanyModel = function () {
+        $scope.companyModel = {
+            id: '',
+            orgNumber: '',
+            country: '',
+            taxNumber: '',
+            companyName: '',
+            isCustomer: false
+        };
+    }
 }

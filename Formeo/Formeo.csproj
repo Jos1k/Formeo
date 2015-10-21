@@ -277,6 +277,11 @@
     <Compile Include="UnityDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\select.css" />
+    <Content Include="Content\select2-bootstrap.css" />
+    <Content Include="Content\select2-spinner.gif" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.png" />
     <Content Include="images\ajax-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -365,6 +370,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\ui-bootstrap-0.13.4.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls0134.js" />
     <Content Include="Scripts\_references.js" />

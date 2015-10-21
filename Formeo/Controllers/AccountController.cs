@@ -142,7 +142,7 @@ namespace Formeo.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = StaticData.RoleNames.Admin)]
-		[ValidateAntiForgeryToken]
+
 		public async Task<ActionResult> RegisterFormeo(FormeoRegisterViewModel model)
 		{
 			//todo: remove this stub company
@@ -154,15 +154,15 @@ namespace Formeo.Controllers
 			{
 				var user = new ApplicationUser
 				{
-					UserName = model.UserName,
-					Email = model.Email,
-					Adress = model.Address,
-					ZipCode = model.Postal,
-					City = model.City,
-					Country = model.Country,
-					//Company = comp
+					UserName = model.username,
+					Email = model.email,
+					Adress = model.address,
+					ZipCode = model.postal,
+					City = model.city,
+					Country = model.country,
+					Company = ApplicationContext.Companies.Find( model.companyId)
 				};
-				IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+				IdentityResult result = await UserManager.CreateAsync(user, model.password);
 				if (result.Succeeded)
 				{
 					result = await AddUserToRoles(model, user);
@@ -256,7 +256,7 @@ namespace Formeo.Controllers
 
 		private async Task<IdentityResult> AddUserToRoles(FormeoRegisterViewModel model, ApplicationUser user)
 		{
-			IdentityResult result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
+			IdentityResult result = await UserManager.AddToRoleAsync(user.Id, model.selectedRole);
 
 			return result;
 		}
