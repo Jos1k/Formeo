@@ -15,6 +15,22 @@ formeoAngularMVCApp.controller('orderInfoPartialController', orderInfoPartialCon
 formeoAngularMVCApp.controller('printObjectDetailsPartialController', printObjectDetailsPartialController);
 
 
+formeoAngularMVCApp.directive('uiSelectField', function () {
+    return {
+        restrict: 'A',
+        require: ['uiSelect', 'ngModel'],
+        link: function (scope, element, attrs, ctrls) {
+            var $select, ngModel;
+            $select = ctrls[0];
+            ngModel = ctrls[1];
+            return ngModel.$parsers.push(function (value) {
+                if (value[attrs.uiSelectField]) return value[attrs.uiSelectField];
+                else return value;
+            });
+        }
+    };
+});
+
 formeoAngularMVCApp.filter('propsFilter', function () {
     return function (items, props) {
         var out = [];

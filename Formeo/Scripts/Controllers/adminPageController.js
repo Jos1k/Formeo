@@ -51,15 +51,27 @@
                 });
     }
 
+    $scope.setDefaultCompany = function () {
+        var defaultcompanyId = null;
+        if ($scope.userModel.selectedRole == 'Customer') {
+            defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == true; })[0];
+        }
+        if ($scope.userModel.selectedRole == 'Producer') {
+            defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == false; })[0];
+        }
+        if ($scope.userModel.selectedRole == 'Admin') {
+            defaultcompanyId = null;
+        }  
+        $scope.userModel.companyId = defaultcompanyId;
+    };
+
     $scope.addUser = function () {
-        $scope.userModel.companyId = $scope.userModel.companyId.id;
         $http({
             method: 'POST',
             url: '/Account/RegisterFormeo',
             data: {
                 model: $scope.userModel
             }
-            //,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).
             then(function (response) {
                 //var index = collectionToHandle.indexOf(user);
