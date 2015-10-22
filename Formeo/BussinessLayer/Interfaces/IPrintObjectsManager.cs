@@ -25,7 +25,7 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		PrintObject AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 
-		//PrintObject UploadPrintObject( string userId, string articleNo, string productName, string pathToFile, int printMaterialId );
+		IEnumerable<PrintObject> GetExclusivePrintObjectsByIdsForCompanyJSON(long companyId, IEnumerable<long> printObjectIdsToExlude);
 
 		IEnumerable<PrintObject> UploadPrintObjects(IEnumerable<Models.HelperModels.PrintObjectFileInfo> fileInfos);
 		string GetPrintObjectFilePath( long printObjectId );

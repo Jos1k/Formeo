@@ -23,7 +23,9 @@ namespace Formeo
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-					  "~/Scripts/ui-bootstrap-tpls0134.js"));
+					  "~/Scripts/ui-bootstrap-tpls0134.js",
+					  "~/Scripts/select.js",
+					  "~/Scripts/angular-sanitize.js" ) );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

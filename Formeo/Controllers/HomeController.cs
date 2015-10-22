@@ -98,17 +98,17 @@ namespace Formeo.Controllers {
 
 			viewModel.PrintObjectsJSON = _printObjectService.GetPrintObjectsByCompanyCreatorJSON( company.ID );
 
-			viewModel.ActiveProjectsJSON =
+			viewModel.Orders_ActiveOrders =
 				_projectService
-				.GetProjectsByCreatorUserJSON(
-				currentUser.Id,
-				Formeo.Models.StaticData.OrderStatusEnum.InProgress );
+				.GetProjectsByCreatorCompanyJSON(
+				company.ID,
+				Formeo.Models.StaticData.OrderStatusEnum.InProgress);
 
-			viewModel.CompletedProjectsJSON =
+			viewModel.Orders_CompletedOrders =
 				_projectService
-				.GetProjectsByCreatorUserJSON(
-				currentUser.Id,
-				Formeo.Models.StaticData.OrderStatusEnum.Delivered );
+				.GetProjectsByCreatorCompanyJSON(
+				company.ID,
+				Formeo.Models.StaticData.OrderStatusEnum.Delivered);
 
 			return View( viewModel );
 		}

@@ -40,8 +40,7 @@
                             </button>
                         </li>
                         <li>
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
+                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
                                     <i class="fa fa-sign-out fa-2x" style="color:white"></i>
@@ -53,13 +52,13 @@
                 </div>
                 <div class="sidebar-menu-content">
                     <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
-                        @Html.Partial("Partial/Sections/_dashboard")
+                        @Html.Partial( "Partial/Sections/_dashboard" )
                     </div>
                     <div class="row" ng-show="isActiveMainMenu('/Storage')">
-                        @Html.Partial("Partial/Sections/_storage")
+                        @Html.Partial( "Partial/Sections/_storage" )
                     </div>
                     <div class="row" ng-show="isActiveMainMenu('/Orders')">
-                        @Html.Partial("Partial/Sections/_orders")
+                        @Html.Partial( "Partial/Sections/_orders" )
                     </div>
                 </div>
             </div>
@@ -97,16 +96,18 @@
                         </div>
                     </div>
                     <div class="row head">
-                        <div class="col-md-4">Product Name</div>
-                        <div class="col-md-4">Company</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Company</div>
+                        <div class="col-md-2">Material</div>
                         <div class="col-md-2">Bid Item</div>
                         <div class="col-md-2">Actions</div>
                     </div>
 
                     <div ng-repeat="needBidPrintObject in needBidPrintObjects">
                         <div class="row data-row">
-                            <div class="col-md-4">{{needBidPrintObject.Name}}</div>
-                            <div class="col-md-4">{{needBidPrintObject.CompanyName}}</div>
+                            <div class="col-md-3">{{needBidPrintObject.Name}}</div>
+                            <div class="col-md-3">{{needBidPrintObject.CompanyName}}</div>
+                            <div class="col-md-2">{{needBidPrintObject.PrintMaterial}}</div>
                             <div class="col-md-2">
                                 <input type="checkbox" ng-model="needBidPrintObject.IsSelected" ng-click="selectSingleItem($index,needBidPrintObjects)" />
                             </div>
@@ -138,7 +139,7 @@
                         <div ng-repeat="orderInfo in deliveredPrintObjects">
                             <div class="row data-row">
                                 <div class="col-md-3">{{orderInfo.CompanyName}}</div>
-                                <div class="col-md-5">{{orderInfo.PrintObjectName}}</div>
+                                <div class="col-md-5"><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></div>
                                 <div class="col-md-2">{{orderInfo.Quantity}}</div>
                                 <div class="col-md-2 actions">
                                     <i class="fa fa-stack-exchange"></i>
@@ -233,7 +234,7 @@
                     <div ng-repeat="orderInfo in ordersInQueue">
                         <div class="row data-row">
                             <div class="col-md-3">{{orderInfo.CompanyName}}</div>
-                            <div class="col-md-5">{{orderInfo.PrintObjectName}}</div>
+                            <div class="col-md-5"><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></div>
                             <div class="col-md-2">{{orderInfo.Quantity}}</div>
                             <div class="col-md-2 actions">
                                 <i class="fa fa-stack-exchange"></i>
@@ -257,15 +258,15 @@
                     </div>
                     <div class="row head">
                         <div class="col-md-3">Customer</div>
-                        <div class="col-md-2">Art.No.</div>
-                        <div class="col-md-3">Product Name</div>
+                        @*<div class="col-md-2">Art.No.</div>*@
+                        <div class="col-md-5">Product Name</div>
                         <div class="col-md-2">Quantity</div>
                         <div class="col-md-2">Actions</div>
                     </div>
                     <div ng-repeat="orderInfo in ordersInProduction">
                         <div class="row data-row">
                             <div class="col-md-3">{{orderInfo.CompanyName}}</div>
-                            <div class="col-md-5">{{orderInfo.PrintObjectName}}</div>
+                            <div class="col-md-5"><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></div>
                             <div class="col-md-2">{{orderInfo.Quantity}}</div>
                             <div class="col-md-2 actions">
                                 <i class="fa fa-stack-exchange"></i>

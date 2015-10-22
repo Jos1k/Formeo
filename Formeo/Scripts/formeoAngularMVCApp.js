@@ -11,6 +11,8 @@ formeoAngularMVCApp.controller('bidsForPrintObjectController', bidsForPrintObjec
 formeoAngularMVCApp.controller('uploadProductController', uploadProductController);
 formeoAngularMVCApp.controller('bidProductPartialController', bidProductPartialController);
 formeoAngularMVCApp.controller('companyEditController', companyEditController);
+formeoAngularMVCApp.controller('orderInfoPartialController', orderInfoPartialController);
+formeoAngularMVCApp.controller('printObjectDetailsPartialController', printObjectDetailsPartialController);
 
 
 formeoAngularMVCApp.filter('propsFilter', function () {

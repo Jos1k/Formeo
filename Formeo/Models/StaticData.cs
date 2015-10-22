@@ -50,5 +50,20 @@ namespace Formeo.Models
 			}
 			return statusRes;
 		}
+
+		public static string GetPrintObjectStatusName(this PrintObjectStatusEnum status) 
+		{
+			switch (status)
+			{
+				case PrintObjectStatusEnum.InQueue:
+					return "In queue";
+				case PrintObjectStatusEnum.Producing:
+					return "In Production";
+				case PrintObjectStatusEnum.Delivered:
+					return "Delivered";
+				default:
+					return "Status unknown";
+			}
+		}
 	}
 }

@@ -76,6 +76,9 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					projInfo.Quantity = poInfo.Quantity;
 					projInfo.Status = Formeo.Models.StaticData.PrintObjectStatusEnum.InQueue;
 					projInfo.CompanyProducer = poEntity.CompanyProducer;
+					projInfo.Price = selectedBid.Price * poInfo.Quantity;
+					projInfo.SelectedBidPrice = selectedBid.Price;
+					projInfo.SelectedBid = selectedBid;
 
 					totalPrice += selectedBid.Price * poInfo.Quantity;
 
@@ -101,16 +104,28 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			.Where(project => project.Status == ordersStatus)
 			.ToList();
 		}
+		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)
+		{
+			ProjectInfo projectInfo = _dbcontext.ProjectInfos
+				.Find(projectId, printObjectId);
+			projectInfo.Status = status;
+			_dbcontext.SaveChanges();
+			_dbcontext.Entry(projectInfo).Reload();
+		}
 
-		public IEnumerable<Project> GetProjectByCreator(string customerId, StaticData.OrderStatusEnum orderStatus)
+		public IEnumerable<Project> GetProjectByCreatorCompany(long companyId, StaticData.OrderStatusEnum orderStatus)
 		{
 			var customersProjects = _dbcontext
 					.Projects
-					.Where(project => project.Creator.Id == customerId)
+					.Include("CompanyCreator")
+					.Where(project => project.CompanyCreator.ID == companyId)
 					.ToList();
-			return customersProjects.Where(project => project.Status == orderStatus);
+			return customersProjects.Where(project => project.Status == orderStatus); //hack. don't touch it
 		}
-		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus) 
+
+		#region ProjectInfo parts
+
+		public IEnumerable<ProjectInfo> GetProjectInfosForProducer(long companyId, StaticData.PrintObjectStatusEnum printObjectStatus)
 		{
 			return _dbcontext
 				.ProjectInfos
@@ -122,14 +137,28 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 				);
 		}
 
-		public void SetPrintObjectStatus(long projectId, long printObjectId, StaticData.PrintObjectStatusEnum status)
+		public IEnumerable<ProjectInfo> GetProjectInfosByProjectId(long projectId)
 		{
-			ProjectInfo projectInfo = _dbcontext.ProjectInfos
-				.Find(projectId, printObjectId);
-			projectInfo.Status = status;
-			_dbcontext.SaveChanges();
-			_dbcontext.Entry(projectInfo).Reload();
+			return _dbcontext
+				.ProjectInfos
+				.Include("CompanyProducer")
+				.Include("PrintObject")
+				.Where(projectInfo => projectInfo.ProjectId == projectId);
 		}
+
+		public ProjectInfo GetProjectInfo(long projectId, long printObjectId)
+		{
+			return _dbcontext
+					.ProjectInfos
+					.Include("PrintObject")
+					.Include("Project")
+					.Where(projectInfo =>
+							projectInfo.PrintObjectId == printObjectId
+							&& projectInfo.ProjectId == projectId)
+					.FirstOrDefault();
+		}
+
+		#endregion
 
 	}
 }

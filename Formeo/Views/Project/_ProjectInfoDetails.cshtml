@@ -1,0 +1,83 @@
+﻿@model Formeo.Models._PrintObjectDetailsViewModel
+<div class="modal-content" style="border-radius: 0; border:none;">
+    <div class="modal-header" style="background-color: #34495E; color: white;">
+        <h5 class="modal-title"><b>Upload Product</b></h5>
+    </div>
+    <div class="modal-body">
+        <div ng-init="productDetails = @Model.PrintObjectDetailsJSON" />
+        <p>Products details:</p>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Art. No.</th>
+                        <th class="col-md-3">Product Name</th>
+                        <th class="col-md-3">Customer</th>
+                        <th class="col-md-2">Price</th>
+                        <th class="col-md-2">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">{{productDetails.ArtNo}}</td>
+                        <td class="col-md-4">{{productDetails.ProductName}}</td>
+                        <td class="col-md-4">{{productDetails.CompanyName}}</td>
+                        <td class="col-md-4">{{productDetails.PricePerItem}}</td>
+                        <td class="col-md-4">{{productDetails.Quantity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <b>Total price:</b> {{productDetails.OverralPrice}}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                   <b>Material: </b> {{productDetails.PrintMaterial}}
+                </p>
+            </div>
+        </div>
+        <p><b>Delivery info:</b></p>
+        <div class="container" ng-init="deliveryInfo">
+            <div class="row">
+                <div class="col-md-6">
+                    {{productDetails.Surname}}
+                </div>
+                <div class="col-md-6">
+                    {{productDetails.LastName}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{productDetails.Address}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    {{productDetails.City}}
+                </div>
+                <div class="col-md-4">
+                    {{productDetails.Country}}
+                </div>
+                <div class="col-md-3">
+                    {{productDetails.ZipCode}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 uploadProductModalButton">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product" style="background-color:#FF8080" ng-click="cancel()">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

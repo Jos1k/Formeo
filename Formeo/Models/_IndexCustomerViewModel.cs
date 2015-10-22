@@ -8,7 +8,8 @@ namespace Formeo.Models
 	public class _IndexCustomerViewModel
 	{
 		public string PrintObjectsJSON { get; set; }
-		public string ActiveProjectsJSON { get; set; }
-		public string CompletedProjectsJSON { get; set; }
+		public string Orders_ActiveOrders { get; set; }
+		public string Orders_CompletedOrders { get; set; }
+
 	}
 }

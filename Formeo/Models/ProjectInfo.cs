@@ -20,7 +20,9 @@ namespace Formeo.Models
 		public virtual Company CompanyProducer { get; set; }
 		public int Quantity { get; set; }
 		public decimal Price { get; set; }
-
+		public decimal SelectedBidPrice { get; set; }
+		public Bid SelectedBid { get; set; }
 		public Formeo.Models.StaticData.PrintObjectStatusEnum Status { get; set; }
+	
 	}
 }

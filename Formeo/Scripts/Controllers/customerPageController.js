@@ -1,8 +1,6 @@
 ﻿var customerPageController = function ($scope, $window, $http, $modal, UploadPrinObject) {
     UploadPrinObject.storeScope($scope, 'printObjects');
-    $scope.selectedMainMenu = '/Dashboard';
-    $scope.selectedClientsMenu = '/AddUser';
-    $scope.helloVariable = 'I work!';
+    $scope.selectedMainMenu = '/Orders';
     $scope.mainMenu = [];
     $scope.menuType = "0";
     $scope.selectedPrintObjectIds = [];
@@ -160,6 +158,35 @@
                     $window.alert('error');
 
                 });
+    }
+
+    $scope.ShowProjectStatus = function (projectId) {
+        $http({
+            method: 'GET',
+            url: '/Project/GetProjectStatus',
+            params: { 'projectID': projectId },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+              then(function (response) {
+                  //success
+                  var modalInstance = $modal.open({
+                      template: (response.data),
+                      controller: 'orderInfoPartialController',
+                      backdrop: 'static',
+                  });
+
+                  modalInstance.result.then(function (response) {
+                      $modalInstance.close(response);
+                  }, function (response) {
+                      //error or cancel
+                      $modalInstance.dismiss('cancel');
+                  });
+
+              }, function (response) {
+                  //error
+                  $window.alert('error');
+
+              });
     }
 
     $scope.showUploadProductModal = function () {

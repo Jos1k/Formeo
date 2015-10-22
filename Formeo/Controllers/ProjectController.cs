@@ -15,13 +15,13 @@ namespace Formeo.Controllers
 {
 	public class ProjectController : Controller
 	{
-
 		ApplicationDbContext DbContext { get { return new ApplicationDbContext(); } }
 
 		IPrintObjectsService _printObjectService;
 		IUserManager _userManager;
 		IProjectsManager _projectManager;
 		ICompaniesManager _companiesManager;
+		IProjectService _projectsService;
 
 		[InjectionConstructor]
 		public ProjectController
@@ -29,13 +29,15 @@ namespace Formeo.Controllers
 			IPrintObjectsService printObjectService,
 			IUserManager userManager,
 			IProjectsManager projectManager,
-			ICompaniesManager companiesManager
+			ICompaniesManager companiesManager,
+			IProjectService projectsService
 		)
 		{
 			_printObjectService = printObjectService;
 			_userManager = userManager;
 			_projectManager = projectManager;
 			_companiesManager = companiesManager;
+			_projectsService = projectsService;
 		}
 
 		[HttpGet]
@@ -119,6 +121,26 @@ namespace Formeo.Controllers
 			_projectManager.SetPrintObjectStatus(projectId, printObjectId, status);
 
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
+		}
+
+		[HttpGet]
+		[JsonQueryParamFilter(Param = "projectID", JsonDataType = typeof(long))]
+		public ActionResult GetProjectStatus(long projectID)
+		{
+			_OrderInfoPartialViewModel viewModel = new _OrderInfoPartialViewModel();
+			viewModel.ProjectInfosJSON = _projectsService.GetProjectInfosByProjectIdJSON(projectID);
+
+			return PartialView("_OrderInfoPartial", viewModel);
+		}
+
+		[HttpGet]
+		[JsonQueryParamFilter(Param = "projectId", JsonDataType = typeof(long))]
+		[JsonQueryParamFilter(Param = "printObjectId", JsonDataType = typeof(long))]
+		public ActionResult GetProjectInfoDetails(long projectId, long printObjectId)
+		{
+			_PrintObjectDetailsViewModel viewModel = new _PrintObjectDetailsViewModel();
+			viewModel.PrintObjectDetailsJSON = _projectsService.GetProjectInfoDetailsForProducerJSON(projectId,printObjectId);
+			return PartialView("_ProjectInfoDetails", viewModel);
 		}
 	}
 }
