@@ -23,6 +23,7 @@ namespace Formeo.BussinessLayer.Services
 			var users_short = users.Select
 				(user => new
 					{
+						Id = user.Id,
 						UserName = user.UserName,
 						Company = user.Company == null ? "<No Data>" : user.Company.Name,
 						Email = string.IsNullOrWhiteSpace(user.Email) ? "<No Data>" : user.Email,

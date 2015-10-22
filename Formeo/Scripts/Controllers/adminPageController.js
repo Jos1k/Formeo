@@ -61,17 +61,17 @@
             }
             //,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).
-          then(function (response) {
-              //var index = collectionToHandle.indexOf(user);
-              //collectionToHandle.splice(index, 1);
-              alert(response.data);
-          }, function (response) {
-              // called asynchronously if an error occurs
-              // or server returns response with an error status.
-          });
-    }
+            then(function (response) {
+                //var index = collectionToHandle.indexOf(user);
+                //collectionToHandle.splice(index, 1);
+                alert(response.data);
+            }, function (response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+    };
 
-    $scope.removeUser = function (user, collectionToHandle) {
+    $scope.removeUser = function(user, collectionToHandle) {
         if (user != $scope.EMPTY) {
             $http({
                 method: 'POST',
@@ -79,21 +79,58 @@
                 params: { userName: user.UserName },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
-              then(function (response) {
-                  var index = collectionToHandle.indexOf(user);
-                  collectionToHandle.splice(index, 1);
-              }, function (response) {
-                  // called asynchronously if an error occurs
-                  // or server returns response with an error status.
-              });
+                then(function(response) {
+                    var index = collectionToHandle.indexOf(user);
+                    collectionToHandle.splice(index, 1);
+                }, function(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                });
         }
-    }
+    };
+    
 
-    $scope.selectUser = function (user) {
+    $scope.removeCompany = function (company, collectionToHandle) {
+        if (company != $scope.EMPTY) {
+            $http({
+                method: 'POST',
+                url: '/Home/RemoveCompany',
+                params: { companyId: company.id },
+                //headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).
+                then(function (response) {
+                    var index = collectionToHandle.indexOf(company);
+                    collectionToHandle.splice(index, 1);
+
+                    var usersToDelete = JSON.parse(response.data);
+                    //var producersToDelete = [];
+                    //var customersToDelete = [];
+                    usersToDelete.forEach(function (entry) {
+                        
+                        $scope.producers = $scope.producers.filter(function (obj) {
+                            return obj.Id !== entry;
+                        });
+                        
+                        $scope.customers = $scope.customers.filter(function (obj) {
+                            return obj.Id !== entry;
+                        });
+
+                        //producersToDelete.push($.grep($scope.producers, function (e) { return e.Id == entry; })[0]);
+                    });
+
+                }, function (response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                });
+        }
+    };
+
+
+    $scope.selectUser = function(user) {
         if (user != $scope.EMPTY) {
             $scope.selectedUser = user;
         }
-    }
+    };
 
     $scope.showEditCompanyModal = function () {
 

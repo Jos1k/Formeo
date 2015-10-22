@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="row" style="margin-bottom:15px">
-                            <ui-select ng-model="userModel.companyId" theme="select2" style="min-width: 218px; border-radius:0px;">
+                            <ui-select ng-model="userModel.companyId" theme="select2" style="width: 218px; border-radius:0px;">
                                 <ui-select-match placeholder="Select a company from list">{{$select.selected.companyName}}</ui-select-match>
                                 <ui-select-choices repeat="company in companies | propsFilter: {companyName: $select.search}">
                                     <div ng-bind-html="company.companyName | highlight: $select.search"></div>

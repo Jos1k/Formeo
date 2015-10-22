@@ -13,7 +13,7 @@ using System.IO;
 namespace Formeo.EFInfrastructure
 {
 	public class TestInitializer :
-						DropCreateDatabaseAlways<ApplicationDbContext>
+						DropCreateDatabaseIfModelChanges<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext context)
 		{
@@ -31,7 +31,8 @@ namespace Formeo.EFInfrastructure
 					Name = "Company 1",
 					OrgNumber = "OrgNumber1",
 					TaxNumber = "TaxNumber1",
-					IsCustomer = true
+					IsCustomer = true,
+					IsDeleted = false
 				},
 				new Company()
 				{
@@ -39,7 +40,8 @@ namespace Formeo.EFInfrastructure
 					Name = "Company 2",
 					OrgNumber = "OrgNumber2",
 					TaxNumber = "TaxNumber2",
-					IsCustomer = false
+					IsCustomer = false,
+					IsDeleted = false
 				},
 			};
 

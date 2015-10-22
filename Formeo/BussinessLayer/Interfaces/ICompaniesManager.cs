@@ -21,6 +21,6 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		void UpdateCompany( Company company );
 
-		void RemoveCompany( long companyId );
+		ICollection<string> RemoveCompany(long companyId);
 	}
 }

@@ -20,16 +20,12 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 				return null;
 			}
 
-			return _dbContext
-					.Companies
-					.Where( company => company.ID == user.Company.ID )
-					.SingleOrDefault();
+			return _dbContext.Companies
+				.SingleOrDefault( company => company.ID == user.Company.ID );
 		}
 		public Company GetCompanyById( long companyId ) {
 			return _dbContext
-				.Companies
-				.Where( company => company.ID == companyId )
-				.SingleOrDefault();
+				.Companies.SingleOrDefault( company => company.ID == companyId );
 		}
 
 		public Company GetCurrentCompany() {
@@ -38,7 +34,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 		}
 
 		public IEnumerable<Company> GetCompanies() {
-			return _dbContext.Companies.ToArray();
+			return _dbContext.Companies.Where( x => !x.IsDeleted ).ToArray();
 		}
 
 		#region ICompaniesManager Members
@@ -60,17 +56,28 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 		#region ICompaniesManager Members
 
 
-		public void RemoveCompany( long companyId ) {
+		public ICollection<string> RemoveCompany( long companyId ) {
 			Company company = _dbContext.Companies.Find( companyId );
+			List<string> deletedUsers = null;
 			if( company != null ) {
-				_dbContext.Companies.Remove( company );
+				company.IsDeleted = true;
+				List<string> usersToDelete = company.Users.Select(x => x.Id).ToList();
+				foreach (var userTodeleteId in usersToDelete)
+				{
+					ApplicationUser userToDelete = _userManager.GetUserById( userTodeleteId );
+					userToDelete.IsDeleted = true;
+					_dbContext.SaveChanges();
+					_dbContext.Entry( userToDelete ).Reload();
+				}
 				_dbContext.SaveChanges();
+				deletedUsers = company.Users.Select( x => x.Id ).ToList();
 			} else {
 				throw new InvalidOperationException( "Company not found!" );
 			}
+			return deletedUsers;
 		}
 		public void UpdateCompany( Company company ) {
-			bool ifSuchCompanyPresent = _dbContext.Companies.Where( x => x.OrgNumber == company.OrgNumber ).Count()>1;
+			bool ifSuchCompanyPresent = _dbContext.Companies.Count( x => x.OrgNumber == company.OrgNumber ) > 1;
 			if( !ifSuchCompanyPresent ) {
 				Company resultCompany = _dbContext.Companies.Find( company.ID );
 				resultCompany.Name = company.Name;
