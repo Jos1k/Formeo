@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Formeo.Models
 {
@@ -22,6 +23,9 @@ namespace Formeo.Models
 
 		public bool IsDeleted { get; set; }
 
+		public long? CompanyId { get; set; }
+
+		[ForeignKey( "CompanyId" )]
 		public virtual Company Company { get; set; }
 
 		public virtual ICollection<Project> Projects { get; set; }

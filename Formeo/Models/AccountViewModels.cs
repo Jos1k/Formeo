@@ -8,9 +8,9 @@ namespace Formeo.Models
 
 	public class FormeoRegisterViewModel
 	{
-		[Required]
-		[StringLength(20)]
-		[Display(Name = "UserName")]
+		//[Required]
+		//[StringLength(20)]
+		//[Display(Name = "UserName")]
 		public string username { get; set; }
 
 		[Required]
@@ -18,30 +18,30 @@ namespace Formeo.Models
 		[Display(Name = "Email")]
 		public string email { get; set; }
 
-		[Required]
-		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[DataType(DataType.Password)]
-		[Display(Name = "Password")]
+		//[Required]
+		//[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+		//[DataType(DataType.Password)]
+		//[Display(Name = "Password")]
 		public string password { get; set; }
 
-		[StringLength(100)]
-		[DataType(DataType.Text)]
-		[Display(Name = "Address")]
+		//[StringLength(100)]
+		//[DataType(DataType.Text)]
+		//[Display(Name = "Address")]
 		public string address { get; set; }
 
-		[StringLength(20)]
-		[DataType(DataType.Text)]
-		[Display(Name = "Postal")]
+		//[StringLength(20)]
+		//[DataType(DataType.Text)]
+		//[Display(Name = "Postal")]
 		public string postal { get; set; }
 
-		[StringLength(100)]
-		[DataType(DataType.Text)]
-		[Display(Name = "City")]
+		//[StringLength(100)]
+		//[DataType(DataType.Text)]
+		//[Display(Name = "City")]
 		public string city { get; set; }
 
-		[StringLength(100)]
-		[DataType(DataType.Text)]
-		[Display(Name = "Country")]
+		//[StringLength(100)]
+		//[DataType(DataType.Text)]
+		//[Display(Name = "Country")]
 		public string country { get; set; }
 
 		//public bool isAdmin { get; set; }
@@ -50,7 +50,7 @@ namespace Formeo.Models
 
 		public string selectedRole { get; set; }
 
-		public long companyId { get; set; }
+		public long? companyId { get; set; }
 	}
 
 

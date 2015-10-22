@@ -33,7 +33,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 
 		public IEnumerable<ApplicationUser> GetUsersByRole( string roleName ) {
 			var role = RoleManager.FindByName( roleName );
-			var user = _dbcontext.Users.Where( x => x.Roles.FirstOrDefault().RoleId == role.Id  && !x.IsDeleted).ToList();
+			var user = _dbcontext.Users.Where( x => x.Roles.FirstOrDefault().RoleId == role.Id && !x.IsDeleted ).ToList();
 			return user;
 		}
 
@@ -54,5 +54,8 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 			return userManager.IsInRole( userId, roleName );
 		}
 
+		public string GetRoleNameByRoleId( string roleId ) {
+			return RoleManager.FindById( roleId ).Name;
+		}
 	}
 }

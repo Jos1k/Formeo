@@ -7,7 +7,7 @@
         postal: '',
         country: '',
         companyId: '',
-        selectedRole: 'Producer'
+        selectedRole: 'Admin'
     };
 
     $scope.companyModel = {
@@ -60,15 +60,20 @@
             defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == false; })[0];
         }
         if ($scope.userModel.selectedRole == 'Admin') {
-            defaultcompanyId = null;
+            $scope.selectedCompanyUser = null;
+            return;
         }  
-        $scope.userModel.companyId = defaultcompanyId;
+        $scope.selectedCompanyUser = defaultcompanyId;
     };
 
     $scope.addUser = function () {
+        $scope.userModel.companyId = null;
+        if ($scope.selectedCompanyUser != null) {
+            $scope.userModel.companyId = $scope.selectedCompanyUser.id
+        }
         $http({
             method: 'POST',
-            url: '/Account/RegisterFormeo',
+            url: '/Home/RegisterFormeo',
             data: {
                 model: $scope.userModel
             }
@@ -76,7 +81,16 @@
             then(function (response) {
                 //var index = collectionToHandle.indexOf(user);
                 //collectionToHandle.splice(index, 1);
-                alert(response.data);
+                //alert(response.data);
+                if ($scope.userModel.selectedRole == 'Customer') {
+                    $scope.customers.push(JSON.parse(response.data));
+                }
+                if ($scope.userModel.selectedRole == 'Producer') {
+                    $scope.customers.push(JSON.parse(response.data));
+                }
+
+                $scope.cleanUserModel();
+
             }, function (response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
@@ -234,7 +248,7 @@
             postal: '',
             country: '',
             companyId: '',
-            selectedRole: 'Producer'
+            selectedRole: 'Admin'
         };
     };
 

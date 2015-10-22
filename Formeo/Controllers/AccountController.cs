@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using Formeo.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net;
+using Formeo.BussinessLayer.ManagersImplementation;
+using Formeo.BussinessLayer.Interfaces;
 
 namespace Formeo.Controllers
 {
@@ -138,48 +140,6 @@ namespace Formeo.Controllers
 			}
 			// If we got this far, something failed, redisplay form
 			return View(model);
-		}
-
-		[HttpPost]
-		[Authorize(Roles = StaticData.RoleNames.Admin)]
-
-		public async Task<ActionResult> RegisterFormeo(FormeoRegisterViewModel model)
-		{
-			//todo: remove this stub company
-			//Company comp = new ApplicationDbContext().Companies.First();
-
-
-
-			if (ModelState.IsValid)
-			{
-				var user = new ApplicationUser
-				{
-					UserName = model.username,
-					Email = model.email,
-					Adress = model.address,
-					ZipCode = model.postal,
-					City = model.city,
-					Country = model.country,
-					Company = ApplicationContext.Companies.Find( model.companyId)
-				};
-				IdentityResult result = await UserManager.CreateAsync(user, model.password);
-				if (result.Succeeded)
-				{
-					result = await AddUserToRoles(model, user);
-					if (result == null || !result.Succeeded)
-					{
-						AddErrors(result);
-					}
-					return RedirectToAction("Index", "Home");
-				}
-
-				AddErrors(result);
-			}
-
-
-
-			// If we got this far, something failed, redisplay form
-			return RedirectToAction("Index", "Home");
 		}
 
 		[HttpPost]

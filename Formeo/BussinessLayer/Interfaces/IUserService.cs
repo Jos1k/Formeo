@@ -9,5 +9,6 @@ namespace Formeo.BussinessLayer.Interfaces
 	public interface IUserService
 	{
 		string GetUsersByRoleJSON(string roleName);
+		string GetUsersByIdJSON( string id );
 	}
 }

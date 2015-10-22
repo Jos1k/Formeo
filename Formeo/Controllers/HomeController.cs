@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Microsoft.Practices.Unity;
 using Formeo.BussinessLayer.Interfaces;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Formeo.Controllers {
 	[Authorize]
@@ -73,6 +74,53 @@ namespace Formeo.Controllers {
 			}
 		}
 
+		private async Task<IdentityResult> AddUserToRoles( FormeoRegisterViewModel model, ApplicationUser user ) {
+			IdentityResult result = await UserManager.AddToRoleAsync( user.Id, model.selectedRole );
+
+			return result;
+		}
+
+		private void AddErrors( IdentityResult result ) {
+			foreach( var error in result.Errors ) {
+				ModelState.AddModelError( "", error );
+			}
+		}
+
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public async Task<ActionResult> RegisterFormeo( FormeoRegisterViewModel model ) {
+			//todo: remove this stub company
+			//Company comp = new ApplicationDbContext().Companies.First();
+			if( ModelState.IsValid ) {
+				try {
+					var user = new ApplicationUser {
+						UserName = model.username,
+						Email = model.email,
+						Adress = model.address,
+						ZipCode = model.postal,
+						City = model.city,
+						Country = model.country,
+						CompanyId = model.companyId
+					};
+
+					IdentityResult result = await UserManager.CreateAsync( user, model.password );
+					if( result.Succeeded ) {
+						result = await AddUserToRoles( model, user );
+						if( result == null || !result.Succeeded ) {
+							AddErrors( result );
+						}
+						return Json( _userService.GetUsersByIdJSON( user.Id ) );
+					}
+				} catch( Exception ex ) {
+					throw;
+				}
+			}
+
+
+
+			// If we got this far, something failed, redisplay form
+			return RedirectToAction( "Index", "Home" );
+		}
 
 		#region Indexes
 
