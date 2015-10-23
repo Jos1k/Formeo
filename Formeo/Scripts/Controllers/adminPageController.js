@@ -60,33 +60,35 @@
             defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == false; })[0];
         }
         if ($scope.userModel.selectedRole == 'Admin') {
-            $scope.selectedCompanyUser = null;
+            $scope.userModel.companyId = null;
             return;
         }  
-        $scope.selectedCompanyUser = defaultcompanyId;
+        $scope.userModel.companyId = defaultcompanyId;
     };
 
     $scope.addUser = function () {
-        $scope.userModel.companyId = null;
-        if ($scope.selectedCompanyUser != null) {
-            $scope.userModel.companyId = $scope.selectedCompanyUser.id
+        //$scope.userModel.companyId = null;
+        //if ($scope.selectedCompanyUser != null) {
+        //    $scope.userModel.companyId = $scope.selectedCompanyUser.id;
+        //}
+        var resultUser = $scope.userModel;
+        if (isNaN(parseFloat(resultUser.companyId)) && !isFinite(resultUser.companyId)) {
+            resultUser.companyId = resultUser.companyId.id;
         }
+        
         $http({
             method: 'POST',
             url: '/Home/RegisterFormeo',
             data: {
-                model: $scope.userModel
+                model: resultUser
             }
         }).
             then(function (response) {
-                //var index = collectionToHandle.indexOf(user);
-                //collectionToHandle.splice(index, 1);
-                //alert(response.data);
                 if ($scope.userModel.selectedRole == 'Customer') {
                     $scope.customers.push(JSON.parse(response.data));
                 }
                 if ($scope.userModel.selectedRole == 'Producer') {
-                    $scope.customers.push(JSON.parse(response.data));
+                    $scope.producers.push(JSON.parse(response.data));
                 }
 
                 $scope.cleanUserModel();
