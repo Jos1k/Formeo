@@ -103,8 +103,8 @@
         if (user != $scope.EMPTY) {
             $http({
                 method: 'POST',
-                url: '/Account/RemoveUser',
-                params: { userName: user.UserName },
+                url: '/Home/RemoveUser',
+                params: { email: user.Email },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
                 then(function(response) {

@@ -59,20 +59,24 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 		public ICollection<string> RemoveCompany( long companyId ) {
 			Company company = _dbContext.Companies.Find( companyId );
 			List<string> deletedUsers = null;
-			if( company != null ) {
-				company.IsDeleted = true;
-				List<string> usersToDelete = company.Users.Select(x => x.Id).ToList();
-				foreach (var userTodeleteId in usersToDelete)
-				{
-					ApplicationUser userToDelete = _userManager.GetUserById( userTodeleteId );
-					userToDelete.IsDeleted = true;
+			if (_dbContext.Companies.Count(x => x.IsCustomer == company.IsCustomer && !x.IsDeleted) > 1)
+			{
+				if( company != null ) {
+					company.IsDeleted = true;
+					List<string> usersToDelete = company.Users.Select( x => x.Id ).ToList();
+					foreach( var userTodeleteId in usersToDelete ) {
+						ApplicationUser userToDelete = _userManager.GetUserById( userTodeleteId );
+						userToDelete.IsDeleted = true;
+						_dbContext.SaveChanges();
+						_dbContext.Entry( userToDelete ).Reload();
+					}
 					_dbContext.SaveChanges();
-					_dbContext.Entry( userToDelete ).Reload();
+					deletedUsers = company.Users.Select( x => x.Id ).ToList();
+				} else {
+					throw new InvalidOperationException( "Company not found!" );
 				}
-				_dbContext.SaveChanges();
-				deletedUsers = company.Users.Select( x => x.Id ).ToList();
 			} else {
-				throw new InvalidOperationException( "Company not found!" );
+				throw new InvalidOperationException( "You could not remove last company with that type!" );
 			}
 			return deletedUsers;
 		}

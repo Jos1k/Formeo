@@ -143,25 +143,6 @@ namespace Formeo.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult RemoveUser(string userName)
-		{
-			ApplicationUser user = UserManager.FindByName(userName);
-			if (user == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-			}
-
-			IdentityResult removeResult = UserManager.Delete(user);
-
-			if (removeResult.Succeeded)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.OK);
-			}
-			return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-
-		}
-
-		[HttpPost]
 		public ActionResult UpdateUserInfo(string userName, string field, string newValue)
 		{
 

@@ -46,6 +46,14 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 			return _dbcontext.Users.Where( user => user.Id == userId ).First();
 		}
 
+		public void RemoveUser(string userId)
+		{
+			var user = _dbcontext.Users.Find(userId);
+			user.IsDeleted = true;
+			_dbcontext.SaveChanges();
+			_dbcontext.Entry<ApplicationUser>(user);
+		}
+
 
 		public bool UserIsInRole( string userId, string roleName ) {
 			var userStore = new UserStore<ApplicationUser>( _dbcontext );

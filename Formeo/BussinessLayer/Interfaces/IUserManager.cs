@@ -12,6 +12,7 @@ namespace Formeo.BussinessLayer.Interfaces {
 		Task<ICollection<ApplicationUser>> GetUsersByRoleAsync( string roleName );
 		ApplicationUser GetUserById( string userId );
 		string GetRoleNameByRoleId( string roleId );
+		void RemoveUser(string userId);
 
 		bool UserIsInRole( string userId, string roleName );
 	}
