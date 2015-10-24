@@ -94,10 +94,15 @@
                 $scope.cleanUserModel();
 
             }, function (response) {
+                alert("There is something wrong with adding user");
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
             });
     };
+
+    $scope.getCompanyNameById = function(companyId){
+        return $.grep($scope.companies, function (e) { return e.id == companyId; })[0].companyName;
+}
 
     $scope.removeUser = function(user, collectionToHandle) {
         if (user != $scope.EMPTY) {
@@ -110,7 +115,9 @@
                 then(function(response) {
                     var index = collectionToHandle.indexOf(user);
                     collectionToHandle.splice(index, 1);
-                }, function(response) {
+                    $scope.selectClientMenu('/AddUser');
+                }, function (response) {
+                    alert("There is something wrong with deleting user");
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                 });
@@ -147,6 +154,7 @@
                     });
 
                 }, function (response) {
+                    alert("There is smth wrong with deleting company");
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                 });
@@ -173,7 +181,6 @@
                 }
             }
         });
-
         modalInstance.result.then(function (selectedItem) {
             $scope.selectedCompany = selectedItem;
             var result = $.grep($scope.companies, function (e) { return e.id == selectedItem.id; })[0];
@@ -181,6 +188,43 @@
             result.country = selectedItem.country;
             result.orgNumber = selectedItem.orgNumber;
             result.taxNumber = selectedItem.taxNumber;
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+
+    $scope.showEditUserModal = function () {
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: "/Home/EditUserModal/",
+            controller: 'userEditController',
+            size: "editCompany",
+            resolve: {
+                user: function () {
+                    return $scope.selectedUser;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selectedUser = selectedItem;
+            var result = null;
+            if (selectedItem.SelectedRole == 'Producer') {
+                result = $.grep($scope.producers, function (e) { return e.Id == selectedItem.Id; })[0];
+            }
+            else {
+                result = $.grep($scope.customers, function (e) { return e.Id == selectedItem.Id; })[0];
+            }
+
+            result.Company.Id = selectedItem.Company.Id;
+            result.Company.CompanyName = selectedItem.Company.CompanyName;
+            result.Email = selectedItem.Email;
+            result.Address = selectedItem.Address;
+            result.Postal = selectedItem.Postal;
+            result.City = selectedItem.City;
+            result.Country = selectedItem.Country;
+
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });

@@ -65,5 +65,20 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 		public string GetRoleNameByRoleId( string roleId ) {
 			return RoleManager.FindById( roleId ).Name;
 		}
+
+		#region IUserManager Members
+
+
+		public void UpdateUser( ApplicationUser user ) {
+			ApplicationUser resultUser = _dbcontext.Users.Find( user.Id );
+			resultUser.City = user.City;
+			resultUser.Country = user.Country;
+			resultUser.Adress = user.Adress;
+			resultUser.Email = user.Email;
+			resultUser.ZipCode = user.ZipCode;
+			_dbcontext.SaveChanges();
+			_dbcontext.Entry<ApplicationUser>( resultUser );
+		}
+		#endregion
 	}
 }

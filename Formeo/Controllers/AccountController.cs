@@ -92,10 +92,20 @@ namespace Formeo.Controllers
 				ModelState.AddModelError("", "Invalid login attempt.");
 				return View(model);
 			}
+			if( user.IsDeleted) {
+				ModelState.AddModelError( "", "This account not active" );
+				return View( model );
+			}
+
 
 			// This doesn't count login failures towards account lockout
 			// To enable password failures to trigger account lockout, change to shouldLockout: true
-			var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+			SignInStatus result = SignInStatus.Failure;
+			try {
+				result = await SignInManager.PasswordSignInAsync( user.UserName, model.Password, model.RememberMe, shouldLockout: false );
+			} catch( Exception e ) {
+				Console.WriteLine(e.Message);
+			}
 			switch (result)
 			{
 				case SignInStatus.Success:

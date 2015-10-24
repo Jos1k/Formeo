@@ -21,15 +21,12 @@ namespace Formeo.BussinessLayer.Services {
 				( user => new {
 					Id = user.Id,
 					UserName = user.UserName,
-					Company = user.Company == null ? "<No Data>" : user.Company.Name,
+					Company =  new {Id = user.Company.ID, CompanyName = user.Company.Name},
 					Email = string.IsNullOrWhiteSpace( user.Email ) ? "<No Data>" : user.Email,
 					Address = string.IsNullOrWhiteSpace( user.Adress ) ? "<No Data>" : user.Adress,
 					Postal = string.IsNullOrWhiteSpace( user.ZipCode ) ? "<No Data>" : user.ZipCode,
 					City = string.IsNullOrWhiteSpace( user.City ) ? "<No Data>" : user.City,
 					Country = string.IsNullOrWhiteSpace( user.Country ) ? "<No Data>" : user.Country,
-					//IsProducer = roleName == StaticData.RoleNames.Producer,
-					//IsCustomer = roleName == StaticData.RoleNames.Customer,
-					//IsAdmin = roleName == StaticData.RoleNames.Admin
 					SelectedRole = _manager.GetRoleNameByRoleId( user.Roles.FirstOrDefault().RoleId )
 				}
 				)
@@ -47,7 +44,7 @@ namespace Formeo.BussinessLayer.Services {
 			var users_short = new {
 				Id = user.Id,
 				UserName = user.UserName,
-				Company = user.Company == null ? "<No Data>" : user.Company.Name,
+				Company = new { Id = user.Company.ID, CompanyName = user.Company.Name },
 				Email = string.IsNullOrWhiteSpace( user.Email ) ? "<No Data>" : user.Email,
 				Address = string.IsNullOrWhiteSpace( user.Adress ) ? "<No Data>" : user.Adress,
 				Postal = string.IsNullOrWhiteSpace( user.ZipCode ) ? "<No Data>" : user.ZipCode,

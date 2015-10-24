@@ -336,6 +336,7 @@
     <Content Include="App_Data\uploads\mypdf.pdf" />
     <None Include="Properties\PublishProfiles\formeo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\userEditController.js" />
     <Content Include="Scripts\Controllers\companyEditController.js" />
     <Content Include="Scripts\Controllers\bidProductPartialController.js" />
     <Content Include="Scripts\Controllers\addProductsPartialController.js" />
@@ -417,6 +418,7 @@
     <Content Include="Views\Company\_EditCompany.cshtml" />
     <Content Include="Views\Project\_OrderInfoPartial.cshtml" />
     <Content Include="Views\Project\_ProjectInfoDetails.cshtml" />
+    <Content Include="Views\Account\_EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

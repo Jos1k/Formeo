@@ -8,37 +8,41 @@ namespace Formeo.Models
 
 	public class FormeoRegisterViewModel
 	{
-		//[Required]
+		[Required]
 		//[StringLength(20)]
 		//[Display(Name = "UserName")]
 		public string username { get; set; }
 
 		[Required]
 		[EmailAddress]
-		[Display(Name = "Email")]
+		//[Display(Name = "Email")]
 		public string email { get; set; }
 
-		//[Required]
+		[Required]
 		//[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
 		//[DataType(DataType.Password)]
 		//[Display(Name = "Password")]
 		public string password { get; set; }
 
+		[Required]
 		//[StringLength(100)]
 		//[DataType(DataType.Text)]
 		//[Display(Name = "Address")]
 		public string address { get; set; }
 
-		//[StringLength(20)]
+		[Required]
+		[StringLength(10)]
 		//[DataType(DataType.Text)]
 		//[Display(Name = "Postal")]
 		public string postal { get; set; }
 
+		[Required]
 		//[StringLength(100)]
 		//[DataType(DataType.Text)]
 		//[Display(Name = "City")]
 		public string city { get; set; }
 
+		[Required]
 		//[StringLength(100)]
 		//[DataType(DataType.Text)]
 		//[Display(Name = "Country")]
@@ -47,7 +51,7 @@ namespace Formeo.Models
 		//public bool isAdmin { get; set; }
 		//public bool isCustomer { get; set; }
 		//public bool isProduction { get; set; }
-
+		[Required]
 		public string selectedRole { get; set; }
 
 		public long? companyId { get; set; }

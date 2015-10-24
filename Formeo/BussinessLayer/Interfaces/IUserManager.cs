@@ -13,7 +13,7 @@ namespace Formeo.BussinessLayer.Interfaces {
 		ApplicationUser GetUserById( string userId );
 		string GetRoleNameByRoleId( string roleId );
 		void RemoveUser(string userId);
-
+		void UpdateUser(ApplicationUser user);
 		bool UserIsInRole( string userId, string roleName );
 	}
 }

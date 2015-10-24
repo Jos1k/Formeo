@@ -5,19 +5,14 @@
 
 <div class="row">
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/AddUser')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/AddUser')}">
+        <button style="width:95px;" type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/AddUser')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/AddUser')}">
             <i class="fa fa-user fa-2x"></i>
             <i class="fa fa-plus"></i>
             <br>Add user
         </button>
-        <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/ManageUser')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/ManageUser')}">
-            <i class="fa fa-user fa-2x"></i>
-            <i class="fa fa-cog" ng-class="{'fa-spin': isActiveCLientsMenu('/ManageUser')}"></i>
-            <br>Manage user
-        </button>
-        <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectClientMenu('/GetInfo')" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/GetInfo')}">
+        <button disabled style="width:95px;" type="button" class="btn btn-default text-center btn-sidebar-menu" ng-class="{'btn-menu-selected': isActiveCLientsMenu('/ManageUser')}">
             <i class="fa fa-file-text fa-2x"></i>
-            <br>Get info
+            <br>User Info
         </button>
     </div>
 </div>
@@ -26,8 +21,6 @@
 <div class="row">
     <div class="container">
         <div ng-show="isActiveCLientsMenu('/AddUser')">
-            @using( Html.BeginForm( "RegisterFormeo", "Account", FormMethod.Post ) ) {
-                @Html.AntiForgeryToken()
                 <div class="padding30px">
                     <div class="row form-group-margin">
                         <input type="text" ng-model="userModel.username" name="UserName" id="UserName" placeholder="Username" autofocus class="form-control login-textbox textbox-menu" maxlength="25" />
@@ -35,7 +28,7 @@
                         <input type="text" ng-model="userModel.email" name="Email" id="Email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" maxlength="25" />
                     </div>
                     <div class="row">
-                        <input type="text" ng-model="userModel.address" name="address" id=" address" placeholder="Address" autofocus class="form-control login-textbox textbox-menu" maxlength="50" />
+                        <input type="text" ng-model="userModel.address" name="address" id=" address" placeholder="Address" autofocus class="form-control login-textbox textbox-menu" maxlength="30" />
                         <input type="number" ng-model="userModel.postal" name="Postal" id="Postal" placeholder="Postal" autofocus class="form-control login-textbox textbox-menu" min="1" max="9999999" />
                         <input type="text" ng-model="userModel.city" name="City" id="City" placeholder="City" autofocus class="form-control login-textbox textbox-menu" maxlength="25" />
                         <input type="text" ng-model="userModel.country" name="Country" id="Country" placeholder="Country" autofocus class="form-control login-textbox textbox-menu" maxlength="25" />
@@ -99,118 +92,27 @@
                         </button>
                     </div>
                 </div>
-            }
         </div>
-        <form role="form" ng-show="isActiveCLientsMenu('/ManageUser')">
+        <div ng-show="isActiveCLientsMenu('/ManageUser')">
             <div class="padding30px">
-                <div class="row form-group-margin">
-                    <div class="row editable-field">
-                        <div class="edit-value-holder">
-                            {{selectedUser === EMPTY ? "&#60; User Name &#62;" : selectedUser.UserName}}
-                        </div>
-                    </div>
-
-                    <div ng-init="isShowEditEmail = false"></div>
-                    <div ng-init="isShowEditAddress = false"></div>
-                    <div ng-init="isShowEditPostal = false"></div>
-                    <div ng-init="isShowEditCity = false"></div>
-                    <div ng-init="isShowEditCountry = false"></div>
-
-                    <div class="row editable-field">
-                        <div class="edit-value-holder" ng-show="!isShowEditEmail || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditEmail = false : isShowEditEmail=true;">
-                            {{selectedUser === EMPTY ? "&#60; Email &#62;" : selectedUser.Email}}
-                        </div>
-                        <div class="edit-value-holder " ng-show="isShowEditEmail && !selectedUser==EMPTY">
-                            <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Email" />
-                        </div>
-
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditEmail, selectedUser, 'email', selectedUser.Email); isShowEditEmail=false">Change</a>
-                        </div>
-                    </div>
+                <p></p>
+                <div ng-switch on="selectedUser.SelectedRole" class="row">
+                    <label class="label label-success" ng-switch-when="Customer" style="font-size:18px;">
+                        Customer
+                    </label>
+                    <label class="label label-info" ng-switch-when="Producer" style="font-size:18px;">
+                        Producer
+                    </label>
                 </div>
-
-                <div class="row form-group-margin">
-                    <div class="row editable-field">
-                        <div class="edit-value-holder" ng-show="!isShowEditAddress || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditAddress = false : isShowEditAddress=true;">
-                            {{selectedUser === EMPTY ? "&#60;Address&#62;" : selectedUser.Address}}
-                        </div>
-                        <div class="edit-value-holder " ng-show="isShowEditAddress && !selectedUser==EMPTY">
-                            <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Address" />
-                        </div>
-
-                        <div class="edit-link-holder">
-                            <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditAddress, selectedUser, 'address', selectedUser.Address); isShowEditAddress=false">Change</a>
-                        </div>
-                    </div>
-
-
-                    <div class="row form-group-margin">
-                        <div class="row editable-field">
-                            <div class="edit-value-holder" ng-show="!isShowEditPostal || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditPostal = false : isShowEditPostal=true;">
-                                {{selectedUser === EMPTY ? "&#60;Postal&#62;" : selectedUser.Postal}}
-                            </div>
-                            <div class="edit-value-holder " ng-show="isShowEditPostal && !selectedUser==EMPTY">
-                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Postal" />
-                            </div>
-
-                            <div class="edit-link-holder">
-                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditPostal, selectedUser, 'postal', selectedUser.Postal); isShowEditPostal=false">Change</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row form-group-margin">
-                        <div class="row editable-field">
-                            <div class="edit-value-holder" ng-show="!isShowEditCity || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditCity = false : isShowEditCity=true;">
-                                {{selectedUser === EMPTY ? "&#60;City&#62;" : selectedUser.City}}
-                            </div>
-                            <div class="edit-value-holder " ng-show="isShowEditCity && !selectedUser==EMPTY">
-                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.City" />
-                            </div>
-
-                            <div class="edit-link-holder">
-                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditCity, selectedUser, 'city', selectedUser.City); isShowEditCity=false">Change</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row form-group-margin">
-                        <div class="row editable-field">
-                            <div class="edit-value-holder" ng-show="!isShowEditCountry || selectedUser==EMPTY" ng-click="selectedUser===EMPTY ? isShowEditCountry = false : isShowEditCountry=true;">
-                                {{selectedUser === EMPTY ? "&#60;Country&#62;" : selectedUser.Country}}
-                            </div>
-                            <div class="edit-value-holder " ng-show="isShowEditCountry && !selectedUser==EMPTY">
-                                <input type="text" class="form-control textbox-menu" ng-model="selectedUser.Country" />
-                            </div>
-
-                            <div class="edit-link-holder">
-                                <a class="btn-edit-link" href="#" ng-click="updateUserInfo(isShowEditCountry, selectedUser, 'country', selectedUser.Country); isShowEditCountry=false">Change</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row form-group-margin">
-
-                    <div class="left">
-                        <div class="form-group">
-                            <label for="isProduction" style="font-size: medium" ng-class="{checked: selectedUser.IsProducer == true}">
-                                Production
-                                <input class="pointer" name="roleRadio" ng-model="selectedUser.IsProducer" value="true" type="radio">
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="isCustomer" style="font-size: medium">Customer</label>
-                            <input class="pointer" name="roleRadio" ng-class="{checked: selectedUser.IsCustomer}" type="radio" readonly="readonly">
-                        </div>
-                        <div class="form-group">
-                            <label for="isAdmin" style="font-size: medium">Admin</label>
-                            <input class="pointer" name="roleRadio" ng-class="{checked: selectedUser.IsAdmin}" type="radio" readonly="readonly">
-                        </div>
-                    </div>
-                </div>
+                <p><h4>User Name:</h4></p>
+                <h5 style="font-size: 16px;font-style:italic;margin-left:10px;">{{selectedUser.UserName}}</h5>
+                <p><h4>Email:</h4></p>
+                <h5 style="font-size: 16px;font-style:italic;margin-left:10px;">{{selectedUser.Email}}</h5>
+                <p><h4>Address:</h4></p>
+                <h5 style="font-size: 16px;font-style:italic;margin-left:10px;">{{selectedUser.Address}}</h5>
+                <h5 style ="font-size: 16px;font-style:italic;margin-left:10px;">{{selectedUser.Postal+' '+selectedUser.City}}</h5>
+                <h5 style="font-size: 16px;font-style:italic;margin-left:10px;">{{selectedUser.Country}}</h5>
             </div>
-        </form>
+        </div>
     </div>
 </div>

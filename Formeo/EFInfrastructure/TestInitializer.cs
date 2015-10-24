@@ -79,31 +79,45 @@ namespace Formeo.EFInfrastructure
 			{
 				new ApplicationUser()
 				{
-					Country = "US",
+					Country = "United States",
 					Email = "SomeEmail1@somedomain.com",
-					UserName = "Gordon_Freeman",
-					ZipCode = "SomeZipCode",
-					Adress = "New Mexico City, 21,32",
+					UserName = "Morgan_Freeman",
+					ZipCode = "55599",
+					Adress = "Grand Street 21, 32",
+					City = "New Mexico",
 					Company = companies.ElementAt(0)
 				},
 
 				new ApplicationUser()
 				{
-					Country = "IT",
+					Country = "Italy",
 					Email = "SomeEmail2@somedomain.com",
-					UserName = "Mario",
-					ZipCode = "SomeZipCode Mario Edition",
-					Adress = "NY, 50,50",
+					UserName = "Serhiy_Trachenko",
+					ZipCode = "32321",
+					Adress = "Florentino 14, 50",
+					City = "Rome",
 					Company = companies.ElementAt(0)
 				},
 
 				new ApplicationUser()
 				{
-					Country = "US",
+					Country = "Ukraine",
 					Email = "SomeEmail3@somedomain.com",
-					UserName = "Dead_pool",
-					ZipCode = "SomeZipCode Crazy Edition",
-					Adress = "Away from normal",
+					UserName = "Ihor_Hadzera",
+					ZipCode = "29000",
+					Adress = "Mykolaivska 1, 15",
+					City = "Vinnitsa",
+					Company = companies.ElementAt(1)
+				},
+
+				new ApplicationUser()
+				{
+					Country = "United Kingdom",
+					Email = "SomeEmail0@somedomain.com",
+					UserName = "James_Bond",
+					ZipCode = "77777",
+					Adress = "Baker Street 15, 4",
+					City = "London",
 					Company = companies.ElementAt(1)
 				},
 
@@ -138,18 +152,19 @@ namespace Formeo.EFInfrastructure
 				switch (i++)
 				{
 					case 0:
+					case 1:
 						{
 							userManager.AddToRole(user.Id, roles.ElementAt(2).Name);
 							break;
 						}
-					case 1:
 					case 2:
+					case 3:
 						{
 							userManager.AddToRole(user.Id, roles.ElementAt(1).Name);
 							break;
 						}
 
-					case 3:
+					case 4:
 						{
 							userManager.AddToRole(user.Id, roles.ElementAt(0).Name);
 							break;

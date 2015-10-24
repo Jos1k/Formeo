@@ -17,6 +17,7 @@ using Microsoft.Practices.Unity;
 using Formeo.BussinessLayer.Interfaces;
 using System.IO;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Formeo.Controllers {
 	[Authorize]
@@ -208,11 +209,54 @@ namespace Formeo.Controllers {
 			return PartialView( "~/Views/Company/_EditCompany.cshtml" );
 		}
 
+		[HttpGet]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditUserModal() {
+			return PartialView( "~/Views/Account/_EditUser.cshtml" );
+		}
+
 		[HttpPost]
 		[Authorize( Roles = StaticData.RoleNames.Admin )]
 		public ActionResult EditCompany( Company company ) {
 			_companiesManager.UpdateCompany( company );
 			return Json( _companiesService.GetCompanyJSON( company.ID ) );
+		}
+
+		public class ShortUser {
+			public string Id { get;set; }
+			//long? Company { get; set; }
+			[Required]
+			[EmailAddress]
+			public string Email { get; set; }
+			[Required]
+			public string City { get; set; }
+			[Required]
+			public string Country { get; set; }
+			[Required]
+			public string Postal { get; set; }
+			[Required]
+			public string Address { get; set; }
+			//[Required]
+			//string SelectedRole { get; set; }
+		}
+
+		[HttpPost]
+		[Authorize( Roles = StaticData.RoleNames.Admin )]
+		public ActionResult EditUser( ShortUser user ) {
+			if( ModelState.IsValid ) {
+				ApplicationUser resultUser = new ApplicationUser() {
+					Id = user.Id,
+					ZipCode = user.Postal,
+					Email = user.Email,
+					Adress = user.Address,
+					City = user.City,
+					Country = user.Country
+				};
+				_userManager.UpdateUser( resultUser );
+				var result = _userService.GetUsersByIdJSON( resultUser.Id );
+				return Json( result );
+			}
+			return View(user);
 		}
 
 		[HttpPost]
