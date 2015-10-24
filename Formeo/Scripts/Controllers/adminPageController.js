@@ -62,20 +62,16 @@
         if ($scope.userModel.selectedRole == 'Admin') {
             $scope.userModel.companyId = null;
             return;
-        }  
+        }
         $scope.userModel.companyId = defaultcompanyId;
     };
 
     $scope.addUser = function () {
-        //$scope.userModel.companyId = null;
-        //if ($scope.selectedCompanyUser != null) {
-        //    $scope.userModel.companyId = $scope.selectedCompanyUser.id;
-        //}
         var resultUser = $scope.userModel;
         if (isNaN(parseFloat(resultUser.companyId)) && !isFinite(resultUser.companyId)) {
             resultUser.companyId = resultUser.companyId.id;
         }
-        
+
         $http({
             method: 'POST',
             url: '/Home/RegisterFormeo',
@@ -100,11 +96,11 @@
             });
     };
 
-    $scope.getCompanyNameById = function(companyId){
+    $scope.getCompanyNameById = function (companyId) {
         return $.grep($scope.companies, function (e) { return e.id == companyId; })[0].companyName;
-}
+    }
 
-    $scope.removeUser = function(user, collectionToHandle) {
+    $scope.removeUser = function (user, collectionToHandle) {
         if (user != $scope.EMPTY) {
             $http({
                 method: 'POST',
@@ -112,7 +108,7 @@
                 params: { email: user.Email },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).
-                then(function(response) {
+                then(function (response) {
                     var index = collectionToHandle.indexOf(user);
                     collectionToHandle.splice(index, 1);
                     $scope.selectClientMenu('/AddUser');
@@ -123,7 +119,7 @@
                 });
         }
     };
-    
+
 
     $scope.removeCompany = function (company, collectionToHandle) {
         if (company != $scope.EMPTY) {
@@ -141,11 +137,11 @@
                     //var producersToDelete = [];
                     //var customersToDelete = [];
                     usersToDelete.forEach(function (entry) {
-                        
+
                         $scope.producers = $scope.producers.filter(function (obj) {
                             return obj.Id !== entry;
                         });
-                        
+
                         $scope.customers = $scope.customers.filter(function (obj) {
                             return obj.Id !== entry;
                         });
@@ -162,7 +158,7 @@
     };
 
 
-    $scope.selectUser = function(user) {
+    $scope.selectUser = function (user) {
         if (user != $scope.EMPTY) {
             $scope.selectedUser = user;
         }
@@ -195,6 +191,7 @@
 
 
     $scope.showEditUserModal = function () {
+        var oldRoleName = $scope.selectedUser.SelectedRole;
         var modalInstance = $modal.open({
             animation: true,
             templateUrl: "/Home/EditUserModal/",
@@ -203,28 +200,45 @@
             resolve: {
                 user: function () {
                     return $scope.selectedUser;
+                },
+                companies: function () {
+                    return $scope.companies;
                 }
             }
         });
 
         modalInstance.result.then(function (selectedItem) {
-            $scope.selectedUser = selectedItem;
-            var result = null;
-            if (selectedItem.SelectedRole == 'Producer') {
-                result = $.grep($scope.producers, function (e) { return e.Id == selectedItem.Id; })[0];
+            if (selectedItem.SelectedRole == oldRoleName) {
+                $scope.selectedUser = selectedItem;
+                var result = null;
+                if (selectedItem.SelectedRole == 'Producer') {
+                    result = $.grep($scope.producers, function (e) { return e.Id == selectedItem.Id; })[0];
+                }
+                else {
+                    result = $.grep($scope.customers, function (e) { return e.Id == selectedItem.Id; })[0];
+                }
+
+                result.Company.Id = selectedItem.Company.Id;
+                result.Company.CompanyName = selectedItem.Company.CompanyName;
+                result.Email = selectedItem.Email;
+                result.Address = selectedItem.Address;
+                result.Postal = selectedItem.Postal;
+                result.City = selectedItem.City;
+                result.Country = selectedItem.Country;
             }
             else {
-                result = $.grep($scope.customers, function (e) { return e.Id == selectedItem.Id; })[0];
+                if ($scope.selectedUser.SelectedRole == 'Producer') {
+                    var index = $scope.producers.indexOf($scope.selectedUser);
+                    $scope.producers.splice(index, 1);
+                    $scope.customers.push(selectedItem);
+                }
+                else {
+                    var index = $scope.customers.indexOf($scope.selectedUser);
+                    $scope.customers.splice(index, 1);
+                    $scope.producers.push(selectedItem);
+                }
+                $scope.selectedUser = selectedItem;
             }
-
-            result.Company.Id = selectedItem.Company.Id;
-            result.Company.CompanyName = selectedItem.Company.CompanyName;
-            result.Email = selectedItem.Email;
-            result.Address = selectedItem.Address;
-            result.Postal = selectedItem.Postal;
-            result.City = selectedItem.City;
-            result.Country = selectedItem.Country;
-
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });

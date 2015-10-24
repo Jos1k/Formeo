@@ -1,9 +1,11 @@
-﻿var userEditController = function ($scope, $modalInstance, $window, $http, UploadPrinObject, user) {
+﻿var userEditController = function ($scope, $modalInstance, $window, $http, UploadPrinObject, user, companies) {
+
+    $scope.companies = companies;
 
     $scope.user = {
         Id: user.Id,
         UserName: user.UserName,
-        //Company: user.Company,
+        Company: $.grep($scope.companies, function (e) { return e.id == user.Company.Id; })[0],
         Email: user.Email,
         Address: user.Address,
         Postal: user.Postal,
@@ -12,11 +14,24 @@
         SelectedRole: user.SelectedRole,
     };
 
+    $scope.setDefaultCompany = function () {
+        var defaultcompanyId = null;
+        if ($scope.user.SelectedRole == 'Customer') {
+            defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == true; })[0];
+        }
+        if ($scope.user.SelectedRole == 'Producer') {
+            defaultcompanyId = $.grep($scope.companies, function (e) { return e.isCustomer == false; })[0];
+        }
+        $scope.user.Company = defaultcompanyId;
+    };
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-    
+
     $scope.EditUser = function () {
+        if ($scope.user.Company.id) {
+            $scope.user.Company = $scope.user.Company.id;
+        }
         $http({
             method: 'POST',
             url: '/Home/EditUser',
@@ -28,8 +43,8 @@
                 'Country': $scope.user.Country,
                 'Postal': $scope.user.Postal,
                 'Address': $scope.user.Address,
-                //'SelectedRole': $scope.user.isCustomer,
-                //'CompanyId': $scope.user.Company
+                'CompanyId':$scope.user.Company,
+                'SelectedRole': $scope.user.SelectedRole,
             }
         }).
            then(function (response) {

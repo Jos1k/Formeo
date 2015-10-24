@@ -284,6 +284,10 @@
     <Content Include="Content\select2-spinner.gif" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.png" />
+    <Content Include="Content\Site2.css" />
+    <Content Include="Content\Site - Copy.min.css">
+      <DependentUpon>Site2.css</DependentUpon>
+    </Content>
     <Content Include="images\ajax-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -334,6 +338,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Data\uploads\mypdf.pdf" />
+    <Content Include="Content\Site - Copy.css.map">
+      <DependentUpon>Site2.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\formeo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Controllers\userEditController.js" />

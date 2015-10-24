@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
 
 namespace Formeo.BussinessLayer.ManagersImplementation {
 	class UserManager : IUserManager {
@@ -43,7 +45,8 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 		}
 
 		public ApplicationUser GetUserById( string userId ) {
-			return _dbcontext.Users.Where( user => user.Id == userId ).First();
+			ApplicationUser userResult = _dbcontext.Users.Where( user => user.Id == userId ).First();
+			return userResult;
 		}
 
 		public void RemoveUser(string userId)
@@ -76,6 +79,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 			resultUser.Adress = user.Adress;
 			resultUser.Email = user.Email;
 			resultUser.ZipCode = user.ZipCode;
+			resultUser.CompanyId = user.CompanyId;
 			_dbcontext.SaveChanges();
 			_dbcontext.Entry<ApplicationUser>( resultUser );
 		}

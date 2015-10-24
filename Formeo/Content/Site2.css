@@ -1,0 +1,34 @@
+﻿.modal-editCompany {
+	width:400px;
+}
+
+.ui-select-container {
+width:330px;
+margin-left:15px;
+}
+
+.ui-select-toggle {
+	background-color: #ffffff;
+	color:#000000;
+	width:330px;
+	border-radius:0;
+}
+.ui-select-toggle:hover, 
+.ui-select-toggle:active,
+.form-control:active:focus:hover, 
+.btn-default:active:focus:hover,
+.dropdown-menu:active:focus:hover   {
+	background-color: #ffffff;
+	color:#000000;
+}
+
+.btn-default:active:focus
+.ui-select-match, .ui-select-choice, ui-select-search,.form-control {
+	/*padding:0 15px;*/
+	width:330px;
+	max-width: 500px;
+	border-radius:0px;
+}
+.dropdown-menu {
+	border-radius:0;
+}

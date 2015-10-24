@@ -354,7 +354,10 @@ a.list-group-item {
 	border-radius:0;
 	font-size:medium;  
 }
-.select2-container.select2-drop-above .select2-choice, .select2-drop, .ui-select-container[theme="select2"].direction-up .ui-select-match, .select2-container .select2-choice{
+.select2-container.select2-drop-above .select2-choice, 
+.select2-drop, 
+.ui-select-container[theme="select2"].direction-up .ui-select-match, 
+.select2-container .select2-choice{
 		border-radius:0;  
 }
 /*# sourceMappingURL=Site.css.map */

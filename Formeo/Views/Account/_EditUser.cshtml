@@ -1,4 +1,10 @@
-﻿<div class="modal-content" style="border-radius: 0; border:none;">
+﻿<link rel="stylesheet" href="~/Content/select.css">
+<link rel="stylesheet" href="~/Content/select2.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<link rel="stylesheet" href="~/Content/Site.css">
+<link rel="stylesheet" href="~/Content/Site2.css">
+
+<div class="modal-content" style="border-radius: 0; border:none;">
     <div class="modal-header" style="background-color: #34495E; color: white;">
         <h5 class="modal-title"><b>Edit User</b></h5>
     </div>
@@ -6,6 +12,40 @@
                 <div class="padding30px">
                     <div class="row form-group-margin">
                         <p style="font-weight:bold">User Name: {{user.UserName}}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="pointer" name="SelectedRoleInModal" ng-model="user.SelectedRole" type="radio" ng-value="'@Formeo.Models.StaticData.RoleNames.Producer'" ng-click="setDefaultCompany()">
+                                <label for="isProduction" style="font-size: medium">Producer</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="pointer" name="SelectedRoleInModal" ng-model="user.SelectedRole" type="radio" ng-value="'@Formeo.Models.StaticData.RoleNames.Customer'" ng-click="setDefaultCompany()">
+                                <label for="isCustomer" style="font-size: medium">Customer</label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px;" ng-switch="user.SelectedRole">
+                            <div ng-switch-when="Producer">
+                                <ui-select ng-model="user.Company" ui-select-field="id" theme="bootstrap" style="border-radius:0px;">
+                                    <ui-select-match placeholder="Select a company from list">{{$select.selected.companyName}}</ui-select-match>
+                                    <ui-select-choices repeat="company in companies | filter: {isCustomer: false} | propsFilter: {companyName: $select.search}">
+                                        <div ng-bind-html="company.companyName | highlight: $select.search"></div>
+                                        <small>
+                                            Org Number: {{company.orgNumber}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div ng-switch-when="Customer">
+                                <ui-select ng-model="user.Company" ui-select-field="id" theme="bootstrap" style="border-radius:0px;">
+                                    <ui-select-match placeholder="Select a company from list">{{$select.selected.companyName}}</ui-select-match>
+                                    <ui-select-choices repeat="company in companies | filter: {isCustomer: true}| propsFilter: {companyName: $select.search}">
+                                        <div ng-bind-html="company.companyName | highlight: $select.search"></div>
+                                        <small>
+                                            Org Number: {{company.orgNumber}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
                         <p style="font-weight:bold">Email:</p>
                         <input type="email" ng-model="user.Email" name="Email" id="Email" placeholder="Email" autofocus class="form-control login-textbox textbox-menu" maxlength="25" />
                         <p style="font-weight:bold">Address:</p>

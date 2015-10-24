@@ -131,8 +131,8 @@ namespace Formeo.Controllers {
 			if( user == null ) {
 				return new HttpStatusCodeResult( HttpStatusCode.NotFound );
 			}
-			_userManager.RemoveUser ( user.Id );
-				return new HttpStatusCodeResult( HttpStatusCode.OK );
+			_userManager.RemoveUser( user.Id );
+			return new HttpStatusCodeResult( HttpStatusCode.OK );
 			//return new HttpStatusCodeResult( HttpStatusCode.InternalServerError );
 
 		}
@@ -165,13 +165,13 @@ namespace Formeo.Controllers {
 				_projectService
 				.GetProjectsByCreatorCompanyJSON(
 				company.ID,
-				Formeo.Models.StaticData.OrderStatusEnum.InProgress);
+				Formeo.Models.StaticData.OrderStatusEnum.InProgress );
 
 			viewModel.Orders_CompletedOrders =
 				_projectService
 				.GetProjectsByCreatorCompanyJSON(
 				company.ID,
-				Formeo.Models.StaticData.OrderStatusEnum.Delivered);
+				Formeo.Models.StaticData.OrderStatusEnum.Delivered );
 
 			return View( viewModel );
 		}
@@ -223,8 +223,8 @@ namespace Formeo.Controllers {
 		}
 
 		public class ShortUser {
-			public string Id { get;set; }
-			//long? Company { get; set; }
+			public string Id { get; set; }
+			public long? CompanyId { get; set; }
 			[Required]
 			[EmailAddress]
 			public string Email { get; set; }
@@ -236,34 +236,56 @@ namespace Formeo.Controllers {
 			public string Postal { get; set; }
 			[Required]
 			public string Address { get; set; }
-			//[Required]
-			//string SelectedRole { get; set; }
+			[Required]
+			public string SelectedRole { get; set; }
+		}
+
+
+		public RoleManager<IdentityRole> RoleManager {
+			get {
+				return new RoleManager<IdentityRole>( new RoleStore<IdentityRole>( DbContext ) );
+			}
 		}
 
 		[HttpPost]
 		[Authorize( Roles = StaticData.RoleNames.Admin )]
 		public ActionResult EditUser( ShortUser user ) {
 			if( ModelState.IsValid ) {
-				ApplicationUser resultUser = new ApplicationUser() {
-					Id = user.Id,
-					ZipCode = user.Postal,
-					Email = user.Email,
-					Adress = user.Address,
-					City = user.City,
-					Country = user.Country
-				};
+
+				ApplicationUser resultUser = _userManager.GetUserById( user.Id );
+				resultUser.ZipCode = user.Postal;
+				resultUser.Email = user.Email;
+				resultUser.Adress = user.Address;
+				resultUser.City = user.City;
+				resultUser.Country = user.Country;
+				resultUser.CompanyId = user.CompanyId;
+
 				_userManager.UpdateUser( resultUser );
+
+				var oldRole = RoleManager.FindById( resultUser.Roles.FirstOrDefault().RoleId );
+				var newRole = RoleManager.FindByName( user.SelectedRole );
+				//resultUser.Roles.FirstOrDefault().RoleId = role.Id;
+
+				UserManager.RemoveFromRole( resultUser.Id, oldRole.Name );
+				UserManager.AddToRole( resultUser.Id, user.SelectedRole );
+
+				DbContext.SaveChanges();
+				DbContext.Entry<ApplicationUser>( resultUser );
+
 				var result = _userService.GetUsersByIdJSON( resultUser.Id );
+				dynamic desearResult = JsonConvert.DeserializeObject( result );
+				desearResult.SelectedRole = user.SelectedRole;
+				result = JsonConvert.SerializeObject( desearResult );
 				return Json( result );
 			}
-			return View(user);
+			return View( user );
 		}
 
 		[HttpPost]
 		[Authorize( Roles = StaticData.RoleNames.Admin )]
 		public ActionResult RemoveCompany( long companyId ) {
 			ICollection<string> deletedUsers = _companiesManager.RemoveCompany( companyId );
-			return Json( JsonConvert.SerializeObject(deletedUsers));
+			return Json( JsonConvert.SerializeObject( deletedUsers ) );
 		}
 		#endregion
 
