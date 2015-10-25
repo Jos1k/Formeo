@@ -238,6 +238,7 @@ namespace Formeo.Controllers {
 			public string Address { get; set; }
 			[Required]
 			public string SelectedRole { get; set; }
+			public string NewPassword { get; set; }
 		}
 
 
@@ -268,6 +269,13 @@ namespace Formeo.Controllers {
 
 				UserManager.RemoveFromRole( resultUser.Id, oldRole.Name );
 				UserManager.AddToRole( resultUser.Id, user.SelectedRole );
+
+				if( !string.IsNullOrEmpty(user.NewPassword)) 
+				{
+					UserManager.RemovePassword( user.Id );
+					UserManager.AddPassword( user.Id, user.NewPassword );
+				}
+
 
 				DbContext.SaveChanges();
 				DbContext.Entry<ApplicationUser>( resultUser );

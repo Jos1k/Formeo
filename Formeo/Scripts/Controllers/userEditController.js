@@ -12,6 +12,7 @@
         City: user.City,
         Country: user.Country,
         SelectedRole: user.SelectedRole,
+        NewPassword:''
     };
 
     $scope.setDefaultCompany = function () {
@@ -45,6 +46,7 @@
                 'Address': $scope.user.Address,
                 'CompanyId':$scope.user.Company,
                 'SelectedRole': $scope.user.SelectedRole,
+                'NewPassword': $scope.user.NewPassword
             }
         }).
            then(function (response) {
