@@ -8,7 +8,6 @@
 
     $scope.addOrRemovePrintobject = function (printObjectId) {
         var index = $scope.selectedPrintObjectIds.indexOf(printObjectId);
-        $scope.selectedPrintObjectIds.IsSelected = $scope.selectedPrintObjectIds.IsSelected;
 
         if (index > -1) {
             $scope.selectedPrintObjectIds.splice(index, 1);
@@ -48,13 +47,6 @@
 
                     modalInstance.result.then(function (response) {
                         $scope.activeProjects.push(response);
-                        $scope.selectedPrintObjectIds = [];
-                        $scope.layOrderButtonIsDisabled = true;
-
-                        angular.forEach($scope.printObjects, function (printObject, index) {
-                            printObject.IsSelected = false;
-                        });
-
                     },
                     function (response) {
                         //error
@@ -144,7 +136,7 @@
                             }
                         }
 
-                        $scope.selectedPrintObjectIds = [];
+                       // $scope.selectedPrintObjectIds = [];
                     }, function (response) {
                         //error
                         $modalInstance.dismiss('cancel');
