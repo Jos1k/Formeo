@@ -30,6 +30,26 @@
     $scope.selectedUser = $scope.EMPTY;
     $scope.selectedCompany = $scope.EMPTY;
 
+    $scope.templateUserEdit = '';
+    $scope.templateCompanyEdit = '';
+
+    $scope.loadTemplatesForModals = function () {
+        $http({
+            method: 'GET',
+            url: '/Home/EditCompanyModal'
+        }).
+        then(function (response) {
+            $scope.templateCompanyEdit = response.data;
+        });
+        $http({
+            method: 'GET',
+            url: '/Home/EditUserModal'
+        }).
+        then(function (response) {
+            $scope.templateUserEdit = response.data;
+        });
+    };
+
     $scope.updateUserInfo = function (isShownEditableTextbox, user, fieldNameToChange, newValue) {
 
         if (!isShownEditableTextbox || user == $scope.EMPTY) {
@@ -168,7 +188,7 @@
 
         var modalInstance = $modal.open({
             animation: true,
-            templateUrl: "/Home/EditCompanyModal/",
+            template: $scope.templateCompanyEdit,
             controller: 'companyEditController',
             size: "editCompany",
             resolve: {
@@ -194,7 +214,7 @@
         var oldRoleName = $scope.selectedUser.SelectedRole;
         var modalInstance = $modal.open({
             animation: true,
-            templateUrl: "/Home/EditUserModal/",
+            template: $scope.templateUserEdit,
             controller: 'userEditController',
             size: "editCompany",
             resolve: {
