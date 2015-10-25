@@ -7,7 +7,7 @@
 <div class="row" ng-controller="customerPageController" ng-cloak>
 
     <p class="text-right"> Number of stored products </p>
-    <div class="col-md-4">
+    <div class="col-md-1">
         <div class="navigation">
             <div class="row">
                 <div class="sidebar">
@@ -37,7 +37,8 @@
                             </button>
                         </li>
                         <li>
-                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
                                     <i class="fa fa-sign-out fa-2x" style="color: white"></i>
@@ -47,21 +48,10 @@
                         </li>
                     </ol>
                 </div>
-                <div class="sidebar-menu-content">
-                    <div class="row" ng-show="isActiveMainMenu('/Dashboard')">
-                        @Html.Partial( "Partial/Sections/_dashboard" )
-                    </div>
-                    <div class="row" ng-show="isActiveMainMenu('/Storage')">
-                        @Html.Partial( "Partial/Sections/_storage" )
-                    </div>
-                    <div class="row" ng-show="isActiveMainMenu('/Orders')">
-                        @Html.Partial( "Partial/Sections/_orders" )
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-11">
 
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Art.No">
@@ -78,7 +68,6 @@
 
         <br />
         <div class="row custom-greed">
-
             <div ng-show="isActiveMainMenu('/Storage')">
 
                 <div ng-init="printObjects = @Model.PrintObjectsJSON" />
@@ -89,127 +78,120 @@
                             <div class="col-md-10">
                                 <h4>Results</h4>
                             </div>
-                            <div class="col-md-2 line-height">
-                                <i class="fa fa-plus right"></i>
-                            </div>
                         </div>
-                        <div class="row head">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-2">Art.No.</div>
-                            <div class="col-md-3">Product Name</div>
-                            <div class="col-md-2">Select bid</div>
-                            <div class="col-md-2">Demand Bids</div>
-                            <div class="col-md-2">Actions</div>
-                        </div>
-
-                        <div ng-repeat="printObject in printObjects">
-                            <div class="row data-row">
-                                <div class="col-md-1">
-                                    <input type="checkbox" ng-show="printObject.SelectedProducerCompanyId != null" ng-model="printObject.IsSelected" ng-click="addOrRemovePrintobject(printObject.Id)" />
-                                </div>
-                                <div class="col-md-2">
-                                    {{printObject.ArtNo}}
-                                </div>
-                                <div class="col-md-3">
-                                    {{printObject.Name}}
-                                </div>
-                                <div class="col-md-2">
-                                    <a ng-show="printObject.HasBids">
-                                        <i class="fa fa-usd" ng-click="ShowBidsForPrintObject(printObject.Id)"></i>
-                                    </a>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="#" ng-click="toogleIsNeedBid(printObject);">
-                                        <i class=" fa fa-square-o" ng-show="!printObject.IsNeedBid"></i>
-                                        <i class="fa fa-check-square-o" ng-show="printObject.IsNeedBid"></i>
-                                    </a>
-                                </div>
-                                <div class="col-md-2 actions">
-                                    <i class="fa fa-stack-exchange"></i>
-                                    <i class="fa fa-photo"></i>
-                                    <a href="#" ng-click="download(printObject.Id)"><i class="fa fa-download"></i></a>
-                                </div>
-                            </div>
-                            <div class="row data-row" ng-show="printObject.SelectedProducerCompanyId!=null">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-3">{{printObject.CompanyName}}</div>
-                                <div class="col-md-6"></div>
-                            </div>
-                            <div class="row data-row" ng-show="printObject.SelectedProducerCompanyId!=null">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-3">{{printObject.CurrentPrice}}</div>
-                                <div class="col-md-6"></div>
-                            </div>
-                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1"></th>
+                                    <th class="col-md-2">Art.No.</th>
+                                    <th class="col-md-3">Product Name</th>
+                                    <th class="col-md-3">Selected producer (price)</th>
+                                    <th class="col-md-1">Select bid</th>
+                                    <th class="col-md-1">Demand Bids</th>
+                                    <th class="col-md-1">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="printObject in printObjects">
+                                    <td>
+                                        <input type="checkbox" ng-show="printObject.SelectedProducerCompanyId != null" ng-model="printObject.IsSelected" ng-click="addOrRemovePrintobject(printObject.Id)" />
+                                    </td>
+                                    <td>
+                                        {{printObject.ArtNo}}
+                                    </td>
+                                    <td>
+                                        {{printObject.Name}}
+                                    </td>
+                                    <td>
+                                        <div ng-show="printObject.SelectedProducerCompanyId!=null">
+                                            {{printObject.CompanyName}} ({{printObject.CurrentPrice}})
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a ng-show="printObject.HasBids">
+                                            <i class="fa fa-usd" ng-click="ShowBidsForPrintObject(printObject.Id)"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" ng-click="toogleIsNeedBid(printObject);">
+                                            <i class=" fa fa-square-o" ng-show="!printObject.IsNeedBid"></i>
+                                            <i class="fa fa-check-square-o" ng-show="printObject.IsNeedBid"></i>
+                                        </a>
+                                    </td>
+                                    <td class="actions">
+                                        <a href="#" ng-click="download(printObject.Id)"><i class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        </div>
-            <div ng-show="isActiveMainMenu('/Orders')">
+    </div>
+    <div ng-show="isActiveMainMenu('/Orders')">
 
-                <div ng-init="activeProjects = @Model.Orders_ActiveOrders" />
-                <div ng-init="completedProjects = @Model.Orders_CompletedOrders" />
+        <div ng-init="activeProjects = @Model.Orders_ActiveOrders" />
+        <div ng-init="completedProjects = @Model.Orders_CompletedOrders" />
 
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <h4>Active Orders</h4>
-                            </div>
-                            <div class="col-md-2 line-height">
-                                <i class="fa fa-plus right"></i>
-                            </div>
-                        </div>
-                        <div class="row head">
-                            <div class="col-md-4">Product Name</div>
-                            <div class="col-md-4">Quantity</div>
-                            <div class="col-md-4">Actions</div>
-                        </div>
-
-                        <div ng-repeat="project in activeProjects">
-                            <div class="row data-row">
-                                <div class="col-md-4"><a href="#" ng-click="ShowProjectStatus(project.ProjectId)">{{project.Name}}</a></div>
-                                <div class="col-md-4">{{project.Quantity}}</div>
-                                <div class="col-md-4 actions">
-                                    <i class="fa fa-stack-exchange"></i>
-                                    <i class="fa fa-photo"></i>
-                                    <i class="fa fa-download"></i>
-                                </div>
-                            </div>
-                        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Active Orders</h4>
                     </div>
                 </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <h4>Completed Orders</h4>
-                            </div>
-                            <div class="col-md-2 line-height">
-                                <i class="fa fa-plus right"></i>
-                            </div>
-                        </div>
-                        <div class="row head">
-                            <div class="col-md-4">Product Name</div>
-                            <div class="col-md-4">Quantity</div>
-                            <div class="col-md-4">Actions</div>
-                        </div>
-
-                        <div ng-repeat="project in completedProjects">
-                            <div class="row data-row">
-                                <div class="col-md-4">{{project.Name}}</div>
-                                <div class="col-md-4">{{project.Quantity}}</div>
-                                <div class="col-md-4 actions">
-                                    <i class="fa fa-stack-exchange"></i>
-                                    <i class="fa fa-photo"></i>
-                                    <i class="fa fa-download"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-4">Product Name</th>
+                            <th class="col-md-4">Quantity</th>
+                            <th class="col-md-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in activeProjects">
+                            <td class="col-md-4"><a href="#" ng-click="ShowProjectStatus(project.ProjectId)">{{project.Name}}</a></td>
+                            <td class="col-md-4">{{project.Quantity}}</td>
+                            <td class="col-md-4 actions">
+                                <i class="fa fa-stack-exchange"></i>
+                                <i class="fa fa-photo"></i>
+                                <i class="fa fa-download"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Completed Orders</h4>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-4">Product Name</th>
+                            <th class="col-md-4">Quantity</th>
+                            <th class="col-md-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in completedProjects">
+                            <td class="col-md-4">{{project.Name}}</td>
+                            <td class="col-md-4">{{project.Quantity}}</td>
+                            <td class="col-md-4 actions">
+                                <i class="fa fa-stack-exchange"></i>
+                                <i class="fa fa-photo"></i>
+                                <i class="fa fa-download"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
