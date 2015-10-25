@@ -4,180 +4,182 @@
     ViewBag.Title = "Home Page";
 }
 <div class="row" ng-controller="adminPageController" ng-cloak>
+    <div ng-init="loadTemplatesForModals()">
 
-    <div ng-init="customers = @Model.CustomersJSON" />
-    <div ng-init="producers = @Model.ProducersJSON" />
-    <div ng-init="companies = @Model.CompaniesJSON" />
+        <div ng-init="customers = @Model.CustomersJSON" />
+        <div ng-init="producers = @Model.ProducersJSON" />
+        <div ng-init="companies = @Model.CompaniesJSON" />
 
-    <p></p>
-    <div class="col-md-4">
-        <div class="navigation">
-            <div class="row">
-                <div class="sidebar">
-                    <ol class="sidebar-menu">
-                        <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Clients')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Clients')}">
-                                <i class="fa fa-users fa-2x" style="color:white"></i>
-                                <br>Clients
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Companies')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Companies')}">
-                                <i class="fa fa-building-o fa-2x" style="color:white"></i>
-                                <br>Companies
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Orders')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Orders')}">
-                                <i class="fa fa-shopping-cart fa-2x" style="color:white"></i>
-                                <br>Orders
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Stats')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Stats')}">
-                                <i class="fa fa-bar-chart fa-2x" style="color:white"></i>
-                                <br>Stats
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Settings')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Settings')}">
-                                <i class="fa fa-cog fa-2x" style="color:white"></i>
-                                <br>Settings
-                            </button>
-                        </li>
-                        <li>
-                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
-                                    <i class="fa fa-sign-out fa-2x" style="color:white"></i>
-                                    <br>Logout
+        <p></p>
+        <div class="col-md-4">
+            <div class="navigation">
+                <div class="row">
+                    <div class="sidebar">
+                        <ol class="sidebar-menu">
+                            <li>
+                                <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Clients')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Clients')}">
+                                    <i class="fa fa-users fa-2x" style="color:white"></i>
+                                    <br>Clients
                                 </button>
-                            }
-                        </li>
-                    </ol>
-                </div>
-                <div class="sidebar-menu-content">
-                    <div class="row" ng-show="isActiveMainMenu('/Clients')">
-                        @Html.Partial( "Partial/Sections/_clients" )
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Companies')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Companies')}">
+                                    <i class="fa fa-building-o fa-2x" style="color:white"></i>
+                                    <br>Companies
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Orders')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Orders')}">
+                                    <i class="fa fa-shopping-cart fa-2x" style="color:white"></i>
+                                    <br>Orders
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Stats')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Stats')}">
+                                    <i class="fa fa-bar-chart fa-2x" style="color:white"></i>
+                                    <br>Stats
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Settings')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Settings')}">
+                                    <i class="fa fa-cog fa-2x" style="color:white"></i>
+                                    <br>Settings
+                                </button>
+                            </li>
+                            <li>
+                                @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
+                                        <i class="fa fa-sign-out fa-2x" style="color:white"></i>
+                                        <br>Logout
+                                    </button>
+                                }
+                            </li>
+                        </ol>
                     </div>
-                    <div class="row" ng-show="isActiveMainMenu('/Companies')">
-                        @Html.Partial( "Partial/Sections/_companies" )
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search user">
-            <span class="input-group-btn">
-                <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-
-        <br />
-        <div class="row custom-greed">
-            <div class="clientsList" ng-show="isActiveMainMenu('/Clients')">
-                <div class="container">
-                    <h4 class="text-right">Customer Users</h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-5">User Name</th>
-                                <th class="col-md-5">Company Name</th>
-                                <th class="col-md-2" style="text-align: center;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="user in customers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
-                                <td>{{user.UserName}}</td>
-                                <td>{{user.Company.CompanyName}} </td>
-                                <td style="text-align: center;">
-                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
-                                    <a style="cursor: pointer;" ng-click="selectUser(user);showEditUserModal();">
-                                        <i class="fa fa-cog"></i>
-                                    </a>
-                                    <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
-                                        <i class="fa fa-times-circle" style="cursor: pointer;"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <br />
-                            </div>
+                    <div class="sidebar-menu-content">
+                        <div class="row" ng-show="isActiveMainMenu('/Clients')">
+                            @Html.Partial( "Partial/Sections/_clients" )
+                        </div>
+                        <div class="row" ng-show="isActiveMainMenu('/Companies')">
+                            @Html.Partial( "Partial/Sections/_companies" )
                         </div>
                     </div>
-
-                    <h4 class="text-right">Production Users</h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-5">User Name</th>
-                                <th class="col-md-5">Company Name</th>
-                                <th class="col-md-2" style="text-align: center;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="user in producers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
-                                <td>{{user.UserName}}</td>
-                                <td>{{user.Company.CompanyName}} </td>
-
-                                <td style="text-align: center;">
-                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
-                                    <a style="cursor: pointer;" ng-click="selectUser(user);showEditUserModal();">
-                                        <i class="fa fa-cog"></i>
-                                    </a>
-                                    <a style="cursor: pointer;" ng-click="removeUser(user, producers)">
-                                        <i class="fa fa-times-circle" style="cursor: pointer;"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
+        </div>
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search user">
+                <span class="input-group-btn">
+                    <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
 
-            <div class="companiesList" div ng-show="isActiveMainMenu('/Companies')">
-                <div class="container">
-                    <h4 class="text-right">Companies</h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-1">C/P</th>
-                                <th class="col-md-2">Org Number</th>
-                                <th class="col-md-7">Company Name</th>
-                                <th class="col-md-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="company in companies" ng-click="selectCompany(company); selectCompaniesMenu('/ManageCompany')" style="cursor: pointer;">
-                                <td ng-switch on="company.isCustomer">
-                                    <span class="label label-success" ng-switch-when="true">
-                                        C
-                                    </span>
-                                    <span class="label label-info" ng-switch-when="false">
-                                        P
-                                    </span>
-                                </td>
-                                <td>{{company.orgNumber}}</td>
-                                <td>{{company.companyName}}</td>
-                                <td style="text-align: center;">
-                                    <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
-                                    <a style="cursor: pointer;" ng-click="selectCompany(company);showEditCompanyModal()">
-                                        <i class="fa fa-cog"></i>
-                                    </a>
-                                    <a style="cursor: pointer;" ng-click="removeCompany(company, companies);">
-                                        <i class="fa fa-times-circle"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <br />
+            <div class="row custom-greed">
+                <div class="clientsList" ng-show="isActiveMainMenu('/Clients')">
+                    <div class="container">
+                        <h4 class="text-right">Customer Users</h4>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-5">User Name</th>
+                                    <th class="col-md-5">Company Name</th>
+                                    <th class="col-md-2" style="text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in customers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                    <td>{{user.UserName}}</td>
+                                    <td>{{user.Company.CompanyName}} </td>
+                                    <td style="text-align: center;">
+                                        <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                        <a style="cursor: pointer;" ng-click="selectUser(user);showEditUserModal();">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                        <a style="cursor: pointer;" ng-click="removeUser(user, customers)">
+                                            <i class="fa fa-times-circle" style="cursor: pointer;"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="text-right">Production Users</h4>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-5">User Name</th>
+                                    <th class="col-md-5">Company Name</th>
+                                    <th class="col-md-2" style="text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in producers" ng-click="selectUser(user); selectClientMenu('/ManageUser')" style="cursor: pointer;">
+                                    <td>{{user.UserName}}</td>
+                                    <td>{{user.Company.CompanyName}} </td>
+
+                                    <td style="text-align: center;">
+                                        <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                        <a style="cursor: pointer;" ng-click="selectUser(user);showEditUserModal();">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                        <a style="cursor: pointer;" ng-click="removeUser(user, producers)">
+                                            <i class="fa fa-times-circle" style="cursor: pointer;"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="companiesList" div ng-show="isActiveMainMenu('/Companies')">
+                    <div class="container">
+                        <h4 class="text-right">Companies</h4>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1">C/P</th>
+                                    <th class="col-md-2">Org Number</th>
+                                    <th class="col-md-7">Company Name</th>
+                                    <th class="col-md-2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="company in companies" ng-click="selectCompany(company); selectCompaniesMenu('/ManageCompany')" style="cursor: pointer;">
+                                    <td ng-switch on="company.isCustomer">
+                                        <span class="label label-success" ng-switch-when="true">
+                                            C
+                                        </span>
+                                        <span class="label label-info" ng-switch-when="false">
+                                            P
+                                        </span>
+                                    </td>
+                                    <td>{{company.orgNumber}}</td>
+                                    <td>{{company.companyName}}</td>
+                                    <td style="text-align: center;">
+                                        <i class="fa fa-stack-exchange" style="cursor: pointer;"></i>
+                                        <a style="cursor: pointer;" ng-click="selectCompany(company);showEditCompanyModal()">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                        <a style="cursor: pointer;" ng-click="removeCompany(company, companies);">
+                                            <i class="fa fa-times-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
