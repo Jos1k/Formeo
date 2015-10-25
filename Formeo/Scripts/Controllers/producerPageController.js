@@ -42,6 +42,21 @@
         });
     };
 
+
+    $scope.templateBidPrintObjectPartial = '';
+
+    $scope.loadTemplatesForModals = function () {
+        $http({
+            method: 'POST',
+            url: '/Bids/GetBidModal',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).
+        then(function (response) {
+            $scope.templateBidPrintObjectPartial = response.data;
+        });
+    };
+
+
     $scope.showBidProductModal = function (printObjectId) {
         if ($scope.isActiveMainMenu('/Dashboard')) {
 
@@ -50,17 +65,22 @@
             }
 
             $http({
-                method: 'GET',
-                url: '/Bids/GetBidModal',
-                params: { 'printObjectId': printObjectId },
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                method: 'POST',
+                url: '/Bids/GetBidPrintObject',
+                params: { 'printObjectId': printObjectId }
             }).
                 then(function (response) {
                     //success
                     var modalInstance = $modal.open({
-                        template: (response.data),
+                        template: $scope.templateBidPrintObjectPartial,
                         controller: 'bidProductPartialController',
-                        backdrop: 'static'
+                        backdrop: 'static',
+                        animation: true,
+                        resolve: {
+                            printObjectInfoModal: function () {
+                                return JSON.parse(response.data);
+                            }
+                        }
                     });
 
                     modalInstance.result.then(function (response) {

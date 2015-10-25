@@ -3,115 +3,193 @@
     ViewBag.Title = "Home Page";
 }
 <div class="row" id="indexProducer" ng-controller="producerPageController" ng-cloak>
-    <div class="col-md-1">
-        <div class="navigation" style="width: 115%;">
-            <div class="row">
-                <div class="sidebar">
-                    <ol class="sidebar-menu">
-                        <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Dashboard')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Dashboard')}">
-                                <i class="fa fa-home fa-2x" style="color:white"></i>
-                                <br>Dashboard
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Storage')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Storage')}">
-                                <i class="fa fa-cloud fa-2x" style="color:white"></i>
-                                <br>Storage
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Orders')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Orders')}">
-                                <i class="fa fa-shopping-cart fa-2x" style="color: white"></i>
-                                <br>Orders
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Stats')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Stats')}">
-                                <i class="fa fa-bar-chart fa-2x" style="color:white"></i>
-                                <br>Stats
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Settings')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Settings')}">
-                                <i class="fa fa-cog fa-2x" style="color:white"></i>
-                                <br>Settings
-                            </button>
-                        </li>
-                        <li>
-                            @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
-                                    <i class="fa fa-sign-out fa-2x" style="color:white"></i>
-                                    <br>Logout
+    <div ng-init="loadTemplatesForModals()">
+        <div class="col-md-1">
+            <div class="navigation" style="width: 115%;">
+                <div class="row">
+                    <div class="sidebar">
+                        <ol class="sidebar-menu">
+                            <li>
+                                <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Dashboard')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Dashboard')}">
+                                    <i class="fa fa-home fa-2x" style="color:white"></i>
+                                    <br>Dashboard
                                 </button>
-                            }
-                        </li>
-                    </ol>
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Storage')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Storage')}">
+                                    <i class="fa fa-cloud fa-2x" style="color:white"></i>
+                                    <br>Storage
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Orders')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Orders')}">
+                                    <i class="fa fa-shopping-cart fa-2x" style="color: white"></i>
+                                    <br>Orders
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Stats')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Stats')}">
+                                    <i class="fa fa-bar-chart fa-2x" style="color:white"></i>
+                                    <br>Stats
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" disabled class="btn btn-default text-center btn-sidebar-menu" ng-click="selectMainMenu('/Settings')" ng-class="{'btn-menu-selected': isActiveMainMenu('/Settings')}">
+                                    <i class="fa fa-cog fa-2x" style="color:white"></i>
+                                    <br>Settings
+                                </button>
+                            </li>
+                            <li>
+                                @using( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm" } ) ) {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-default text-center btn-sidebar-menu">
+                                        <i class="fa fa-sign-out fa-2x" style="color:white"></i>
+                                        <br>Logout
+                                    </button>
+                                }
+                            </li>
+                        </ol>
+                    </div>
                 </div>
             </div>
+
         </div>
+        <div class="col-md-11">
 
-    </div>
-    <div class="col-md-11">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search user">
+                <span class="input-group-btn">
+                    <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
+                </span>
+                <span style="margin-left:100px">
+                    <button type="button" class="btn btn-default btn-upload-product" style="background-color:#49c9af; width:200%;" ng-disabled="isActiveMainMenu('/Dashboard') && layOrderButtonIsDisabled" ng-click="showBidProductModal(selectedPrintObjectToBidId)">
+                        <i class="fa fa-money"></i> Bid product
+                    </button>
+                </span>
+            </div>
 
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search user">
-            <span class="input-group-btn">
-                <button class="btn btn-dark" type="button"><i class="fa fa-search"></i></button>
-            </span>
-            <span style="margin-left:100px">
-                <button type="button" class="btn btn-default btn-upload-product" style="background-color:#49c9af; width:200%;" ng-disabled="isActiveMainMenu('/Dashboard') && layOrderButtonIsDisabled" ng-click="showBidProductModal(selectedPrintObjectToBidId)">
-                    <i class="fa fa-money"></i> Bid product
-                </button>
-            </span>
-        </div>
+            <br />
+            <div class="row custom-greed">
 
-        <br />
-        <div class="row custom-greed">
-
-            <div ng-init="needBidPrintObjects = @Model.Dashboard_BidRequestedPrintObjects"></div>
-            <div ng-init="deliveredPrintObjects = @Model.Dashboard_PrintObjectsDelivered"></div>
+                <div ng-init="needBidPrintObjects = @Model.Dashboard_BidRequestedPrintObjects"></div>
+                <div ng-init="deliveredPrintObjects = @Model.Dashboard_PrintObjectsDelivered"></div>
 
 
-            <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>New orders Registered</h4>
+                <div ng-show="isActiveMainMenu('/Dashboard')" class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>New orders Registered</h4>
+                            </div>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-3">Product Name</th>
+                                    <th class="col-md-3">Company</th>
+                                    <th class="col-md-2">Material</th>
+                                    <th class="col-md-2">Bid Item</th>
+                                    <th class="col-md-2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="needBidPrintObject in needBidPrintObjects">
+                                    <td>{{needBidPrintObject.Name}}</td>
+                                    <td>{{needBidPrintObject.CompanyName}}</td>
+                                    <td>{{needBidPrintObject.PrintMaterial}}</td>
+                                    <td>
+                                        <input type="checkbox" ng-model="needBidPrintObject.IsSelected" ng-click="selectSingleItem($index,needBidPrintObjects)" />
+                                    </td>
+                                    <td class="actions">
+                                        <a href="#" ng-click="download(needBidPrintObject.Id)"><i class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Delivered Orders</h4>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-3">Customer</th>
+                                        <th class="col-md-5">Product Name</th>
+                                        <th class="col-md-2">Quantity</th>
+                                        <th class="col-md-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="orderInfo in deliveredPrintObjects">
+                                        <td>{{orderInfo.CompanyName}}</td>
+                                        <td><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></td>
+                                        <td>{{orderInfo.Quantity}}</td>
+                                        <td class="actions">
+                                            <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-3">Product Name</th>
-                                <th class="col-md-3">Company</th>
-                                <th class="col-md-2">Material</th>
-                                <th class="col-md-2">Bid Item</th>
-                                <th class="col-md-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="needBidPrintObject in needBidPrintObjects">
-                                <td>{{needBidPrintObject.Name}}</td>
-                                <td>{{needBidPrintObject.CompanyName}}</td>
-                                <td>{{needBidPrintObject.PrintMaterial}}</td>
-                                <td>
-                                    <input type="checkbox" ng-model="needBidPrintObject.IsSelected" ng-click="selectSingleItem($index,needBidPrintObjects)" />
-                                </td>
-                                <td class="actions">
-                                    <a href="#" ng-click="download(needBidPrintObject.Id)"><i class="fa fa-download"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                </div> @*Dashboard*@
+
+                <div ng-show="isActiveMainMenu('/Storage')">
+
+                    <div ng-init="printObjects = @Model.Storage_PrintObjects" />
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Results</h4>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-2">Art.No.</th>
+                                        <th class="col-md-3">Product Name</th>
+                                        <th class="col-md-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="printObject in printObjects">
+                                        <td>
+                                            {{printObject.ArtNo}}
+                                        </td>
+                                        <td>
+                                            {{printObject.Name}}
+                                        </td>
+                                        <td class="actions">
+                                            <i class="fa fa-stack-exchange"></i>
+                                            <i class="fa fa-photo"></i>
+                                            <a href="#" ng-click="download(printObject.Id)"><i class="fa fa-download"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div ng-show="isActiveMainMenu('/Orders')">
+
+                <div ng-init="ordersInQueue = @Model.Orders_OrdersInQueue" />
+                <div ng-init="ordersInProduction = @Model.Orders_OrdersInProduction" />
 
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Delivered Orders</h4>
+                                <h4>Orders In queue</h4>
                             </div>
                         </div>
                         <table class="table table-hover">
@@ -124,11 +202,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="orderInfo in deliveredPrintObjects">
+                                <tr ng-repeat="orderInfo in ordersInQueue">
                                     <td>{{orderInfo.CompanyName}}</td>
                                     <td><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></td>
                                     <td>{{orderInfo.Quantity}}</td>
                                     <td class="actions">
+                                        <a href="#" ng-click="SetProductionStatus(orderInfo,2)"><i class="fa fa-gears"></i></a>
                                         <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
@@ -137,113 +216,36 @@
                     </div>
                 </div>
 
-            </div> @*Dashboard*@
-
-            <div ng-show="isActiveMainMenu('/Storage')">
-
-                <div ng-init="printObjects = @Model.Storage_PrintObjects" />
-
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Results</h4>
+                                <h4>Orders In production</h4>
                             </div>
                         </div>
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">Art.No.</th>
-                                    <th class="col-md-3">Product Name</th>
+                                    <th class="col-md-3">Customer</th>
+                                    <th class="col-md-5">Product Name</th>
+                                    <th class="col-md-2">Quantity</th>
                                     <th class="col-md-2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="printObject in printObjects">
-                                    <td>
-                                        {{printObject.ArtNo}}
-                                    </td>
-                                    <td>
-                                        {{printObject.Name}}
-                                    </td>
-                                    <td class="actions">
-                                        <i class="fa fa-stack-exchange"></i>
-                                        <i class="fa fa-photo"></i>
-                                        <a href="#" ng-click="download(printObject.Id)"><i class="fa fa-download"></i></a>
+                                <tr ng-repeat="orderInfo in ordersInProduction">
+                                    <td class="col-md-3">{{orderInfo.CompanyName}}</td>
+                                    <td class="col-md-5"><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></td>
+                                    <td class="col-md-2">{{orderInfo.Quantity}}</td>
+                                    <td class="col-md-2 actions">
+                                        <a href="#" ng-click="SetProductionStatus(orderInfo,3)"><i class="fa fa-check"></i></a>
+                                        <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div ng-show="isActiveMainMenu('/Orders')">
-
-            <div ng-init="ordersInQueue = @Model.Orders_OrdersInQueue" />
-            <div ng-init="ordersInProduction = @Model.Orders_OrdersInProduction" />
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Orders In queue</h4>
-                        </div>
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-3">Customer</th>
-                                <th class="col-md-5">Product Name</th>
-                                <th class="col-md-2">Quantity</th>
-                                <th class="col-md-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="orderInfo in ordersInQueue">
-                                <td>{{orderInfo.CompanyName}}</td>
-                                <td><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></td>
-                                <td>{{orderInfo.Quantity}}</td>
-                                <td class="actions">
-                                    <a href="#" ng-click="SetProductionStatus(orderInfo,2)"><i class="fa fa-gears"></i></a>
-                                    <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Orders In production</h4>
-                        </div>
-                    </div>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-3">Customer</th>
-                                <th class="col-md-5">Product Name</th>
-                                <th class="col-md-2">Quantity</th>
-                                <th class="col-md-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="orderInfo in ordersInProduction">
-                                <td class="col-md-3">{{orderInfo.CompanyName}}</td>
-                                <td class="col-md-5"><a href="#" ng-click="ShowProductDetails(orderInfo)">{{orderInfo.PrintObjectName}}</a></td>
-                                <td class="col-md-2">{{orderInfo.Quantity}}</td>
-                                <td class="col-md-2 actions">
-                                    <a href="#" ng-click="SetProductionStatus(orderInfo,3)"><i class="fa fa-check"></i></a>
-                                    <a href="#" ng-click="download(orderInfo.PrinObjectID)"><i class="fa fa-download"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

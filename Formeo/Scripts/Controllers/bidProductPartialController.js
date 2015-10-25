@@ -1,8 +1,8 @@
-﻿var bidProductPartialController = function ($scope, $modalInstance, $window, $http, UploadPrinObject) {
+﻿var bidProductPartialController = function ($scope, $modalInstance, $window, $http, UploadPrinObject, printObjectInfoModal) {
 
     $scope.asd = "Hi";
     $scope.price = 0.01;
-    $scope.printObjectInfoModal = "";
+    $scope.printObjectInfoModal = printObjectInfoModal;
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');

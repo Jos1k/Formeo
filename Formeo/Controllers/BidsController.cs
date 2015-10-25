@@ -5,6 +5,7 @@ using Formeo.Models;
 using System;
 using System.Net;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace Formeo.Controllers
 {
@@ -24,17 +25,19 @@ namespace Formeo.Controllers
 		/// </summary>
 		/// <param name="printObjectId"></param>
 		/// <returns></returns>
-		[HttpGet]
-		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
-		public ActionResult GetBidModal(long printObjectId)
+		[HttpPost]
+		public ActionResult GetBidModal()
 		{
-			var printObject = _printObjectsService.GetPrintObjectsByIdForProducerJSON(printObjectId);
-
-			_BidPrintObjectPartialViewModel viewModel = new _BidPrintObjectPartialViewModel();
-			viewModel.PrintObjectJSON = printObject;
-
-			return PartialView("_BidPrintObjectPartial", viewModel);
+			return PartialView("_BidPrintObjectPartial");
 		}
+
+		[HttpPost]
+		[JsonQueryParamFilter( JsonDataType = typeof( long ), Param = "printObjectId" )]
+		public ActionResult GetBidPrintObject( long printObjectId ) {
+			string result = _printObjectsService.GetPrintObjectsByIdForProducerJSON( printObjectId );
+			return Json( result );
+		}
+
 
 		[HttpPost]
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]

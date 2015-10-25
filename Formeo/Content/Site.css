@@ -185,6 +185,9 @@ a.list-group-item {
     margin: 0;
     opacity: 1;
     overflow: auto; }
+.selectProducerButton:disabled {
+	     background-color: #49c9af;; 
+}
     .navigation .btn-sidebar-menu:disabled {
       cursor: cell; }
     .navigation .btn-sidebar-menu:hover, .navigation .btn-sidebar-menu:focus {
