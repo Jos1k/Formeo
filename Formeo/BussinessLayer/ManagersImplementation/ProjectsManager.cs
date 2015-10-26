@@ -79,6 +79,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 					projInfo.Price = selectedBid.Price * poInfo.Quantity;
 					projInfo.SelectedBidPrice = selectedBid.Price;
 					projInfo.SelectedBid = selectedBid;
+					projInfo.SelectedCurrency = selectedBid.Currency;
 
 					totalPrice += selectedBid.Price * poInfo.Quantity;
 

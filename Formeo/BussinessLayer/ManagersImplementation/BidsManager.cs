@@ -23,29 +23,9 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			_companiesManager = companiesManager;
 		}
 
-		public Bid CreateBid(long printObjectId, string userId, decimal price)
-		{
-			PrintObject printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
-			Company bidCompany = _companiesManager.GetCompanyByUserId(userId);
-			if (printObject == null)
-			{
-				return null;
-			}
 
-			Bid newBid = new Bid();
-			newBid.PrintObject = printObject;
-			newBid.Price = price;
-			newBid.CompanyProducer = bidCompany;
 
-			_dbContext.Bids.Add(newBid);
-			_dbContext.SaveChanges();
-			_dbContext.Entry(newBid.PrintObject).Reload();
-			_dbContext.Entry(newBid.CompanyProducer).Reload();
-
-			return newBid;
-		}
-
-		public Bid CreateBid(long printObjectId, long companyId, decimal price)
+		public Bid CreateBid(long printObjectId, long companyId, decimal price, string currency)
 		{
 			PrintObject printObject = _printObjectsManager.GetPrintObjectById(printObjectId);
 			Company bidCompany = _companiesManager.GetCompanyById(companyId);
@@ -56,8 +36,9 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 			Bid newBid = new Bid();
 			newBid.PrintObject = printObject;
-			newBid.Price = price;
+			newBid.Price = Math.Round(price,2);
 			newBid.CompanyProducer = bidCompany;
+			newBid.Currency = currency;
 
 			_dbContext.Bids.Add(newBid);
 			_dbContext.SaveChanges();

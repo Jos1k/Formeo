@@ -10,6 +10,7 @@ namespace Formeo.Models
 {
 	public class Bid
 	{
+
 		[Key]
 		public long ID { get; set; }
 		[Required]
@@ -18,5 +19,6 @@ namespace Formeo.Models
 		public virtual Company CompanyProducer { get; set; }
 		[Required]
 		public virtual PrintObject PrintObject { get; set; }
+		public string Currency { get; set; }
 	}
 }
