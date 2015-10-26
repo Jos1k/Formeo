@@ -73,7 +73,8 @@ namespace Formeo.Controllers
 
 		[HttpPost]
 		public FileResult Download( long printObjectId ) {
-			return new FileStreamResult( new FileStream( _printObjecsManager.GetPrintObjectFilePath( printObjectId ), FileMode.Open ), "application/pdf" ); 
+			string pathToFile = _printObjecsManager.GetPrintObjectFilePath( printObjectId );
+			return new FileStreamResult( new FileStream( pathToFile, FileMode.Open ), Path.GetExtension(pathToFile)); 
 				//File( _printObjecsManager.GetPrintObjectFilePath( printObjectId ), System.Net.Mime.MediaTypeNames.Application.Octet );
 		}
 	}

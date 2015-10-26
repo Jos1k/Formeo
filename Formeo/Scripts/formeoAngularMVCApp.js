@@ -82,7 +82,7 @@ formeoAngularMVCApp.factory('UploadPrinObject', function ($window, $http, $modal
             .then(function (response) {
                 try {
                     $timeout(function () {
-                        saveAs(response.data, "printobjectProduct.pdf");
+                        saveAs(response.data, "printObject" + response.data.type);
                     });
                 } catch (ex) {
                     console.log(ex);
