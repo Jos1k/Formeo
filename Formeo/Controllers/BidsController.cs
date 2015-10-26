@@ -32,24 +32,25 @@ namespace Formeo.Controllers
 		}
 
 		[HttpPost]
-		[JsonQueryParamFilter( JsonDataType = typeof( long ), Param = "printObjectId" )]
-		public ActionResult GetBidPrintObject( long printObjectId ) {
-			string result = _printObjectsService.GetPrintObjectsByIdForProducerJSON( printObjectId );
-			return Json( result );
+		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
+		public ActionResult GetBidPrintObject(long printObjectId)
+		{
+			string result = _printObjectsService.GetPrintObjectsByIdForProducerJSON(printObjectId);
+			return Json(result);
 		}
 
 
 		[HttpPost]
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
 		[JsonQueryParamFilter(JsonDataType = typeof(decimal), Param = "price")]
-		public ActionResult CreateBid(long printObjectId, decimal price)
+		public ActionResult CreateBid(long printObjectId, decimal price, string currency)
 		{
-			return Json(_bidsService.CreateBidJSON(printObjectId, price));
+			return Json(_bidsService.CreateBidJSON(printObjectId, price, currency));
 		}
 
 		[HttpGet]
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
-		public ActionResult GetBidsForPrintObject(long printObjectId) 
+		public ActionResult GetBidsForPrintObject(long printObjectId)
 		{
 			_BidsForPrintObjectsViewModel viewModel = new _BidsForPrintObjectsViewModel();
 			viewModel.BidsJSON = _bidsService.GetBidsForPrintObjectJSON(printObjectId);

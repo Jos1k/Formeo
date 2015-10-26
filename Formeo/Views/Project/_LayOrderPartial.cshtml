@@ -14,7 +14,7 @@
                     <tr>
                         <th class="col-md-1">Art.No.</th>
                         <th class="col-md-6">Product Name</th>
-                        <th class="col-md-3">Current Price</th>
+                        <th class="col-md-3">Price for Item</th>
                         <th class="col-md-1">Quantity</th>
                         <th class="col-md-1">Actions</th>
                     </tr>
@@ -23,7 +23,7 @@
                     <tr ng-repeat="printObject in printObjectsInfoModal">
                         <td>{{printObject.ArtNo}}</td>
                         <td>{{printObject.Name}}</td>
-                        <td>{{printObject.CurrentPrice}}</td>
+                        <td>{{printObject.CurrentPrice}} {{printObject.Currency}}</td>
                         <td style="text-align: center;">
                             <div class="input-group">
                                 <a href="#" ng-click="increasePrintObjectQuantity(printObject)" style="padding-right:5px;">
@@ -44,13 +44,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="container">
+        @*<div class="container">   !!!this part was removed because of clarification on last demo: support different currencies.
             <div class="row">
                 <div class="col-md-12">
                     Total Price: {{TotalPrice}}
                 </div>
             </div>
-        </div>
+        </div>*@
         <p>Order info:</p>
         <div class="container">
             <div class="row">

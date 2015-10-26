@@ -23,6 +23,8 @@ namespace Formeo.Models
 		public decimal SelectedBidPrice { get; set; }
 		public Bid SelectedBid { get; set; }
 		public Formeo.Models.StaticData.PrintObjectStatusEnum Status { get; set; }
-	
+
+
+		public string SelectedCurrency { get; set; }
 	}
 }

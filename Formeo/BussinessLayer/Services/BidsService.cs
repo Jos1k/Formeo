@@ -20,7 +20,7 @@ namespace Formeo.BussinessLayer.Services
 
 		#region IBidsService members
 
-		public string CreateBidJSON(long printObjectId, decimal price)
+		public string CreateBidJSON(long printObjectId, decimal price, string currency)
 		{
 			ApplicationUser user = _userManager.GetCurrentUser();
 
@@ -29,12 +29,12 @@ namespace Formeo.BussinessLayer.Services
 				throw new InvalidOperationException();
 			}
 
-			Bid newBid = _bidsManager.CreateBid(printObjectId, user.Company.ID, price);
+			Bid newBid = _bidsManager.CreateBid(printObjectId, user.Company.ID, price, currency);
 			BidForProducerShort bshort = BidToForProducerShort(newBid);
 			return JsonConvert.SerializeObject(bshort);
 		}
 
-		public string GetBidsForPrintObjectJSON(long printObjectId) 
+		public string GetBidsForPrintObjectJSON(long printObjectId)
 		{
 			IEnumerable<Bid> bids = _bidsManager.GetBidsForPrintObject(printObjectId);
 			IEnumerable<BidForCustomerShort> bidsShort = bids.
@@ -63,6 +63,7 @@ namespace Formeo.BussinessLayer.Services
 			shortBid.PrintObjectId = bid.PrintObject.ID;
 			shortBid.PrintObjectName = bid.PrintObject.Name;
 			shortBid.ArtNo = bid.PrintObject.ArticleNo;
+			shortBid.Currency = bid.Currency;
 			shortBid.IsSelected = bid.PrintObject.CompanyProducer == null ? false : bid.PrintObject.CompanyProducer.ID == bid.CompanyProducer.ID;
 			return shortBid;
 		}
@@ -100,6 +101,7 @@ namespace Formeo.BussinessLayer.Services
 			public long ProducerCompanyId { get; set; }
 			public string ProducerCompanyName { get; set; }
 			public bool IsSelected { get; set; }
+			public string Currency { get; set; }
 		}
 	}
 }

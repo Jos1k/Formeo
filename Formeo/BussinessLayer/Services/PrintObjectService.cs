@@ -164,6 +164,7 @@ namespace Formeo.BussinessLayer.Services
 			long? selectedCompanyProducerID = null;
 			string selectedProducerCompanyName = null;
 			decimal? selectedPrice = null;
+			string currency = string.Empty;
 
 			if (printObject.CompanyProducer != null)
 			{
@@ -172,6 +173,7 @@ namespace Formeo.BussinessLayer.Services
 
 				Bid selectedBid = _bidsManager.GetSelecetdBidForPrintObject(printObject.ID);
 				selectedPrice = selectedBid == null ? (decimal?)null : selectedBid.Price;
+				currency = selectedBid == null ? string.Empty : selectedBid.Currency;
 			}
 
 			return new PrintObjectForCustomerShort()
@@ -185,7 +187,8 @@ namespace Formeo.BussinessLayer.Services
 				SelectedProducerCompanyId = selectedCompanyProducerID,
 				CompanyName = selectedProducerCompanyName,
 				CurrentPrice = selectedPrice,
-				PrintMaterial = printObject.PrintMaterial
+				PrintMaterial = printObject.PrintMaterial,
+				Currency = currency
 			};
 
 		}
@@ -209,7 +212,7 @@ namespace Formeo.BussinessLayer.Services
 			public long? SelectedProducerCompanyId { get; set; }
 			public decimal? CurrentPrice { get; set; }
 			public bool IsSelected { get; set; }
-
+			public string Currency { get; set; }
 		}
 
 		private class PrintObjectForProducerShort : PrintObjectBaseShort

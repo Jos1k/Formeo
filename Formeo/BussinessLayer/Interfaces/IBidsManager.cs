@@ -13,9 +13,8 @@ namespace Formeo.BussinessLayer.Interfaces
 		/// This method creates Bid on behalf of users company
 		/// </summary>
 		/// <returns></returns>
-		Bid CreateBid(long printObjectId, string userId, decimal price);
 
-		Bid CreateBid(long printObjectId, long companyId, decimal price);
+		Bid CreateBid(long printObjectId, long companyId, decimal price, string currency);
 		IReadOnlyList<Bid> GetBidsForPrintObject(long printObjectId);
 		Bid GetSelecetdBidForPrintObject(long printObjectId);
 	}

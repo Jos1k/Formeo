@@ -14,7 +14,7 @@
         $http({
             method: 'POST',
             url: '/Bids/CreateBid',
-            params: { 'printObjectId': $scope.printObjectInfoModal.Id, 'price': $scope.price },
+            params: { 'printObjectId': $scope.printObjectInfoModal.Id, 'price': $scope.price, 'currency': $scope.currency },
             headers: { 'Content-Type': 'application/json;' },
             data: ''
         }).

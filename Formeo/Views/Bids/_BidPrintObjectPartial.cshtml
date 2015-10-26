@@ -2,40 +2,48 @@
     <div class="modal-header" style="background-color: #34495E; color: white;">
         <h5 class="modal-title"><b>Bid Product</b></h5>
     </div>
-	<div class="modal-body">
-		
-		<div class="container">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th class="col-md-2">Art. No.</th>
-						<th class="col-md-9">Product Name</th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="col-md-2">{{printObjectInfoModal.ArtNo}}</td>
-						<td class="col-md-9">{{printObjectInfoModal.Name}}</td>
-						<td class="col-md-1">
+    <div class="modal-body">
+
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Art. No.</th>
+                        <th class="col-md-9">Product Name</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">{{printObjectInfoModal.ArtNo}}</td>
+                        <td class="col-md-9">{{printObjectInfoModal.Name}}</td>
+                        <td class="col-md-1">
                             <a href="#" ng-click="download(printObjectInfoModal.Id)"><i class="fa fa-download"></i></a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-        
-		<div class="container">		
-			<div class="row">
-				<div class="col-md-1 uploadProductModalButton">
-					<p class="login-textbox" style="margin-top: 5px;"><b>Price:</b></p>
-				</div>
-				<div class="col-md-11 uploadProductModalButton">
-					<input class="form-control login-textbox" placeholder="Order Name" ng-model="price" type="number" min="0.00" value="0.00">
-				</div>
-			</div>
-		</div>
-	</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 uploadProductModalButton">
+                    <p class="login-textbox" style="margin-top: 5px;"><b>Price:</b></p>
+                </div>
+                <div ng-init="currency='USD'" />
+                <div class="col-md-9 uploadProductModalButton">
+                    <input class="form-control login-textbox" placeholder="Order Name" ng-model="price" type="number" min="0.00" value="0.00">
+                </div>
+                <div class="col-md-2 uploadProductModalButton">
+                    <select class="form-control" id="sel1" ng-model="currency">
+                        <option>USD</option>
+                        <option>EUR</option>
+                        <option>SEK</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="BidProduct()">Bid price</button>
         <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>

@@ -56,6 +56,7 @@ namespace Formeo.BussinessLayer.Services
 				LastName = projectInfo.Project.LastName,
 				OverralPrice = projectInfo.Price,
 				PricePerItem = projectInfo.SelectedBidPrice,
+				Currency = projectInfo.SelectedCurrency,
 				PrintMaterial = projectInfo.PrintObject.PrintMaterial,
 				PrintObjectId = projectInfo.PrintObject.ID,
 				ProductName = projectInfo.PrintObject.Name,
@@ -170,6 +171,8 @@ namespace Formeo.BussinessLayer.Services
 			#endregion
 
 			public string CompanyName { get; set; }
+
+			public string Currency { get; set; }
 		}
 
 	}

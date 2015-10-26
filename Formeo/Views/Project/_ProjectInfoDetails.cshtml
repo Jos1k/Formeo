@@ -1,7 +1,7 @@
 ﻿@model Formeo.Models._PrintObjectDetailsViewModel
 <div class="modal-content" style="border-radius: 0; border:none;">
     <div class="modal-header" style="background-color: #34495E; color: white;">
-        <h5 class="modal-title"><b>Upload Product</b></h5>
+        <h5 class="modal-title"><b>Product details</b></h5>
     </div>
     <div class="modal-body">
         <div ng-init="productDetails = @Model.PrintObjectDetailsJSON" />
@@ -22,7 +22,7 @@
                         <td class="col-md-2">{{productDetails.ArtNo}}</td>
                         <td class="col-md-4">{{productDetails.ProductName}}</td>
                         <td class="col-md-4">{{productDetails.CompanyName}}</td>
-                        <td class="col-md-4">{{productDetails.PricePerItem}}</td>
+                        <td class="col-md-4">{{productDetails.PricePerItem}} {{productDetails.Currency}}</td>
                         <td class="col-md-4">{{productDetails.Quantity}}</td>
                     </tr>
                 </tbody>
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    <b>Total price:</b> {{productDetails.OverralPrice}}
+                    <b>Total price:</b> {{productDetails.OverralPrice}} {{productDetails.Currency}}
                 </p>
             </div>
             <div class="col-md-6">
