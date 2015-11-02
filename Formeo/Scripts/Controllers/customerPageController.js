@@ -139,7 +139,7 @@
                        // $scope.selectedPrintObjectIds = [];
                     }, function (response) {
                         //error
-                        $modalInstance.dismiss('cancel');
+                        modalInstance.dismiss('cancel');
 
                     });
 
@@ -168,10 +168,10 @@
                   });
 
                   modalInstance.result.then(function (response) {
-                      $modalInstance.close(response);
+                      modalInstance.close(response);
                   }, function (response) {
                       //error or cancel
-                      $modalInstance.dismiss('cancel');
+                      modalInstance.dismiss('cancel');
                   });
 
               }, function (response) {

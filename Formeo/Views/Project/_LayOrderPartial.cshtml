@@ -63,26 +63,26 @@
         <div class="container" ng-init="deliveryInfo">
             <div class="row">
                 <div class="col-md-6 uploadProductModalButton">
-                    <input class="form-control login-textbox" placeholder="First Name" ng-model="deliveryInfo.Surname">
+                    <input class="form-control login-textbox" placeholder="First Name" ng-model="deliveryInfo.Surname" required>
                 </div>
                 <div class="col-md-6 uploadProductModalButton">
-                    <input class="form-control login-textbox" placeholder="Last Name" ng-model="deliveryInfo.LastName">
+                    <input class="form-control login-textbox" placeholder="Last Name" ng-model="deliveryInfo.LastName" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 uploadProductModalButton">
-                    <textarea class="form-control login-textbox" rows="2" placeholder="Delivery address" ng-model="deliveryInfo.Address" style="resize: none;"></textarea>
+                    <textarea class="form-control login-textbox" rows="2" placeholder="Delivery address" ng-model="deliveryInfo.Address" style="resize: none;" required></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5 uploadProductModalButton">
-                    <input class="form-control login-textbox" placeholder="City" ng-model="deliveryInfo.City">
+                    <input class="form-control login-textbox" placeholder="City" ng-model="deliveryInfo.City" required>
                 </div>
                 <div class="col-md-4 uploadProductModalButton">
-                    <input class="form-control login-textbox" placeholder="Country" ng-model="deliveryInfo.Country">
+                    <input class="form-control login-textbox" placeholder="Country" ng-model="deliveryInfo.Country" required>
                 </div>
                 <div class="col-md-3 uploadProductModalButton">
-                    <input type="number" class="form-control login-textbox" placeholder="Postal code" ng-model="deliveryInfo.PostCode">
+                    <input type="number" class="form-control login-textbox" placeholder="Postal code" ng-model="deliveryInfo.PostCode" required>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                     </button>
                 </div>
                 <div class="col-md-4 uploadProductModalButton">
-                    <button type="button" class="btn btn-default btn-block btn-upload-product" ng-click="LayOrder()">
+                    <button type="button" class="btn btn-default btn-block btn-upload-product selectProducerButton" ng-click="LayOrder()" ng-disabled="isLayOrderDisabled()">
                         <i class="fa fa-paper-plane-o"></i>
                         Lay order
                     </button>

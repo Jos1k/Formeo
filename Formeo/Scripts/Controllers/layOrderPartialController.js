@@ -71,6 +71,23 @@
               });
     }
 
+    $scope.isLayOrderDisabled = function () {
+        if ($scope.orderName
+            && $scope.deliveryInfo.Surname
+            && $scope.deliveryInfo.LastName
+            && $scope.deliveryInfo.Address
+            && $scope.deliveryInfo.City
+            && $scope.deliveryInfo.Country
+            && $scope.deliveryInfo.PostCode
+            && $scope.printObjectsInfoModal
+            && $scope.printObjectsInfoModal.length > 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     $scope.AddProduct = function () {
 
         var pObjectIds = []
