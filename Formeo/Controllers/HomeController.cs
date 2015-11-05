@@ -118,8 +118,6 @@ namespace Formeo.Controllers {
 				}
 			}
 
-
-
 			// If we got this far, something failed, redisplay form
 			return RedirectToAction( "Index", "Home" );
 		}
@@ -172,7 +170,7 @@ namespace Formeo.Controllers {
 				.GetProjectsByCreatorCompanyJSON(
 				company.ID,
 				Formeo.Models.StaticData.OrderStatusEnum.Delivered );
-
+			
 			return View( viewModel );
 		}
 

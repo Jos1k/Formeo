@@ -1,4 +1,5 @@
-﻿using Formeo.BussinessLayer;
+﻿using System.Threading.Tasks;
+using Formeo.BussinessLayer;
 using Formeo.BussinessLayer.Interfaces;
 using Formeo.Controllers.CustomAttributes;
 using Formeo.Models;
@@ -24,7 +25,7 @@ namespace Formeo.Controllers
 		}
 		[HttpPost]
 		[JsonQueryParamFilter(JsonDataType = typeof(long), Param = "printObjectId")]
-		public ActionResult ToggleIsNeedPrintObjectBid(long printObjectId)
+		public  ActionResult ToggleIsNeedPrintObjectBid(long printObjectId)
 		{
 			bool toggleRes = _printObjecsManager.ToggleIsNeedBid(printObjectId);
 			Console.WriteLine(printObjectId);

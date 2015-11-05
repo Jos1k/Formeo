@@ -21,7 +21,7 @@ namespace Formeo.BussinessLayer.Interfaces
 
 		IEnumerable<PrintObject> GetPrintObjectsByOrder(long orderId);
 
-		bool ToggleIsNeedBid(long printObjectId);
+		bool ToggleIsNeedBid( long printObjectId );
 
 		PrintObject AssignProducerToPrintObject(long producerCompanyId, long printObjectId);
 

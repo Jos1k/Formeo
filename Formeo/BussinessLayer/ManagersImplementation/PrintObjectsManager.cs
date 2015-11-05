@@ -1,4 +1,5 @@
-﻿using Formeo.BussinessLayer.Interfaces;
+﻿using System.Threading.Tasks;
+using Formeo.BussinessLayer.Interfaces;
 using Formeo.Models;
 using Formeo.Models.HelperModels;
 using System;
@@ -106,7 +107,8 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 
 		public bool ToggleIsNeedBid(long printObjectId)
 		{
-			PrintObject printObject = _dbContext.PrintObjects.Where(po => po.ID == printObjectId).SingleOrDefault();
+			PrintObject printObject = _dbContext.PrintObjects
+				.SingleOrDefault(po => po.ID == printObjectId);
 			if (printObject == null)
 			{
 				throw new InvalidOperationException("printObjectId is Invalid");
@@ -114,6 +116,28 @@ namespace Formeo.BussinessLayer.ManagersImplementation
 			printObject.IsNeedBid = !printObject.IsNeedBid;
 			_dbContext.SaveChanges();
 			_dbContext.Entry(printObject).Reload();
+
+
+			if( printObject.IsNeedBid ) { 
+			List<string> producersEmail = _userManager
+				.GetUsersByRole(StaticData.RoleNames.Producer)
+				.Select(producer=>producer.Email)
+				.ToList();
+			
+			foreach(string producerEmail in producersEmail) {
+				StaticData.SendEmail(
+					producerEmail,
+					"You have a bid request", 
+					string.Format(
+						"Hello!\n\nYou have a new bid request in Formeo from {0} for {1}",
+						printObject.UserCreator.UserName,
+						printObject.ArticleNo
+					)
+				);
+			}
+			}
+
+
 			return printObject.IsNeedBid;
 		}
 
