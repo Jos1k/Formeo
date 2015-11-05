@@ -103,7 +103,7 @@ namespace Formeo.BussinessLayer.ManagersImplementation {
 				foreach( string producerEmaail in producerEmailAndArticleNo.Item1 ) {
 					StaticData.SendEmail(
 						producerEmaail,
-						"You have a new bid",
+						"You have a new order!",
 						string.Format(
 							"Hello!\n\nYou have a new Order in Formeo from {0} for {1}",
 							creatorUser.UserName,
