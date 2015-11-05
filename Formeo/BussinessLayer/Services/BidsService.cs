@@ -20,7 +20,7 @@ namespace Formeo.BussinessLayer.Services
 
 		#region IBidsService members
 
-		public string CreateBidJSON(long printObjectId, decimal price, string currency)
+		public string CreateBidJSON(string producerName, long printObjectId, decimal price, string currency)
 		{
 			ApplicationUser user = _userManager.GetCurrentUser();
 
@@ -29,7 +29,7 @@ namespace Formeo.BussinessLayer.Services
 				throw new InvalidOperationException();
 			}
 
-			Bid newBid = _bidsManager.CreateBid(printObjectId, user.Company.ID, price, currency);
+			Bid newBid = _bidsManager.CreateBid( producerName, printObjectId, user.Company.ID, price, currency );
 			BidForProducerShort bshort = BidToForProducerShort(newBid);
 			return JsonConvert.SerializeObject(bshort);
 		}

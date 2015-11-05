@@ -6,6 +6,7 @@ using System;
 using System.Net;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
 
 namespace Formeo.Controllers
 {
@@ -45,7 +46,7 @@ namespace Formeo.Controllers
 		[JsonQueryParamFilter(JsonDataType = typeof(decimal), Param = "price")]
 		public ActionResult CreateBid(long printObjectId, decimal price, string currency)
 		{
-			return Json(_bidsService.CreateBidJSON(printObjectId, price, currency));
+			return Json(_bidsService.CreateBidJSON(User.Identity.GetUserName() ,printObjectId, price, currency));
 		}
 
 		[HttpGet]
