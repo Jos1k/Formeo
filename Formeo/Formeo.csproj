@@ -342,6 +342,7 @@
       <DependentUpon>Site2.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\formeo.pubxml" />
+    <None Include="Properties\PublishProfiles\Formeologin.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Controllers\userEditController.js" />
     <Content Include="Scripts\Controllers\companyEditController.js" />
